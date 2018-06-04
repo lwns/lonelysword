@@ -1,0 +1,89 @@
+buildscript {
+  ext.versions = ['minSdk'        : 14,
+                  'compileSdk'    : 27,
+                  'supportLibrary': '26.1.0',
+                  'androidPlugin' : '3.1.2',
+                  'androidTools'  : '27.0.2',
+                  'kotlin'        : '1.2.21',
+                  'dagger'        : '2.11',
+                  'rxLifecycle'   : '2.2.1',
+                  'rxAndroid'     : '2.0.1',
+                  'release'       : '8.8.1',
+                  'aspectj'       : '1.8.9',
+                  'arch'          : '1.0.0']
+
+  ext.deps = [android       : ['runtime'     : 'com.google.android:android:4.1.1.4',
+                               'gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",],
+              'support'     : ['compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
+                               'appcompat'  : "com.android.support:appcompat-v7:${versions.supportLibrary}",
+                               'supportV4'  : "om.android.support:support-v4:${versions.supportLibrary}",
+                               'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
+                               'test'       : ['runner': 'com.android.support.test:runner:1.0.1',],],
+              'lint'        : ['core'  : "com.android.tools.lint:lint:${versions.androidTools}",
+                               'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
+                               'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
+                               'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",],
+              javapoet      : 'com.squareup:javapoet:1.10.0',
+              javaparser    : 'com.github.javaparser:javaparser-core:3.5.14',
+              junit         : 'junit:junit:4.12',
+              truth         : 'com.google.truth:truth:0.39',
+              robolectric   : 'org.robolectric:robolectric:3.7.1',
+              compiletesting: 'com.google.testing.compile:compile-testing:0.15',
+              'auto'        : ['service': 'com.google.auto.service:auto-service:1.0-rc4',
+                               'common' : 'com.google.auto:auto-common:0.10',],
+              'guava'       : 'com.google.guava:guava:24.0-jre',
+              'release'     : ['runtime' : "com.jakewharton:butterknife:${versions.release}",
+                               'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"],
+              'kotlin'      : ['stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",],
+
+              'dagger'      : [dagger       : "com.google.dagger:dagger-android:${versions.dagger}",
+                               compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
+                               processor    : "com.google.dagger:dagger-android-processor::${versions.dagger}",
+                               daggerSupport: "com.google.dagger:dagger-android-support:${versions.dagger}"],
+
+              'rx'          : [rxLifecycle: "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxLifecycle}",
+                               rxAndroid  : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"],
+
+              'arch'        : [extensions: "android.arch.lifecycle:extensions:${versions.arch}",
+                               compiler  : "android.arch.lifecycle:compiler:${versions.arch}"],
+              'aspectj'     : [aspectjrt   : "org.aspectj:aspectjrt:${versions.aspectj}",
+                               aspectjtools: "org.aspectj:aspectjtools:${versions.aspectj}"]]
+
+  repositories {
+    mavenCentral()
+    jcenter()
+    google()
+    maven {
+      url uri('repo')
+    }
+  }
+
+  dependencies {
+    classpath deps.android.gradlePlugin
+
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+
+        classpath 'com.timper.lonelysword:lonelysword-plugin:1.0.2'
+
+    classpath deps.aspectj.aspectjtools
+    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+  }
+}
+
+allprojects {
+  repositories {
+    google()
+    jcenter()
+    maven {
+      url uri('repo')
+    }
+  }
+}
+
+task clean(type: Delete) {
+  delete rootProject.buildDir
+}
+task javadoc(type: Javadoc) {
+  options.encoding = "utf-8"
+}

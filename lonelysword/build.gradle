@@ -1,0 +1,107 @@
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+apply plugin: 'com.android.library'
+
+android {
+  compileSdkVersion versions.compileSdk
+
+  defaultConfig {
+    minSdkVersion versions.minSdk
+
+    consumerProguardFiles 'proguard-rules.pro'
+
+    testInstrumentationRunner 'android.support.test.runner.AndroidJUnitRunner'
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        includeCompileClasspath = true
+      }
+    }
+  }
+
+  lintOptions {
+    textReport true
+    textOutput 'stdout'
+    // We run a full lint analysis as build part in CI, so skip vital checks for assemble tasks.
+    checkReleaseBuilds false
+  }
+
+  buildTypes {
+    release {
+      debuggable false
+      minifyEnabled false
+    }
+
+    lintOptions { abortOnError false }
+  }
+
+  // TODO replace with https://issuetracker.google.com/issues/72050365 once released.
+  libraryVariants.all {
+    it.generateBuildConfig.enabled = false
+  }
+
+  dataBinding {
+    enabled true
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+//  api project(':lonelysword-annotations')
+  api 'com.timper:lonelysword-annotations:0.0.1'
+
+  api deps.support.compat
+  api deps.support.appcompat
+  api deps.dagger.dagger
+  api deps.dagger.daggerSupport
+  api deps.arch.extensions
+  api deps.aspectj.aspectjrt
+  api deps.rx.rxAndroid
+
+  annotationProcessor deps.arch.compiler
+  annotationProcessor deps.dagger.compiler
+  //  annotationProcessor deps.dagger.processor
+  //
+  //  api deps.rx.rxLifecycle
+
+  testImplementation 'junit:junit:4.12'
+  androidTestImplementation 'com.android.support.test:runner:1.0.1'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
+android.libraryVariants.all { variant ->
+  JavaCompile javaCompile = variant.javaCompile
+  javaCompile.doLast {
+    //下面的1.8是指我们兼容的jdk的版本
+    String[] args = ["-showWeaveInfo",
+                     "-1.8",
+                     "-inpath", javaCompile.destinationDir.toString(),
+                     "-aspectpath", javaCompile.classpath.asPath,
+                     "-d", javaCompile.destinationDir.toString(),
+                     "-classpath", javaCompile.classpath.asPath,
+                     "-bootclasspath", android.bootClasspath.join(File.pathSeparator)]
+
+    MessageHandler handler = new MessageHandler(true);
+    new Main().run(args, handler)
+
+    def log = project.logger
+    for (IMessage message : handler.getMessages(null, true)) {
+      switch (message.getKind()) {
+        case IMessage.ABORT:
+        case IMessage.ERROR:
+        case IMessage.FAIL:
+          log.error message.message, message.thrown
+          break;
+        case IMessage.WARNING:
+        case IMessage.INFO:
+          log.info message.message, message.thrown
+          break;
+        case IMessage.DEBUG:
+          log.debug message.message, message.thrown
+          break;
+      }
+    }
+  }
+}
+apply from: rootProject.file('gradle/jcenter-push.gradle')
