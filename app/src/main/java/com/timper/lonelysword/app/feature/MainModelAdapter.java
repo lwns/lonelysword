@@ -1,10 +1,11 @@
-package com.timper.lonelysword.app;
+package com.timper.lonelysword.app.feature;
 
 import android.arch.lifecycle.MutableLiveData;
-import com.timper.lonelysword.app.data.remote.service.GetUserUseCase;
+import android.util.Log;
+import com.timper.lonelysword.ActivityScope;
+//import com.timper.lonelysword.app.data.GetUserUseCase;
+import com.timper.lonelysword.app.data.GetUserUseCase;
 import com.timper.lonelysword.base.ModelAdapter;
-import io.reactivex.observers.DisposableObserver;
-import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Inject;
 
@@ -15,7 +16,7 @@ import javax.inject.Inject;
  * FIXME
  */
 
-public class MainModelAdapter extends ModelAdapter {
+@ActivityScope public class MainModelAdapter extends ModelAdapter {
 
   GetUserUseCase userUseCase;
 
@@ -25,7 +26,7 @@ public class MainModelAdapter extends ModelAdapter {
     this.userUseCase = userUseCase;
   }
 
-  public void getData(){
+  public void getData() {
     //userUseCase.execute(new DisposableObserver<List<String>>() {
     //  @Override public void onNext(List<String> datas) {
     //    //List<String> data = users.getValue() == null ? new ArrayList<>() : users.getValue();
@@ -45,5 +46,11 @@ public class MainModelAdapter extends ModelAdapter {
     //    //unDoneRefresh.setValue(ResultState.COMPLETE);
     //  }
     //}, "");
+  }
+
+  @Override protected void onCleared() {
+    super.onCleared();
+
+    Log.i("MainModelAdapter", "onCleared");
   }
 }

@@ -11,6 +11,7 @@ import com.timper.lonelysword.Unbinder;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.DaggerAppCompatActivity;
 import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
 
@@ -20,17 +21,15 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-public abstract class AppActivity<T extends ViewDataBinding> extends AppCompatActivity implements HasSupportFragmentInjector {
-
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+public abstract class AppActivity<T extends ViewDataBinding> extends DaggerAppCompatActivity {
 
   public T binding;
 
   protected Unbinder unbinder;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
+    AndroidInjection.inject(this);
     unbinder = Lonelysword.bind(this);
-    //AndroidInjection.inject(this);
     unbinder.beforeViews();
     super.onCreate(savedInstanceState);
     unbinder.initViews();
@@ -67,9 +66,5 @@ public abstract class AppActivity<T extends ViewDataBinding> extends AppCompatAc
     super.onDestroy();
     unbinder.onDestroy();
     unbinder.unbind();
-  }
-
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingAndroidInjector;
   }
 }

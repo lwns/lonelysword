@@ -1,6 +1,7 @@
 package com.timper.lonelysword.annotations.apt;
 
 import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
@@ -14,5 +15,6 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
  * Description:
  * FIXME
  */
-@Documented @Target(FIELD) @Retention(CLASS) public @interface ModelAdapter {
+@Documented  @Target(FIELD) @Retention(CLASS) public @interface ModelAdapter {
+  String value() default "";
 }

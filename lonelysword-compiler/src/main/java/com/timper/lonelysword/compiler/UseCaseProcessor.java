@@ -189,22 +189,25 @@ import static javax.lang.model.element.Modifier.STATIC;
       }
     }
 
+    UseCaseBinding.Builder builder = new UseCaseBinding.Builder(name);
+    UseCaseSet.Builder useCase = getOrCreateBindingBuilder(builderMap, enclosingElement);
+    if (!useCase.addUseCaseBinding(builder)) {
+      error(element, "@%s the same useCase name.", UseCase.class);
+      hasError = true;
+    }
+
     if (hasError) {
       return;
     }
 
-    UseCaseBinding.Builder builder = new UseCaseBinding.Builder(name);
     if (methodParameters != null && methodParameters.size() > 0) {
       TypeMirror typeMirror = methodParameters.get(0).asType();
       TypeName parameter = getTypeName((Type.ClassType) typeMirror);
       builder.addParameter(parameter);
     } else {
-      //builder.addParameter(OBJECT);
     }
     builder.addReturnClass(returnClassName);
 
-    UseCaseSet.Builder useCase = getOrCreateBindingBuilder(builderMap, enclosingElement);
-    useCase.addUseCaseBinding(builder);
     builderMap.put(enclosingElement, useCase);
     erasedTargetNames.add(enclosingElement);
   }

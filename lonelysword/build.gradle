@@ -50,21 +50,15 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 //  api project(':lonelysword-annotations')
-  api 'com.timper:lonelysword-annotations:0.0.1'
+    api 'com.timper:lonelysword-annotations:0.0.3'
 
   api deps.support.compat
   api deps.support.appcompat
-  api deps.dagger.dagger
+  api deps.dagger.android
   api deps.dagger.daggerSupport
   api deps.arch.extensions
   api deps.aspectj.aspectjrt
   api deps.rx.rxAndroid
-
-  annotationProcessor deps.arch.compiler
-  annotationProcessor deps.dagger.compiler
-  //  annotationProcessor deps.dagger.processor
-  //
-  //  api deps.rx.rxLifecycle
 
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.1'

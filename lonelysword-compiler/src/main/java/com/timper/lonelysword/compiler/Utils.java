@@ -24,8 +24,23 @@ import static javax.lang.model.element.Modifier.STATIC;
  */
 public class Utils {
 
+  public static boolean isEmpty(CharSequence str) {
+    if (str == null || "".equals(str) || "null".equals(str)) {
+      return true;
+    }
+
+    for (int i = 0; i < str.length(); i++) {
+      char c = str.charAt(i);
+      if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
+        return false;
+      }
+    }
+    return true;
+  }
+
   /**
    * is interface
+   *
    * @param typeMirror typemirror
    * @return ture
    */
@@ -35,6 +50,7 @@ public class Utils {
 
   /**
    * get Annotation mirror
+   *
    * @param element element
    * @param annotation annotation
    * @return annotations
@@ -101,4 +117,18 @@ public class Utils {
     return otherType.equals(typeMirror.toString());
   }
 
+  /** Finds the parent binder type in the supplied set, if any. */
+  public static TypeElement findParentType(TypeElement typeElement, Set<TypeElement> parents) {
+    TypeMirror type;
+    while (true) {
+      type = typeElement.getSuperclass();
+      if (type.getKind() == TypeKind.NONE) {
+        return null;
+      }
+      typeElement = (TypeElement) ((DeclaredType) type).asElement();
+      if (parents.contains(typeElement)) {
+        return typeElement;
+      }
+    }
+  }
 }

@@ -1,12 +1,17 @@
 package com.timper.lonelysword.compiler;
 
+import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import com.timper.lonelysword.annotations.apt.ViewModel;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
@@ -59,11 +64,15 @@ public class BindingSet {
   private final DefaultMethodBinding beforViewsBinding;
   private final DefaultMethodBinding afterViewsBinding;
   private final NetworkBinding networkBinding;
-  private final ModelAdapterBinding modelAdapterBinding;
+  private final ImmutableList<ViewModelBinding> viewModelBindings;
+  private final ImmutableList<ModelAdapterBinding> modelAdapterBindings;
+
+  private BindingSet parentBinding;
 
   public BindingSet(TypeName targetTypeName, ClassName bindingClassName, boolean isFinal, boolean isFragment, boolean isActivity,
       boolean isDialog, RootViewBinding rootViewBinding, DefaultMethodBinding beforViewsBinding,
-      DefaultMethodBinding afterViewsBinding, NetworkBinding networkBinding, ModelAdapterBinding modelAdapterBinding) {
+      DefaultMethodBinding afterViewsBinding, NetworkBinding networkBinding, ImmutableList<ViewModelBinding> viewModelBindings,
+      ImmutableList<ModelAdapterBinding> modelAdapterBindings, BindingSet parentBinding) {
     this.targetTypeName = targetTypeName;
     this.bindingClassName = bindingClassName;
     this.isFinal = isFinal;
@@ -74,7 +83,9 @@ public class BindingSet {
     this.beforViewsBinding = beforViewsBinding;
     this.afterViewsBinding = afterViewsBinding;
     this.networkBinding = networkBinding;
-    this.modelAdapterBinding = modelAdapterBinding;
+    this.viewModelBindings = viewModelBindings;
+    this.modelAdapterBindings = modelAdapterBindings;
+    this.parentBinding = parentBinding;
   }
 
   JavaFile brewJava(int sdk, boolean debuggable) {
@@ -88,16 +99,22 @@ public class BindingSet {
     if (isFinal) {
       result.addModifiers(FINAL);
     }
-    result.addSuperinterface(UNBINDER);
+
+    if (parentBinding != null) {
+      result.superclass(parentBinding.bindingClassName);
+    } else {
+      result.addSuperinterface(UNBINDER);
+    }
 
     result.addField(targetTypeName, "target", PRIVATE);
     result.addField(VIEW, "container", PRIVATE);
-    if (networkBinding != null) {
-      result.addField(createNetworkField(sdk, debuggable));
-    }
 
-    if (modelAdapterBinding != null) {
-      result.addField(createModelAdapterFactor(sdk, debuggable));
+    if (parentBinding != null) {
+      if (parentBinding.networkBinding == null && networkBinding != null) {
+        result.addField(createNetworkField(sdk, debuggable));
+      }
+    } else if (networkBinding != null) {
+      result.addField(createNetworkField(sdk, debuggable));
     }
 
     result.addMethod(createConstructorForActivity(sdk, debuggable));
@@ -119,14 +136,6 @@ public class BindingSet {
     return builder.build();
   }
 
-  private FieldSpec createModelAdapterFactor(int sdk, boolean debuggable) {
-    ParameterizedTypeName parameterizedTypeName =
-        ParameterizedTypeName.get(MODELADAPTERFACTOR, modelAdapterBinding.getClassName());
-    FieldSpec.Builder builder = FieldSpec.builder(parameterizedTypeName, "factor", Modifier.PUBLIC);
-    builder.addAnnotation(INJECT);
-    return builder.build();
-  }
-
   /**
    * create constructor method
    */
@@ -136,6 +145,11 @@ public class BindingSet {
         .addModifiers(PUBLIC)
         .addParameter(targetTypeName, "target")
         .addParameter(VIEW, "container");
+
+    if (parentBinding != null) {
+      constructor.addStatement("super(target, container)");
+      constructor.addCode("\n");
+    }
 
     constructor.addStatement("this.target = target");
     constructor.addStatement("this.container = container");
@@ -149,10 +163,15 @@ public class BindingSet {
    */
   private MethodSpec createBeforeViewsMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(BEFORVIEWS).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-    if (modelAdapterBinding != null) {
-      builder.addStatement(modelAdapterBinding.render());
+    if (parentBinding != null) {
+      builder.addStatement("super.beforeViews()");
       builder.addCode("\n");
     }
+    for (ModelAdapterBinding binding : modelAdapterBindings) {
+      builder.addCode(binding.render());
+      builder.addCode("\n");
+    }
+
     if (beforViewsBinding != null) {
       builder.addCode(beforViewsBinding.render());
       builder.addCode("\n");
@@ -166,9 +185,24 @@ public class BindingSet {
   private MethodSpec createInitViewsMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(INITVIEWS).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
     builder.returns(VIEW);
+
     if (rootViewBinding != null) {
+      if (parentBinding != null) {
+        builder.addStatement("super.initViews()");
+        builder.addCode("\n");
+      }
       builder.addCode(rootViewBinding.render(sdk));
       builder.addCode("\n");
+      builder.addCode(rootViewBinding.returnRender());
+      builder.addCode("\n");
+    } else {
+      if (parentBinding != null) {
+        builder.addStatement("return super.initViews()");
+        builder.addCode("\n");
+      } else {
+        builder.addStatement(CodeBlock.of("return null"));
+        builder.addCode("\n");
+      }
     }
     return builder.build();
   }
@@ -178,6 +212,14 @@ public class BindingSet {
    */
   private MethodSpec createAfterViewsMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(AFTERVIEWS).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
+    if (parentBinding != null) {
+      builder.addStatement("super.afterViews()");
+      builder.addCode("\n");
+    }
+    for (ViewModelBinding binding : viewModelBindings) {
+      builder.addCode(binding.render());
+      builder.addCode("\n");
+    }
     if (afterViewsBinding != null) {
       builder.addCode(afterViewsBinding.render());
       builder.addCode("\n");
@@ -190,7 +232,10 @@ public class BindingSet {
    */
   private MethodSpec createOnResumeMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(ONRESUME).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-
+    if (parentBinding != null) {
+      builder.addStatement("super.onResume()");
+      builder.addCode("\n");
+    }
     return builder.build();
   }
 
@@ -199,7 +244,13 @@ public class BindingSet {
    */
   private MethodSpec createOnStartMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(ONSTART).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-    if (networkBinding != null) {
+    if (parentBinding != null) {
+      builder.addStatement("super.onStart()");
+      builder.addCode("\n");
+      if (parentBinding.networkBinding == null && networkBinding != null) {
+        builder.addCode(networkBinding.bindNetworkConnection());
+      }
+    } else if (networkBinding != null) {
       builder.addCode(networkBinding.bindNetworkConnection());
     }
     return builder.build();
@@ -210,7 +261,10 @@ public class BindingSet {
    */
   private MethodSpec createOnPauseMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(ONPAUSE).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-
+    if (parentBinding != null) {
+      builder.addStatement("super.onPause()");
+      builder.addCode("\n");
+    }
     return builder.build();
   }
 
@@ -219,8 +273,16 @@ public class BindingSet {
    */
   private MethodSpec createOnStopMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(ONSTOP).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-    if (networkBinding != null) {
-      builder.addCode(networkBinding.unBindNetworkConnection());
+    if (parentBinding != null) {
+      builder.addStatement("super.onStop()");
+      builder.addCode("\n");
+      if (parentBinding.networkBinding == null && networkBinding != null) {
+        builder.addCode(networkBinding.unBindNetworkConnection());
+      }
+    } else {
+      if (networkBinding != null) {
+        builder.addCode(networkBinding.unBindNetworkConnection());
+      }
     }
     return builder.build();
   }
@@ -230,7 +292,10 @@ public class BindingSet {
    */
   private MethodSpec createOnDestroyMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(ONDESTROY).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-
+    if (parentBinding != null) {
+      builder.addStatement("super.onDestroy()");
+      builder.addCode("\n");
+    }
     return builder.build();
   }
 
@@ -239,7 +304,10 @@ public class BindingSet {
    */
   private MethodSpec createUnbindMethod(int sdk, boolean debuggable) {
     MethodSpec.Builder builder = MethodSpec.methodBuilder(UNBIND).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-
+    if (parentBinding != null) {
+      builder.addStatement("super.unbind()");
+      builder.addCode("\n");
+    }
     return builder.build();
   }
 
@@ -255,7 +323,10 @@ public class BindingSet {
     private DefaultMethodBinding beforViewsBinding;
     private DefaultMethodBinding afterViewsBinding;
     private NetworkBinding.Builder networkBuilder;
-    private ModelAdapterBinding modelAdapterBinding;
+    private final Map<String, ViewModelBinding.Builder> viewModelBindings = new LinkedHashMap<>();
+    private final Map<String, ModelAdapterBinding.Builder> modelAdaterBindings = new LinkedHashMap<>();
+
+    private BindingSet parentBinding;
 
     private Builder(TypeName targetTypeName, ClassName bindingClassName, boolean isFinal, boolean isFragment, boolean isActivity,
         boolean isDialog) {
@@ -265,6 +336,11 @@ public class BindingSet {
       this.isFragment = isFragment;
       this.isActivity = isActivity;
       this.isDialog = isDialog;
+      this.networkBuilder = new NetworkBinding.Builder(isActivity, isFragment);
+    }
+
+    void setParent(BindingSet parent) {
+      this.parentBinding = parent;
     }
 
     public boolean isFragment() {
@@ -288,26 +364,43 @@ public class BindingSet {
     }
 
     void addDisableNetwork(DefaultMethodBinding disableNetwork) {
-      if (networkBuilder == null) {
-        networkBuilder = new NetworkBinding.Builder(isActivity, isFragment);
-      }
       this.networkBuilder.addDisableNetwor(disableNetwork);
     }
 
     void addEnableNetwork(DefaultMethodBinding enableNetwork) {
-      if (networkBuilder == null) {
-        networkBuilder = new NetworkBinding.Builder(isActivity, isFragment);
-      }
       this.networkBuilder.addenableNetwor(enableNetwork);
     }
 
-    void addModelAdapter(ModelAdapterBinding modelAdapterBinding) {
-      this.modelAdapterBinding = modelAdapterBinding;
+    public boolean addViewModel(ViewModelBinding.Builder builder) {
+      if (viewModelBindings.get(builder.getFieldName()) == null) {
+        viewModelBindings.put(builder.getFieldName(), builder);
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    public boolean addModelAdater(ModelAdapterBinding.Builder builder) {
+      if (modelAdaterBindings.get(builder.getFieldName()) == null) {
+        modelAdaterBindings.put(builder.getFieldName(), builder);
+        return true;
+      } else {
+        return false;
+      }
     }
 
     BindingSet build() {
+      ImmutableList.Builder<ViewModelBinding> viewModelBindingBuilder = ImmutableList.builder();
+      for (ViewModelBinding.Builder builder : viewModelBindings.values()) {
+        viewModelBindingBuilder.add(builder.build());
+      }
+      ImmutableList.Builder<ModelAdapterBinding> modelAdapterBindingBuilder = ImmutableList.builder();
+      for (ModelAdapterBinding.Builder builder : modelAdaterBindings.values()) {
+        modelAdapterBindingBuilder.add(builder.build());
+      }
       return new BindingSet(targetTypeName, bindingClassName, isFinal, isFragment, isActivity, isDialog, rootViewBinding,
-          beforViewsBinding, afterViewsBinding, networkBuilder.build(), modelAdapterBinding);
+          beforViewsBinding, afterViewsBinding, networkBuilder.build(), viewModelBindingBuilder.build(),
+          modelAdapterBindingBuilder.build(), parentBinding);
     }
   }
 

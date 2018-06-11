@@ -36,9 +36,9 @@ buildscript {
                                'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"],
               'kotlin'      : ['stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",],
 
-              'dagger'      : [dagger       : "com.google.dagger:dagger-android:${versions.dagger}",
-                               compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
-                               processor    : "com.google.dagger:dagger-android-processor::${versions.dagger}",
+              'dagger'      : [compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
+                               android      : "com.google.dagger:dagger-android:${versions.dagger}",
+                               processor    : "com.google.dagger:dagger-android-processor:${versions.dagger}",
                                daggerSupport: "com.google.dagger:dagger-android-support:${versions.dagger}"],
 
               'rx'          : [rxLifecycle: "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxLifecycle}",
@@ -64,7 +64,7 @@ buildscript {
     classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
-        classpath 'com.timper.lonelysword:lonelysword-plugin:1.0.2'
+    classpath 'com.timper.lonelysword:lonelysword-plugin:1.0.2'
 
     classpath deps.aspectj.aspectjtools
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"

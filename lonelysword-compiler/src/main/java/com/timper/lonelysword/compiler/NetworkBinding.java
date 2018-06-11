@@ -83,7 +83,11 @@ public class NetworkBinding implements CodeBinding {
     }
 
     NetworkBinding build() {
-      return new NetworkBinding(disableNetworkBinding, enableNetworkBinding, isActivity, isFragment);
+      if (disableNetworkBinding == null && enableNetworkBinding == null) {
+        return null;
+      } else {
+        return new NetworkBinding(disableNetworkBinding, enableNetworkBinding, isActivity, isFragment);
+      }
     }
   }
 }

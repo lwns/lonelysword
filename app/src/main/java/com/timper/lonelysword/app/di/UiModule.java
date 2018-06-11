@@ -14,7 +14,7 @@ import javax.inject.Singleton;
  */
 @Module @Singleton public class UiModule {
 
-  @Provides static PostExecutionThread provideContext(UiThread uiThread) {
+  @Provides @Singleton public PostExecutionThread provideContext(UiThread uiThread) {
     return uiThread;
   }
 }

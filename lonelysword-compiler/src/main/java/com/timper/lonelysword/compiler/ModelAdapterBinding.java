@@ -10,20 +10,47 @@ import java.util.List;
  * Description:
  * FIXME
  */
-public class ModelAdapterBinding extends MethodBinding {
+public class ModelAdapterBinding implements CodeBinding {
   private static final ClassName VIEWMODELPROVIDERS = ClassName.get("android.arch.lifecycle", "ViewModelProviders");
-  private ClassName className;
 
-  ModelAdapterBinding(ClassName className, String name, List<Parameter> parameters, boolean required) {
-    super(name, parameters, required);
+  private final String factorName;
+  private final String fieldName;
+  private final ClassName className;
+
+  public ModelAdapterBinding(ClassName className, String fieldName, String factorName) {
     this.className = className;
-  }
-
-  public ClassName getClassName() {
-    return className;
+    this.fieldName = fieldName;
+    if (!Utils.isEmpty(factorName)) {
+      this.factorName = factorName;
+    } else {
+      this.factorName = "factor";
+    }
   }
 
   @Override public CodeBlock render() {
-    return CodeBlock.of("target.$L = $T.of(target,factor).get($T.class)", getName(), VIEWMODELPROVIDERS, className);
+    return CodeBlock.of("target.$L = $T.of(target,target.$L).get($T.class);", fieldName, VIEWMODELPROVIDERS, factorName, className);
+  }
+
+  static final class Builder {
+    private final String fieldName;
+    private final ClassName className;
+    private String factorName;
+
+    public Builder(ClassName className, String fieldName) {
+      this.className = className;
+      this.fieldName = fieldName;
+    }
+
+    public void addFactorName(String factorName) {
+      this.factorName = factorName;
+    }
+
+    public String getFieldName() {
+      return fieldName;
+    }
+
+    ModelAdapterBinding build() {
+      return new ModelAdapterBinding(className, fieldName, factorName);
+    }
   }
 }

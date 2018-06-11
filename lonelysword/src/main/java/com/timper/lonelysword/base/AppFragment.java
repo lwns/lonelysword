@@ -1,18 +1,16 @@
 package com.timper.lonelysword.base;
 
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.timper.lonelysword.Lonelysword;
 import com.timper.lonelysword.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
+import dagger.android.support.DaggerFragment;
 
 /**
  * User: tangpeng.yang
@@ -20,7 +18,7 @@ import dagger.android.support.AndroidSupportInjection;
  * Description:
  * FIXME
  */
-public abstract class AppFragment<T extends ViewDataBinding> extends Fragment {
+public abstract class AppFragment<T extends ViewDataBinding> extends DaggerFragment {
   public T binding;
 
   public View view;
@@ -28,7 +26,7 @@ public abstract class AppFragment<T extends ViewDataBinding> extends Fragment {
   protected Unbinder unbinder;
 
   @Override public void onAttach(Context context) {
-    //AndroidSupportInjection.inject(this);
+    AndroidSupportInjection.inject(this);
     super.onAttach(context);
   }
 

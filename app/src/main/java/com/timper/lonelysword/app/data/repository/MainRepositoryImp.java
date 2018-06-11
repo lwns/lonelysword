@@ -1,6 +1,7 @@
 package com.timper.lonelysword.app.data.repository;
 
 import com.timper.lonelysword.app.data.MainRepository;
+import io.reactivex.Observable;
 import javax.inject.Inject;
 
 /**
@@ -11,5 +12,9 @@ import javax.inject.Inject;
  */
 public class MainRepositoryImp implements MainRepository {
   @Inject public MainRepositoryImp() {
+  }
+
+  @Override public Observable<String> getUser(String hellow) {
+    return null;
   }
 }

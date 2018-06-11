@@ -11,5 +11,5 @@ import io.reactivex.Observable;
  */
 public interface MainService {
 
-  @UseCase Observable<String> getUser(String hellow);
+  Observable<String> getUser(String hellow);
 }

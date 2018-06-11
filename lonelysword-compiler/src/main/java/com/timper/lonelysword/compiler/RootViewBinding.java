@@ -34,15 +34,24 @@ public class RootViewBinding implements ResourceBinding {
 
   @Override public CodeBlock render(int sdk) {
     if (isActivity) {
-      return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n" + "return target.binding.getRoot();",
+      return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n",
           DATABINDINGUTIL, id.code);
     } else if (isFragment) {
       StringBuilder builder = new StringBuilder("if (target.view == null) {\n"
           + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
           + "      target.view = target.binding.getRoot();\n"
-          + "    }\n"
-          + "return target.view;");
+          + "    }\n");
       return CodeBlock.of(builder.toString(), DATABINDINGUTIL, id.code, VIEWGROUP);
+    } else {
+      return CodeBlock.of("return null;");
+    }
+  }
+
+  public CodeBlock returnRender() {
+    if (isActivity) {
+      return CodeBlock.of("return target.binding.getRoot();");
+    } else if (isFragment) {
+      return CodeBlock.of("return target.view;");
     } else {
       return CodeBlock.of("return null;");
     }
