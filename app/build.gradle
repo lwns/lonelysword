@@ -33,8 +33,8 @@ dependencies {
 
   api project(':lonelysword')
   annotationProcessor project(':lonelysword-compiler')
-  //  implementation 'com.timper:lonelysword:0.0.2'
-  //  annotationProcessor 'com.timper:lonelysword-compiler:0.0.2'
+//    implementation 'com.timper:lonelysword:0.0.9'
+//    annotationProcessor 'com.timper:lonelysword-compiler:0.0.9'
 
   annotationProcessor deps.dagger.processor
   annotationProcessor deps.dagger.compiler

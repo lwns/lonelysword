@@ -14,4 +14,5 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
  * FIXME
  */
 @Documented @Retention(CLASS) @Target({ ElementType.TYPE }) public @interface Dagger {
+  Class<?> value() default Object.class;
 }

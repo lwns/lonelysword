@@ -11,6 +11,7 @@ import com.timper.lonelysword.Lonelysword;
 import com.timper.lonelysword.Unbinder;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.DaggerFragment;
+import javax.inject.Inject;
 
 /**
  * User: tangpeng.yang
@@ -18,15 +19,16 @@ import dagger.android.support.DaggerFragment;
  * Description:
  * FIXME
  */
-public abstract class AppFragment<T extends ViewDataBinding> extends DaggerFragment {
+public abstract class AppFragment<V extends AppViewModel, T extends ViewDataBinding> extends DaggerFragment {
   public T binding;
+  @Inject public V viewModel;
+  @Inject public ViewModelFactor<V> factor;
 
   public View view;
 
   protected Unbinder unbinder;
 
   @Override public void onAttach(Context context) {
-    AndroidSupportInjection.inject(this);
     super.onAttach(context);
   }
 

@@ -10,7 +10,7 @@ buildscript {
                   'rxAndroid'     : '2.0.1',
                   'release'       : '8.8.1',
                   'aspectj'       : '1.8.9',
-                  'arch'          : '1.0.0']
+                  'arch'          : '1.1.0']
 
   ext.deps = [android       : ['runtime'     : 'com.google.android:android:4.1.1.4',
                                'gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",],

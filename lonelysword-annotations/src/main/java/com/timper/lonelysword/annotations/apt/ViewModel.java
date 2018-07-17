@@ -7,15 +7,13 @@ package com.timper.lonelysword.annotations.apt;
  * FIXME
  */
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.CLASS;
-import static java.lang.annotation.RetentionPolicy.SOURCE;
 
-@Target(FIELD) @Retention(CLASS) public @interface ViewModel {
+@Target({ FIELD, TYPE }) @Retention(CLASS) public @interface ViewModel {
   String value() default "";
 }

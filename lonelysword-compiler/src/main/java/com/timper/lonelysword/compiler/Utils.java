@@ -117,7 +117,12 @@ public class Utils {
     return otherType.equals(typeMirror.toString());
   }
 
-  /** Finds the parent binder type in the supplied set, if any. */
+  /**
+   * Finds the parent binder type in the supplied set, if any.
+   * @param typeElement typeelement
+   * @param parents parents
+   * @return typeelement
+   * */
   public static TypeElement findParentType(TypeElement typeElement, Set<TypeElement> parents) {
     TypeMirror type;
     while (true) {

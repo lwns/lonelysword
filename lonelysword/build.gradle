@@ -50,7 +50,7 @@ android {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 //  api project(':lonelysword-annotations')
-    api 'com.timper:lonelysword-annotations:0.0.3'
+    api 'com.timper:lonelysword-annotations:0.0.8'
 
   api deps.support.compat
   api deps.support.appcompat

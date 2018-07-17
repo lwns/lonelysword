@@ -19,14 +19,14 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-public class MainApplication extends Application implements HasActivityInjector {
+public class MainApplication extends App {
 
-  @Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+  //@Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
   @Override public void onCreate() {
     super.onCreate();
 
-    DaggerAppComponent.builder().application(this).build().inject(this);
+    //DaggerAppComponent.builder().application(this).build().inject(this);
     Lonelysword.setLoginBinder(new LoginBinder() {
       @Override public void checkLogin() {
         Toast.makeText(MainApplication.this, "go to login", Toast.LENGTH_SHORT).show();
@@ -34,10 +34,10 @@ public class MainApplication extends Application implements HasActivityInjector 
     });
   }
 
-  @Override public AndroidInjector<Activity> activityInjector() {
-    return activityDispatchingAndroidInjector;
-  }
-  //@Override protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-  //  return DaggerAppComponent.builder().create(this);
+  //@Override public AndroidInjector<Activity> activityInjector() {
+  //  return activityDispatchingAndroidInjector;
   //}
+  @Override protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+    return DaggerAppComponent.builder().create(this);
+  }
 }

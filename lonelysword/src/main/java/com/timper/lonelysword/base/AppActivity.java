@@ -8,10 +8,11 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import com.timper.lonelysword.Lonelysword;
 import com.timper.lonelysword.Unbinder;
+import com.timper.lonelysword.annotations.apt.Dagger;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.DaggerAppCompatActivity;
+import dagger.android.HasFragmentInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 import javax.inject.Inject;
 
@@ -21,11 +22,16 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-public abstract class AppActivity<T extends ViewDataBinding> extends DaggerAppCompatActivity {
-
-  public T binding;
+public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBinding> extends AppCompatActivity
+    implements HasFragmentInjector, HasSupportFragmentInjector {
 
   protected Unbinder unbinder;
+  public T binding;
+  public V viewModel;
+  @Inject public ViewModelFactor<V> factor;
+
+  @Inject DispatchingAndroidInjector<Fragment> supportFragmentInjector;
+  @Inject DispatchingAndroidInjector<android.app.Fragment> frameworkFragmentInjector;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     AndroidInjection.inject(this);
@@ -34,6 +40,15 @@ public abstract class AppActivity<T extends ViewDataBinding> extends DaggerAppCo
     super.onCreate(savedInstanceState);
     unbinder.initViews();
     unbinder.afterViews();
+    getLifecycle().addObserver(unbinder);
+  }
+
+  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+    return supportFragmentInjector;
+  }
+
+  @Override public AndroidInjector<android.app.Fragment> fragmentInjector() {
+    return frameworkFragmentInjector;
   }
 
   public void addFragment(int containerViewId, Fragment fragment) {
