@@ -1,8 +1,8 @@
 package com.timper.lonelysword.app.feature.splash;
 
 import android.databinding.ObservableField;
+import com.timper.lib.TestViewModel;
 import com.timper.lonelysword.ActivityScope;
-import com.timper.lonelysword.annotations.apt.Dagger;
 import com.timper.lonelysword.app.data.GetUserUseCase;
 import com.timper.lonelysword.base.AppViewModel;
 import javax.inject.Inject;
@@ -13,7 +13,7 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-@ActivityScope public class SplashViewModel extends AppViewModel {
+@ActivityScope public class SplashViewModel extends TestViewModel {
   GetUserUseCase userUseCase;
 
   public interface Navigation {

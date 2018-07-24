@@ -1,12 +1,9 @@
 package com.timper.lonelysword.app.feature.splash.test2;
 
 import com.timper.lonelysword.annotations.apt.AfterViews;
-import com.timper.lonelysword.annotations.apt.Dagger;
 import com.timper.lonelysword.annotations.apt.RootView;
 import com.timper.lonelysword.app.R;
-import com.timper.lonelysword.app.databinding.FrgTestBinding;
 import com.timper.lonelysword.app.databinding.FrgTestTooBinding;
-import com.timper.lonelysword.app.feature.splash.SplashActivity;
 import com.timper.lonelysword.base.AppFragment;
 
 /**

@@ -39,28 +39,30 @@ public class RootViewBinding implements ResourceBinding {
     if (isActivity) {
       if (id.rSymbol != null) {
         ClassName br = ClassName.get(id.rSymbol.packge().getQualifiedName().toString(), "BR");
-        return CodeBlock.of(
-            "target.binding = $T.setContentView(target, $L);\n" + "target.binding.setVariable($T.viewModel,target.viewModel);\n",
-            DATABINDINGUTIL, id.code, br);
+        return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n"
+            + "target.binding.setVariable($T.viewModel,target.viewModel);\n"
+            + "target.binding.setVariable($T.view,target);\n", DATABINDINGUTIL, id.code, br, br);
       } else {
-        return CodeBlock.of(
-            "target.binding = $T.setContentView(target, $L);\n" + "target.binding.setViewModel(target.viewModel);\n",
-            DATABINDINGUTIL, id.code);
+        return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n"
+            + "target.binding.setViewModel(target.viewModel);\n"
+            + "target.binding.setView(target);\n", DATABINDINGUTIL, id.code);
       }
     } else if (isFragment) {
       if (id.rSymbol != null) {
         StringBuilder builder = new StringBuilder("if (target.view == null) {\n"
             + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
             + "      target.binding.setVariable($T.viewModel,target.viewModel);\n"
+            + "      target.binding.setVariable($T.view,target);\n"
             + "      target.view = target.binding.getRoot();\n"
             + "    }\n");
 
         ClassName br = ClassName.get(id.rSymbol.packge().getQualifiedName().toString(), "BR");
-        return CodeBlock.of(builder.toString(), DATABINDINGUTIL, id.code, VIEWGROUP, br);
+        return CodeBlock.of(builder.toString(), DATABINDINGUTIL, id.code, VIEWGROUP, br, br);
       } else {
         StringBuilder builder = new StringBuilder("if (target.view == null) {\n"
             + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
             + "      target.binding.setViewModel(target.viewModel);\n"
+            + "      target.binding.setView(target);\n"
             + "      target.view = target.binding.getRoot();\n"
             + "    }\n");
 

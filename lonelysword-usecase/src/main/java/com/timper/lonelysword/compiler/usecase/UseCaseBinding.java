@@ -2,7 +2,7 @@ package com.timper.lonelysword.compiler.usecase;
 
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
-import com.timper.lonelysword.compiler.unbinder.TypeBinding;
+import com.timper.lonelysword.compiler.TypeBinding;
 
 /**
  * User: tangpeng.yang

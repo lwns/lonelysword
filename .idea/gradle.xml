@@ -10,10 +10,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/lonelysword" />
             <option value="$PROJECT_DIR$/lonelysword-annotations" />
+            <option value="$PROJECT_DIR$/lonelysword-common" />
             <option value="$PROJECT_DIR$/lonelysword-compiler" />
+            <option value="$PROJECT_DIR$/lonelysword-dagger" />
             <option value="$PROJECT_DIR$/lonelysword-plugin" />
+            <option value="$PROJECT_DIR$/lonelysword-usecase" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

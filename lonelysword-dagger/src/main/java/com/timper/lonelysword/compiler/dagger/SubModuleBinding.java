@@ -1,9 +1,6 @@
 package com.timper.lonelysword.compiler.dagger;
 
-import com.google.common.collect.ImmutableList;
 import com.squareup.javapoet.ClassName;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 /**
  * User: tangpeng.yang

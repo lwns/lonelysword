@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'lonelysword'
+//apply plugin: 'lonelysword'
 
 android {
   compileSdkVersion 26
@@ -31,11 +31,18 @@ gradle.projectsEvaluated {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-  implementation 'com.timper:lonelysword:0.0.9'
-  annotationProcessor 'com.timper:lonelysword-compiler:0.0.9'
+    implementation project(':lib')
+  //  api 'com.timper:lonelysword:0.1.0'
+  //  annotationProcessor 'com.timper:lonelysword-compiler:0.1.0'
+
+//  implementation project(':lonelysword')
+  annotationProcessor project(':lonelysword-compiler')
+  annotationProcessor project(':lonelysword-dagger')
+  annotationProcessor project(':lonelysword-usecase')
 
   annotationProcessor deps.dagger.processor
   annotationProcessor deps.dagger.compiler
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
   implementation 'com.android.support:appcompat-v7:26.1.0'
   implementation 'com.android.support.constraint:constraint-layout:1.1.0'

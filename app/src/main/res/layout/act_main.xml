@@ -6,15 +6,15 @@
 
   <data>
 
-    <!--<variable-->
-        <!--name="view"-->
-        <!--type="com.timper.lonelysword.app.feature.MainActivity"-->
-        <!--/>-->
+    <variable
+        name="view"
+        type="com.timper.lonelysword.app.feature.main.MainActivity"
+        />
 
-    <!--<variable-->
-        <!--name="viewModel"-->
-        <!--type="com.timper.lonelysword.app.feature.MainViewModel"-->
-        <!--/>-->
+    <variable
+        name="viewModel"
+        type="com.timper.lonelysword.app.feature.main.MainViewModel"
+        />
   </data>
 
   <android.support.constraint.ConstraintLayout

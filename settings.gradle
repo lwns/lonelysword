@@ -1,3 +1,3 @@
-include ':app', ':lonelysword', ':lonelysword-compiler', ':lonelysword-annotations', ':lonelysword-plugin'
+include ':app', ':lonelysword', ':lonelysword-compiler', ':lonelysword-annotations', ':lonelysword-plugin', ':lib', ':lonelysword-dagger', ':lonelysword-usecase', ':lonelysword-common'
 
 rootProject.name = 'lonelysword-parent'

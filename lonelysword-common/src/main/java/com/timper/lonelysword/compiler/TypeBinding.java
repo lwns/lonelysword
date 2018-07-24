@@ -1,4 +1,4 @@
-package com.timper.lonelysword.compiler.unbinder;
+package com.timper.lonelysword.compiler;
 
 import com.squareup.javapoet.TypeSpec;
 

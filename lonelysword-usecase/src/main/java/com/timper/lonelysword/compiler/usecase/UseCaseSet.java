@@ -120,7 +120,7 @@ public class UseCaseSet {
     }
   }
 
-  static UseCaseSet.Builder newBuilder(TypeElement enclosingElement) {
+  static Builder newBuilder(TypeElement enclosingElement) {
     TypeMirror typeMirror = enclosingElement.asType();
 
     TypeName targetType = TypeName.get(typeMirror);
@@ -132,6 +132,6 @@ public class UseCaseSet {
     String className = enclosingElement.getQualifiedName().toString().substring(packageName.length() + 1).replace('.', '$');
     ClassName bindingClassName = ClassName.get(packageName, className);
 
-    return new UseCaseSet.Builder(targetType, bindingClassName);
+    return new Builder(targetType, bindingClassName);
   }
 }

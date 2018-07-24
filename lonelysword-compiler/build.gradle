@@ -1,7 +1,9 @@
 apply plugin: 'java-library'
 
 dependencies {
-//        implementation project(':lonelysword-annotations')
+  //  implementation project(':lonelysword-common')
+  //  implementation project(':lonelysword-annotations')
+  implementation 'com.timper:lonelysword-common:0.1.2'
   implementation 'com.timper:lonelysword-annotations:0.0.8'
   implementation deps.auto.common
   implementation deps.guava

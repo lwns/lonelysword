@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,12 +29,15 @@ public abstract class AppFragment<V extends AppViewModel, T extends ViewDataBind
 
   protected Unbinder unbinder;
 
+  public FragmentManager fragmentManager;
+
   @Override public void onAttach(Context context) {
     super.onAttach(context);
   }
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    fragmentManager = getChildFragmentManager();
     unbinder = Lonelysword.bind(this, container);
     unbinder.beforeViews();
     return unbinder.initViews();
