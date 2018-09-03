@@ -1,7 +1,9 @@
 package com.timper.lonelysword.app.feature.splash.test;
 
 import android.databinding.ObservableField;
+import android.support.v7.app.AppCompatActivity;
 import com.timper.lonelysword.ActivityScope;
+import com.timper.lonelysword.base.AppActivity;
 import com.timper.lonelysword.base.AppViewModel;
 import javax.inject.Inject;
 
@@ -19,6 +21,7 @@ import javax.inject.Inject;
 
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 
-  @Inject public TestViewModel() {
+  @Inject public TestViewModel(AppActivity activity) {
+    super(activity);
   }
 }

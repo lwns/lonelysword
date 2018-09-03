@@ -195,6 +195,8 @@ public class BindingSet {
       }
       builder.addCode(rootViewBinding.render(sdk));
       builder.addCode("\n");
+      builder.addStatement("target.viewModel.setBinding(target.binding)");//add viewmodelBinding
+      builder.addCode("\n");
       builder.addCode(rootViewBinding.returnRender());
       builder.addCode("\n");
     } else {
@@ -217,13 +219,17 @@ public class BindingSet {
     if (parentBinding != null) {
       builder.addStatement("super.afterViews()");
       builder.addCode("\n");
+    } else {
+      if (afterViewsBinding != null) {
+        builder.addCode(afterViewsBinding.render());
+        builder.addCode("\n");
+      }
+
+      builder.addStatement("target.viewModel.afterViews()");
+      builder.addCode("\n");
     }
     for (ViewModelBinding binding : viewModelBindings) {
       builder.addCode(binding.render());
-      builder.addCode("\n");
-    }
-    if (afterViewsBinding != null) {
-      builder.addCode(afterViewsBinding.render());
       builder.addCode("\n");
     }
     return builder.build();
@@ -238,6 +244,9 @@ public class BindingSet {
       builder.addStatement("super.onResume()");
       builder.addCode("\n");
     }
+
+    builder.addStatement("target.viewModel.onResume()");
+    builder.addCode("\n");
     return builder.build();
   }
 
@@ -255,6 +264,9 @@ public class BindingSet {
     } else if (networkBinding != null) {
       builder.addCode(networkBinding.bindNetworkConnection());
     }
+
+    builder.addStatement("target.viewModel.onStart()");
+    builder.addCode("\n");
     return builder.build();
   }
 
@@ -267,6 +279,9 @@ public class BindingSet {
       builder.addStatement("super.onPause()");
       builder.addCode("\n");
     }
+
+    builder.addStatement("target.viewModel.onPause()");
+    builder.addCode("\n");
     return builder.build();
   }
 
@@ -286,6 +301,9 @@ public class BindingSet {
         builder.addCode(networkBinding.unBindNetworkConnection());
       }
     }
+
+    builder.addStatement("target.viewModel.onStop()");
+    builder.addCode("\n");
     return builder.build();
   }
 
@@ -298,6 +316,9 @@ public class BindingSet {
       builder.addStatement("super.onDestroy()");
       builder.addCode("\n");
     }
+
+    builder.addStatement("target.viewModel.onDestroy()");
+    builder.addCode("\n");
     return builder.build();
   }
 

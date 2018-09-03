@@ -31,11 +31,11 @@ gradle.projectsEvaluated {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(':lib')
+//    implementation project(':lib')
   //  api 'com.timper:lonelysword:0.1.0'
   //  annotationProcessor 'com.timper:lonelysword-compiler:0.1.0'
 
-//  implementation project(':lonelysword')
+  implementation project(':lonelysword')
   annotationProcessor project(':lonelysword-compiler')
   annotationProcessor project(':lonelysword-dagger')
   annotationProcessor project(':lonelysword-usecase')

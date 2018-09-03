@@ -41,28 +41,36 @@ public class RootViewBinding implements ResourceBinding {
         ClassName br = ClassName.get(id.rSymbol.packge().getQualifiedName().toString(), "BR");
         return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n"
             + "target.binding.setVariable($T.viewModel,target.viewModel);\n"
-            + "target.binding.setVariable($T.view,target);\n", DATABINDINGUTIL, id.code, br, br);
+            //+ "target.binding.setVariable($T.view,target);\n"
+            + "target.viewModel.setBinding(target.binding);\n"
+            + "target.viewModel.setFragmentManager(target.getSupportFragmentManager());\n", DATABINDINGUTIL, id.code, br);
       } else {
         return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n"
             + "target.binding.setViewModel(target.viewModel);\n"
-            + "target.binding.setView(target);\n", DATABINDINGUTIL, id.code);
+            //+ "target.binding.setView(target);\n"
+            + "target.viewModel.setBinding(target.binding);\n"
+            + "target.viewModel.setFragmentManager(target.getSupportFragmentManager());\n", DATABINDINGUTIL, id.code);
       }
     } else if (isFragment) {
       if (id.rSymbol != null) {
         StringBuilder builder = new StringBuilder("if (target.view == null) {\n"
             + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
             + "      target.binding.setVariable($T.viewModel,target.viewModel);\n"
-            + "      target.binding.setVariable($T.view,target);\n"
+            //+ "      target.binding.setVariable($T.view,target);\n"
+            + "      target.viewModel.setBinding(target.binding);\n"
+            + "      target.viewModel.setFragmentManager(target.getChildFragmentManager());\n"
             + "      target.view = target.binding.getRoot();\n"
             + "    }\n");
 
         ClassName br = ClassName.get(id.rSymbol.packge().getQualifiedName().toString(), "BR");
-        return CodeBlock.of(builder.toString(), DATABINDINGUTIL, id.code, VIEWGROUP, br, br);
+        return CodeBlock.of(builder.toString(), DATABINDINGUTIL, id.code, VIEWGROUP, br);
       } else {
         StringBuilder builder = new StringBuilder("if (target.view == null) {\n"
             + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
             + "      target.binding.setViewModel(target.viewModel);\n"
-            + "      target.binding.setView(target);\n"
+            //+ "      target.binding.setView(target);\n"
+            + "      target.viewModel.setBinding(target.binding);\n"
+            + "      target.viewModel.setFragmentManager(target.getChildFragmentManager());\n"
             + "      target.view = target.binding.getRoot();\n"
             + "    }\n");
 

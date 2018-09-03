@@ -1,5 +1,7 @@
 package com.timper.lib;
 
+import android.support.v7.app.AppCompatActivity;
+import com.timper.lonelysword.base.AppActivity;
 import com.timper.lonelysword.base.AppViewModel;
 
 /**
@@ -9,4 +11,8 @@ import com.timper.lonelysword.base.AppViewModel;
  * FIXME
  */
 public class TestViewModel extends AppViewModel {
+
+  public TestViewModel(AppActivity activity) {
+    super(activity);
+  }
 }
