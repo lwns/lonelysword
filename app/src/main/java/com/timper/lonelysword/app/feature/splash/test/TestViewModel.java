@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.timper.lonelysword.ActivityScope;
 import com.timper.lonelysword.base.AppActivity;
 import com.timper.lonelysword.base.AppViewModel;
+import com.timper.lonelysword.context.App;
 import javax.inject.Inject;
 
 /**
@@ -21,7 +22,6 @@ import javax.inject.Inject;
 
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 
-  @Inject public TestViewModel(AppActivity activity) {
-    super(activity);
+  @Inject public TestViewModel() {
   }
 }

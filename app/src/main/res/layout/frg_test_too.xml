@@ -6,7 +6,10 @@
 
   <data>
 
-
+    <variable
+        name="view"
+        type="com.timper.lonelysword.app.feature.splash.test2.Test2Fragment"
+        />
     <variable
         name="viewModel"
         type="com.timper.lonelysword.app.feature.splash.test2.Test2ViewModel"

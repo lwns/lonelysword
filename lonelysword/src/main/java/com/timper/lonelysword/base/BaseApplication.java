@@ -8,6 +8,6 @@ import dagger.android.DaggerApplication;
  * Description:
  * FIXME
  */
-public abstract class App extends DaggerApplication {
+public abstract class BaseApplication extends DaggerApplication {
 
 }

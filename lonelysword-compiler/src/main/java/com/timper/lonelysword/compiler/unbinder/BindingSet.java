@@ -195,8 +195,6 @@ public class BindingSet {
       }
       builder.addCode(rootViewBinding.render(sdk));
       builder.addCode("\n");
-      builder.addStatement("target.viewModel.setBinding(target.binding)");//add viewmodelBinding
-      builder.addCode("\n");
       builder.addCode(rootViewBinding.returnRender());
       builder.addCode("\n");
     } else {

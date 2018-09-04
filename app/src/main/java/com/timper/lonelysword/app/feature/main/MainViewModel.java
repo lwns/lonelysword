@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-@ActivityScope public class MainViewModel extends AppViewModel<ActMainBinding> {
+@ActivityScope public class MainViewModel extends AppViewModel {
 
   public interface Navigation {
     void gotoMain();
@@ -22,7 +22,6 @@ import javax.inject.Inject;
 
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 
-  @Inject public MainViewModel(AppActivity activity) {
-    super(activity);
+  @Inject public MainViewModel() {
   }
 }

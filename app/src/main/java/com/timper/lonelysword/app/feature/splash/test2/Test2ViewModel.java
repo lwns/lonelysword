@@ -14,7 +14,7 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-@ActivityScope public class Test2ViewModel extends AppViewModel<FrgTestTooBinding> {
+@ActivityScope public class Test2ViewModel extends AppViewModel {
 
   public interface Navigation {
     void gotoMain();
@@ -22,7 +22,6 @@ import javax.inject.Inject;
 
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 
-  @Inject public Test2ViewModel(AppActivity activity) {
-    super(activity);
+  @Inject public Test2ViewModel() {
   }
 }
