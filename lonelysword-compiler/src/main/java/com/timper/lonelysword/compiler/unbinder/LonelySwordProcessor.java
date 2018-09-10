@@ -604,19 +604,21 @@ import static javax.lang.model.element.Modifier.STATIC;
 
     @Override public void visitSelect(JCTree.JCFieldAccess jcFieldAccess) {
       Symbol symbol = jcFieldAccess.sym;
-      int value = (Integer) ((Symbol.VarSymbol) symbol).getConstantValue();
       if (symbol.getEnclosingElement() != null
           && symbol.getEnclosingElement().getEnclosingElement() != null
           && symbol.getEnclosingElement().getEnclosingElement().enclClass() != null) {
-        resourceIds.put(value, new Id(value, symbol));
-      } else {
-        resourceIds.put(value, new Id(value));
+        try {
+          int value = (Integer) ((Symbol.VarSymbol) symbol).getConstantValue();
+          resourceIds.put(value, new Id(value, symbol));
+        } catch (Exception ignored) { }
       }
     }
 
     @Override public void visitLiteral(JCTree.JCLiteral jcLiteral) {
-      int value = (Integer) jcLiteral.value;
-      resourceIds.put(value, new Id(value));
+      try {
+        int value = (Integer) jcLiteral.value;
+        resourceIds.put(value, new Id(value));
+      } catch (Exception ignored) { }
     }
 
     void reset() {

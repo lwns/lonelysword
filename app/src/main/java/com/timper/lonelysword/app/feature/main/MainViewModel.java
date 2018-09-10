@@ -16,9 +16,6 @@ import javax.inject.Inject;
  */
 @ActivityScope public class MainViewModel extends AppViewModel {
 
-  public interface Navigation {
-    void gotoMain();
-  }
 
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 

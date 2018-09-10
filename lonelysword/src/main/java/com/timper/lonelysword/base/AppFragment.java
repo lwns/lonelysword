@@ -27,7 +27,7 @@ public abstract class AppFragment<V extends AppViewModel, T extends ViewDataBind
 
   public View view;
 
-  protected Unbinder unbinder;
+  private Unbinder unbinder;
 
   public FragmentManager fragmentManager;
 

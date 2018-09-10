@@ -13,4 +13,5 @@ import com.timper.lonelysword.base.AppActivity;
  * FIXME
  */
 @Dagger @RootView(R.layout.act_main) public class MainActivity extends AppActivity<MainViewModel, ActMainBinding> {
+
 }

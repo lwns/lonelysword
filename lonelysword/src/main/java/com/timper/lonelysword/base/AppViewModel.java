@@ -2,6 +2,7 @@ package com.timper.lonelysword.base;
 
 import android.arch.lifecycle.AndroidViewModel;
 import com.timper.lonelysword.context.App;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * User: tangpeng.yang
@@ -11,8 +12,14 @@ import com.timper.lonelysword.context.App;
  */
 public abstract class AppViewModel extends AndroidViewModel {
 
+  private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+
   public AppViewModel() {
     super(App.context());
+  }
+
+  public CompositeDisposable getCompositeDisposable() {
+    return mCompositeDisposable;
   }
 
   public void afterViews() {
@@ -32,5 +39,10 @@ public abstract class AppViewModel extends AndroidViewModel {
   }
 
   public void onDestroy() {
+  }
+
+  @Override protected void onCleared() {
+    mCompositeDisposable.dispose();
+    super.onCleared();
   }
 }

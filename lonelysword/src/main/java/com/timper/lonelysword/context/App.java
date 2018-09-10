@@ -15,6 +15,7 @@ public class App {
      * <p>
      * Note that this method may return null in some cases, such as working with a hotfix framework
      * or access when the BaseApplication is terminated.
+     * @return context
      */
     public static Application context() {
         return CURRENT;
