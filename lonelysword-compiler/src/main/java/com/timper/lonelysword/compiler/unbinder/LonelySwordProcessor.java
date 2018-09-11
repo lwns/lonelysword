@@ -610,7 +610,8 @@ import static javax.lang.model.element.Modifier.STATIC;
         try {
           int value = (Integer) ((Symbol.VarSymbol) symbol).getConstantValue();
           resourceIds.put(value, new Id(value, symbol));
-        } catch (Exception ignored) { }
+        } catch (Exception ignored) {
+        }
       }
     }
 
@@ -618,7 +619,8 @@ import static javax.lang.model.element.Modifier.STATIC;
       try {
         int value = (Integer) jcLiteral.value;
         resourceIds.put(value, new Id(value));
-      } catch (Exception ignored) { }
+      } catch (Exception ignored) {
+      }
     }
 
     void reset() {
