@@ -66,7 +66,7 @@ import static javax.lang.model.element.Modifier.STATIC;
  * Description:
  * FIXME
  */
-@AutoService(Processor.class) @SupportedSourceVersion(SourceVersion.RELEASE_7) public class LonelySwordProcessor
+@AutoService(Processor.class) @SupportedSourceVersion(SourceVersion.RELEASE_8) public class LonelySwordProcessor
     extends AbstractProcessor {
 
   private static final String OPTION_SDK_INT = "lonelysword.minSdk";

@@ -12,14 +12,10 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public abstract class AppViewModel extends AndroidViewModel {
 
-  private CompositeDisposable mCompositeDisposable = new CompositeDisposable();
+  protected CompositeDisposable disposable = new CompositeDisposable();
 
   public AppViewModel() {
     super(App.context());
-  }
-
-  public CompositeDisposable getCompositeDisposable() {
-    return mCompositeDisposable;
   }
 
   public void afterViews() {
@@ -42,7 +38,7 @@ public abstract class AppViewModel extends AndroidViewModel {
   }
 
   @Override protected void onCleared() {
-    mCompositeDisposable.dispose();
+    disposable.dispose();
     super.onCleared();
   }
 }

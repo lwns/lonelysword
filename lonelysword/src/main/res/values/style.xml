@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <style name="Lonelysword">
+  </style>
+
+  <style name="Lonelysword.Dialog">
+    <item name="android:windowBackground">@color/lonelysword.transparent</item>
+    <item name="android:colorBackgroundCacheHint">@null</item>
+    <item name="android:windowFrame">@null</item>
+    <item name="android:windowContentOverlay">@color/lonelysword.transparent</item>
+    <item name="android:windowIsFloating">false</item>
+    <item name="android:backgroundDimEnabled">true</item>
+    <item name="android:windowIsTranslucent">true</item>
+    <item name="android:windowNoTitle">true</item>
+  </style>
+
+  <style name="Lonelysword.Dialog.Top">
+    <item name="android:windowAnimationStyle">@style/Dialog.Top</item>
+  </style>
+
+  <style name="Lonelysword.Dialog.Bottom">
+    <item name="android:windowAnimationStyle">@style/Dialog.Bottom</item>
+  </style>
+
+  <style name="Lonelysword.Dialog.Center">
+    <item name="android:windowAnimationStyle">@style/Dialog.Center</item>
+  </style>
+
+  <style name="Dialog.Top" parent="@android:style/Animation.Activity">
+    <item name="android:windowEnterAnimation">@anim/dlg_trans_top_in</item>
+    <item name="android:windowExitAnimation">@anim/dlg_trans_top_out</item>
+  </style>
+
+  <style name="Dialog.Bottom" parent="@android:style/Animation.Activity">
+    <item name="android:windowEnterAnimation">@anim/dlg_trans_bottom_in</item>
+    <item name="android:windowExitAnimation">@anim/dlg_trans_bottom_out</item>
+  </style>
+
+  <style name="Dialog.Center" parent="@android:style/Animation.Activity">
+    <item name="android:windowEnterAnimation">@anim/dlg_scan_center_in</item>
+    <item name="android:windowExitAnimation">@anim/dlg_scan_center_out</item>
+  </style>
+
+</resources>

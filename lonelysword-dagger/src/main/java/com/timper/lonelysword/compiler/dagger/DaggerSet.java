@@ -13,6 +13,7 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
 import static com.google.auto.common.MoreElements.getPackage;
+import static com.timper.lonelysword.compiler.dagger.DaggerProcessor.APPACTIVITY_TYPE;
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.PUBLIC;
 
@@ -28,16 +29,23 @@ public class DaggerSet {
   final ClassName bindingClassName;
   final DaggerBinding daggerBinding;
 
+  private final boolean isActivity;
+  private final boolean isFragment;
+
   static final ClassName MODULE = ClassName.get("dagger", "Module");
   static final ClassName BINDS = ClassName.get("dagger", "Binds");
   static final ClassName ACTIVITYSCOPE = ClassName.get("com.timper.lonelysword", "ActivityScope");
   static final ClassName CONTRIBUTESANDROIDINJECTOR = ClassName.get("dagger.android", "ContributesAndroidInjector");
-  static final ClassName APPACTIVITY = ClassName.get("com.timper.lonelysword.base", "AppActivity");
+  //static final ClassName APPACTIVITY = ClassName.get("com.timper.lonelysword.base", "AppActivity");
+  static final ClassName FRAGMENTACTIVITY = ClassName.get("android.support.v4.app", "FragmentActivity");
+  static final ClassName FRAGMENT = ClassName.get("android.support.v4.app", "Fragment");
 
-  public DaggerSet(TypeName targetTypeName, ClassName bindingClassName, DaggerBinding daggerBinding) {
+  public DaggerSet(TypeName targetTypeName, ClassName bindingClassName, DaggerBinding daggerBinding, boolean isActivity) {
     this.targetTypeName = targetTypeName;
     this.bindingClassName = bindingClassName;
     this.daggerBinding = daggerBinding;
+    this.isActivity = isActivity;
+    this.isFragment = !isActivity;
   }
 
   void brewJava(Filer filer, int sdk, boolean debuggable) throws IOException {
@@ -60,8 +68,12 @@ public class DaggerSet {
     MethodSpec.Builder builder =
         MethodSpec.methodBuilder("provide" + binding.getModuleName()).addModifiers(PUBLIC).addModifiers(ABSTRACT);
     builder.addAnnotation(BINDS);
-    builder.addParameter(bindingClassName, "activity");
-    builder.returns(APPACTIVITY);
+    builder.addParameter(bindingClassName, "param");
+    if(isActivity){
+      builder.returns(FRAGMENTACTIVITY);
+    }else if(isFragment){
+      builder.returns(FRAGMENT);
+    }
 
     result.addMethod(builder.build());
 
@@ -88,10 +100,12 @@ public class DaggerSet {
     private final TypeName targetTypeName;
     private final ClassName bindingClassName;
     private DaggerBinding.Builder builder;
+    private final boolean isActivity;
 
-    private Builder(TypeName targetTypeName, ClassName bindingClassName) {
+    private Builder(TypeName targetTypeName, ClassName bindingClassName,boolean isActivity) {
       this.targetTypeName = targetTypeName;
       this.bindingClassName = bindingClassName;
+      this.isActivity = isActivity;
     }
 
     public void addDaggerBinding(String moduleName, String simpleName) {
@@ -117,11 +131,11 @@ public class DaggerSet {
     }
 
     DaggerSet build() {
-      return new DaggerSet(targetTypeName, bindingClassName, builder.build());
+      return new DaggerSet(targetTypeName, bindingClassName, builder.build(),isActivity);
     }
   }
 
-  static Builder newBuilder(TypeElement enclosingElement) {
+  static Builder newBuilder(TypeElement enclosingElement,boolean isActivity) {
     TypeMirror typeMirror = enclosingElement.asType();
 
     TypeName targetType = TypeName.get(typeMirror);
@@ -133,6 +147,6 @@ public class DaggerSet {
     String className = enclosingElement.getQualifiedName().toString().substring(packageName.length() + 1).replace('.', '$');
     ClassName bindingClassName = ClassName.get(packageName, className);
 
-    return new Builder(targetType, bindingClassName);
+    return new Builder(targetType, bindingClassName, isActivity);
   }
 }

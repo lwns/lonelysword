@@ -5,8 +5,8 @@ import com.timper.lonelysword.LoginBinder;
 import com.timper.lonelysword.Lonelysword;
 import com.timper.lonelysword.app.di.DaggerAppComponent;
 import com.timper.lonelysword.base.BaseApplication;
+import com.timper.lonelysword.dagger.DaggerApplication;
 import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
 
 /**
  * User: tangpeng.yang

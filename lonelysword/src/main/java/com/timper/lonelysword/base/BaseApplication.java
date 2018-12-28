@@ -1,6 +1,6 @@
 package com.timper.lonelysword.base;
 
-import dagger.android.DaggerApplication;
+import com.timper.lonelysword.dagger.DaggerApplication;
 
 /**
  * User: tangpeng.yang

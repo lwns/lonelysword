@@ -1,7 +1,9 @@
-apply plugin: 'java-gradle-plugin'
-apply plugin: 'maven'
+//apply plugin: 'maven'
 apply plugin: 'kotlin'
 
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
   compile gradleApi() //gradle sdk
@@ -9,21 +11,24 @@ dependencies {
 
   compile deps.javaparser
   compile deps.javapoet
-  compile deps.kotlin.stdLibJre8
+  compile deps.kotlin.jre
 
-  compile 'com.android.tools.build:gradle:3.1.2'
-  compile 'org.aspectj:aspectjtools:1.8.9'
-  compile 'org.aspectj:aspectjrt:1.8.9'
+  compile 'com.android.tools.build:gradle:3.1.4'
+  compile 'org.codehaus.groovy:groovy-xml:2.0.1'
+//  compile 'org.aspectj:aspectjtools:1.8.9'
+//  compile 'org.aspectj:aspectjrt:1.8.9'
 }
 
-uploadArchives {
-  repositories.mavenDeployer {
-    repository(url: uri('../repo'))
-    pom.groupId = 'com.timper.lonelysword'
-    pom.artifactId = 'lonelysword-plugin'
-    pom.version = '1.0.5'
-  }
-}
 
-//apply from: rootProject.file('gradle/jcenter-push.gradle')
+
+//uploadArchives {
+//  repositories.mavenDeployer {
+//    repository(url: uri('../repo'))
+//    pom.groupId = 'com.timper.lonelysword'
+//    pom.artifactId = 'lonelysword-plugin'
+//    pom.version = '1.0.5'
+//  }
+//}
+
+apply from: rootProject.file('gradle/jcenter-push.gradle')
 //注意⚠️:   插件修改后运行前需要重新发布: ./gradlew -p lonelysword-plugin clean build uploadArchives --info

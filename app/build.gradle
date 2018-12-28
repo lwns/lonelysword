@@ -1,11 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
 //apply plugin: 'lonelysword'
 
 android {
   compileSdkVersion 26
   defaultConfig {
     applicationId "com.timper.lonelysword.app"
-    minSdkVersion 15
+    minSdkVersion 19
     targetSdkVersion 26
     versionCode 1
     versionName "1.0"
@@ -22,6 +25,10 @@ android {
     enabled true
   }
 }
+
+
+
+
 gradle.projectsEvaluated {
   tasks.withType(JavaCompile) {
     options.compilerArgs << "-Xmaxerrs" << "500" // or whatever number you want
@@ -34,15 +41,18 @@ dependencies {
 //    implementation project(':lib')
   //  api 'com.timper:lonelysword:0.1.0'
   //  annotationProcessor 'com.timper:lonelysword-compiler:0.1.0'
+//    kapt 'com.timper:lonelysword-compiler:0.2.9'
 
   implementation project(':lonelysword')
-  annotationProcessor project(':lonelysword-compiler')
-  annotationProcessor project(':lonelysword-dagger')
-  annotationProcessor project(':lonelysword-usecase')
+  kapt project(':lonelysword-compiler')
+  kapt project(':lonelysword-dagger')
+  kapt project(':lonelysword-usecase')
 
-  annotationProcessor deps.dagger.processor
-  annotationProcessor deps.dagger.compiler
-  annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+  implementation deps.kotlin.lib
+
+  kapt deps.dagger.processor
+  kapt deps.dagger.compiler
+  kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 
   implementation 'com.android.support:appcompat-v7:26.1.0'
   implementation 'com.android.support.constraint:constraint-layout:1.1.0'

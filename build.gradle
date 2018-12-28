@@ -1,16 +1,18 @@
 buildscript {
+  ext.kotlin_version = '1.2.50'
+
   ext.versions = ['minSdk'        : 14,
                   'compileSdk'    : 27,
-                  'supportLibrary': '26.1.0',
+                  'supportLibrary': '27.0.2',
                   'androidPlugin' : '3.1.2',
                   'androidTools'  : '27.0.2',
-                  'kotlin'        : '1.2.21',
+                  'kotlin'        : '1.2.30',
                   'dagger'        : '2.11',
                   'rxLifecycle'   : '2.2.1',
                   'rxAndroid'     : '2.0.1',
                   'release'       : '8.8.1',
                   'aspectj'       : '1.8.9',
-                  'arch'          : '1.1.0']
+                  'arch'          : '1.1.1']
 
   ext.deps = [android       : ['runtime'     : 'com.google.android:android:4.1.1.4',
                                'gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",],
@@ -34,7 +36,11 @@ buildscript {
               'guava'       : 'com.google.guava:guava:24.0-jre',
               'release'     : ['runtime' : "com.jakewharton:butterknife:${versions.release}",
                                'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"],
-              'kotlin'      : ['stdLibJre8': "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",],
+
+              'kotlin'      : [jdk   : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+                               jre   : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
+                               lib   : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+                               plugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"],
 
               'dagger'      : [compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
                                android      : "com.google.dagger:dagger-android:${versions.dagger}",
@@ -53,9 +59,7 @@ buildscript {
     mavenCentral()
     jcenter()
     google()
-    maven {
-      url uri('repo')
-    }
+    gradlePluginPortal()
   }
 
   dependencies {
@@ -64,7 +68,7 @@ buildscript {
     classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
     classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
-//    classpath 'com.timper.lonelysword:lonelysword-plugin:1.0.2'
+//    classpath 'com.timper:lonelysword-plugin:0.2.9'
 
     classpath deps.aspectj.aspectjtools
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"

@@ -31,13 +31,16 @@ public class UseCaseSet {
   private final TypeName targetTypeName;
   private final ClassName bindingClassName;
 
-  private static final ClassName USECASE = ClassName.get("com.timper.lonelysword.data", "UseCase");
+  private static final ClassName FLOWABLEUSECASE = ClassName.get("com.timper.lonelysword.data", "FlowableUseCase");
+  private static final ClassName COMPLETABLEUSECASE = ClassName.get("com.timper.lonelysword.data", "CompletableUseCase");
   private static final ClassName INJECT = ClassName.get("javax.inject", "Inject");
   private static final ClassName POSTEXECUTIONTHREAD =
       ClassName.get("com.timper.lonelysword.data.executor", "PostExecutionThread");
   private static final ClassName THREADEXECUTOR = ClassName.get("com.timper.lonelysword.data.executor", "ThreadExecutor");
   private static final ClassName OVERRIIDE = ClassName.get("java.lang", "Override");
   private static final ClassName OBSERVABLE = ClassName.get("io.reactivex", "Observable");
+  private static final ClassName FLOWABLE = ClassName.get("io.reactivex", "Flowable");
+  private static final ClassName COMPLETABLE = ClassName.get("io.reactivex", "Completable");
 
   private final ImmutableList<UseCaseBinding> useCaseBindings;
 
@@ -60,8 +63,28 @@ public class UseCaseSet {
     String className = binding.getName().substring(0, 1).toUpperCase() + binding.getName().substring(1) + "UseCase";
     TypeSpec.Builder result = TypeSpec.classBuilder(className).addModifiers(PUBLIC);
     result.addModifiers(FINAL);
-    ParameterizedTypeName parameterizedTypeName =
-        ParameterizedTypeName.get(USECASE, binding.getReturnClass()!=null?binding.getReturnClass():ClassName.OBJECT, binding.getParameter()!=null?binding.getParameter():ClassName.OBJECT);
+
+    ClassName returnClass = null;
+
+    ParameterizedTypeName parameterizedTypeName = null;
+
+    if (binding.getReturnRxClass() instanceof ParameterizedTypeName) {
+      if (((ParameterizedTypeName) binding.getReturnRxClass()).rawType.reflectionName().equals(FLOWABLE.reflectionName())) {
+        returnClass = FLOWABLE;
+
+        parameterizedTypeName = ParameterizedTypeName.get(FLOWABLEUSECASE,
+            binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
+            binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+      }
+    } else if (binding.getReturnRxClass() instanceof ClassName) {
+      if (((ClassName) binding.getReturnRxClass()).reflectionName().equals(COMPLETABLE.reflectionName())) {
+        returnClass = COMPLETABLE;
+
+        parameterizedTypeName = ParameterizedTypeName.get(COMPLETABLEUSECASE,
+            binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+      }
+    }
+
     result.superclass(parameterizedTypeName);
 
     result.addField(targetTypeName, "repository", PRIVATE);
@@ -79,9 +102,14 @@ public class UseCaseSet {
 
     MethodSpec.Builder builder =
         MethodSpec.methodBuilder("buildUseCaseObservable").addAnnotation(OVERRIIDE).addModifiers(PROTECTED);
-    ParameterizedTypeName typeName = ParameterizedTypeName.get(OBSERVABLE, binding.getReturnClass()!=null?binding.getReturnClass():ClassName.OBJECT);
-    builder.returns(typeName);
-    builder.addParameter(binding.getParameter()!=null?binding.getParameter():ClassName.OBJECT, "request");
+    if (returnClass.reflectionName().equals(FLOWABLE.reflectionName())) {
+      ParameterizedTypeName typeName =
+          ParameterizedTypeName.get(returnClass, binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT);
+      builder.returns(typeName);
+    } else {
+      builder.returns(returnClass);
+    }
+    builder.addParameter(binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT, "request");
     if (binding.getParameter() == null) {
       builder.addStatement("return this.repository.$L()", binding.getName());
     } else {

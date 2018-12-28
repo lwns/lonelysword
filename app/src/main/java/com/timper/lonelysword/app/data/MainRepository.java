@@ -1,6 +1,8 @@
 package com.timper.lonelysword.app.data;
 
 import com.timper.lonelysword.annotations.apt.UseCase;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Observable;
 
 /**
@@ -10,5 +12,7 @@ import io.reactivex.Observable;
  * FIXME
  */
 public interface MainRepository {
-  @UseCase Observable<String> getUser(String hellow);
+  @UseCase Flowable<String> getUser(String hellow);
+
+  @UseCase Completable getUsers(String hellow);
 }

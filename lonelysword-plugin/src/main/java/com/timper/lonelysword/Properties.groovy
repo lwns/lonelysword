@@ -1,3 +1,5 @@
+package com.timper.lonelysword
+
 //package com.timper.lonelysword
 //
 //class Properties {
