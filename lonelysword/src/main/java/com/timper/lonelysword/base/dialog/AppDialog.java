@@ -3,19 +3,26 @@ package com.timper.lonelysword.base.dialog;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.databinding.ViewDataBinding;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +36,7 @@ import com.timper.lonelysword.Lonelysword;
 import com.timper.lonelysword.Unbinder;
 import com.timper.lonelysword.base.AppViewModel;
 import com.timper.lonelysword.base.ViewModelFactor;
+import com.timper.lonelysword.context.App;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
@@ -60,6 +68,8 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
   private Unbinder unbinder;
 
   private boolean animationing = false;
+
+  private Handler handler = new Handler(Looper.getMainLooper());
 
   @Inject
   DispatchingAndroidInjector<Fragment> supportFragmentInjector;
@@ -95,6 +105,9 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
 
     ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
     final FrameLayout rootView = new FrameLayout(getContext());
+    if (dialogBuilder.getGravity() == Gravity.BOTTOM) {
+      rootView.setPadding(0, 0, 0, getNavigationBarHeight(getActivity()));//当底部有虚拟按键的时候添加
+    }
     rootView.setLayoutParams(layoutParams);
     rootView.setBackgroundColor(Color.parseColor("#00000000"));
 
@@ -195,6 +208,7 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
   @Override
   public void dismiss() {
     if (!animationing) {
+      handler.sendMessage(handler.obtainMessage());//解决内存message.obj = activity 内存泄漏问题
       AnimatorSet animatorSet = new AnimatorSet();
       animatorSet.playTogether(alphaOut(fadeView), dialogBuilder.getOutAnimation(view));
       animatorSet.setDuration(300);
@@ -252,9 +266,9 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
 
       dialog.setCancelable(dialogBuilder.isCancelable());
 
-      dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+      DetachableOnKeyListener onKeyListener = DetachableOnKeyListener.wrap(new DialogInterface.OnKeyListener() {
         @Override
-        public boolean onKey(DialogInterface anInterface, int keyCode, KeyEvent event) {
+        public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
           if (dialogBuilder.isCancelable() && keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             dismiss();
             return true;
@@ -262,6 +276,9 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
           return false;
         }
       });
+
+      dialog.setOnKeyListener(onKeyListener);
+      onKeyListener.clearOnDetach(dialog);
     }
     super.onStart();
     unbinder.onStart();
@@ -290,5 +307,69 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
     super.onDestroy();
     unbinder.onDestroy();
     unbinder.unbind();
+  }
+
+  /**
+   * 小米mix3检查是否存在 NavigationBar
+   * 原理是拿到 横屏时候的允许宽度与 内屏的真实高度进行对比来推算是否存在NavigationBar
+   */
+  public static boolean isNavigationBarShow(Activity activity) {
+    Display display = activity.getWindowManager()
+                              .getDefaultDisplay();
+    Point outSmallestSize = new Point();
+    Point outLargestSize = new Point();
+    display.getCurrentSizeRange(outSmallestSize, outLargestSize);
+    display.getRealSize(outSmallestSize);
+    return outSmallestSize.y != outLargestSize.x;
+  }
+
+  public static int getNavigationBarHeight(Activity activity) {
+    if (!isNavigationBarShow(activity)) {
+      return 0;
+    }
+    Resources resources = App.context()
+                             .getResources();
+    int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+    return resources.getDimensionPixelSize(resourceId);
+  }
+
+  /**
+   * 防止内存泄漏
+   */
+  public final static class DetachableOnKeyListener implements DialogInterface.OnKeyListener {
+
+    public static DetachableOnKeyListener wrap(DialogInterface.OnKeyListener delegate) {
+      return new DetachableOnKeyListener(delegate);
+    }
+
+    private DialogInterface.OnKeyListener delegateOrNull;
+
+    private DetachableOnKeyListener(DialogInterface.OnKeyListener delegate) {
+      this.delegateOrNull = delegate;
+    }
+
+    public void clearOnDetach(Dialog dialog) {
+      dialog.getWindow()
+            .getDecorView()
+            .getViewTreeObserver()
+            .addOnWindowAttachListener(new ViewTreeObserver.OnWindowAttachListener() {
+              @Override
+              public void onWindowAttached() {
+              }
+
+              @Override
+              public void onWindowDetached() {
+                delegateOrNull = null;
+              }
+            });
+    }
+
+    @Override
+    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+      if (delegateOrNull != null) {
+        return delegateOrNull.onKey(dialog, keyCode, event);
+      }
+      return false;
+    }
   }
 }

@@ -1,7 +1,7 @@
 buildscript {
   ext.kotlin_version = '1.2.50'
 
-  ext.versions = ['minSdk'        : 14,
+  ext.versions = ['minSdk'        : 19,
                   'compileSdk'    : 27,
                   'supportLibrary': '27.0.2',
                   'androidPlugin' : '3.1.2',
@@ -56,9 +56,9 @@ buildscript {
                                aspectjtools: "org.aspectj:aspectjtools:${versions.aspectj}"]]
 
   repositories {
+    google()
     mavenCentral()
     jcenter()
-    google()
     gradlePluginPortal()
   }
 
