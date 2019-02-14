@@ -21,6 +21,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -69,7 +70,7 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
 
   private boolean animationing = false;
 
-  private Handler handler = new Handler(Looper.getMainLooper());
+  private static Handler handler = new Handler(Looper.getMainLooper());
 
   @Inject
   DispatchingAndroidInjector<Fragment> supportFragmentInjector;
@@ -95,6 +96,13 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
   public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     unbinder.afterViews();
+  }
+
+  @Override
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    getDialog().setDismissMessage(null);
+    getDialog().setCancelMessage(null);//防止在dismiss的时候，发送handle消息，导致内存泄漏
   }
 
   @Nullable
@@ -194,12 +202,10 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
 
       @Override
       public void onAnimationCancel(Animator animation) {
-
       }
 
       @Override
       public void onAnimationRepeat(Animator animation) {
-
       }
     });
     animatorSet.start();
