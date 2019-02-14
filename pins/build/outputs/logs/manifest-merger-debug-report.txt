@@ -1,0 +1,154 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/14761eee53fbc9b40e985d211113d465/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/6853cac92f789d7bcfeecbd2a3b8f553/AndroidManifest.xml:2:1-11:12
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/a660cda109e3b3f4e10b6e574918cbdf/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/1d23fe76d6a4b8719aae9ec8a20d3fc1/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/671b074c2034ceb9ca3fd7a8b69337e4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/bb3fef01ecab9b19a3ab305d2cf99f2b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/7423a8b2a2a9070a64a39529f65117d0/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:loader:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/3231b7a9624be04674d5e328b3dfcce6/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:viewpager:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/3b45bb82ac12bc920c0fcf6f38b5690c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/685a807087a1536085ef65d5c62922ba/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/875197b888653bd935e97be836544b3f/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/aed9a468ace58e0b6bd31e6165126d4c/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:customview:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/37d86e3a42221f99bad233f5fd676256/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/d399bdc4d610e53134593be58be5dc22/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/1baf96dd464e333152ceb6a7b975bafc/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:support-compat:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/ab71be97001091d7ba049386db009c6e/AndroidManifest.xml:17:1-24:12
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/9d31488f83c9839bc1aeac437ecc47bf/AndroidManifest.xml:17:1-25:12
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/995873a19015c631e678fab7e9c64edc/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/00eb863498a7a94fbce7f1e9dd74914b/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:documentfile:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/f8d1a1640fde00b3a50f94144b580402/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/88d04aa5166e36c798d04c94f041c1fb/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:print:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/3b7d8ead116e98b1e261910a90c206df/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/712bee7ae142740bf27372f24ea3925f/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/d56b54bba9c2065329a41a6d5025e239/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/6cc525eff29564ec24db6947b0f55c60/AndroidManifest.xml:17:1-22:12
+MERGED from [android.arch.core:runtime:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/a64ae0d8a9334eca3fff488a66259db4/AndroidManifest.xml:17:1-22:12
+MERGED from [com.android.support:interpolator:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/f44e1d863259175c282a429a00e5ff76/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+	package
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:3:5-30
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:1-21:12
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:5:3-19:17
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/6853cac92f789d7bcfeecbd2a3b8f553/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/6853cac92f789d7bcfeecbd2a3b8f553/AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-compat:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/ab71be97001091d7ba049386db009c6e/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:support-compat:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/ab71be97001091d7ba049386db009c6e/AndroidManifest.xml:22:5-94
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/9d31488f83c9839bc1aeac437ecc47bf/AndroidManifest.xml:22:5-23:19
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/9d31488f83c9839bc1aeac437ecc47bf/AndroidManifest.xml:22:5-23:19
+	android:appComponentFactory
+		ADDED from [com.android.support:support-compat:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/ab71be97001091d7ba049386db009c6e/AndroidManifest.xml:22:18-91
+	android:supportsRtl
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:10:7-33
+	android:label
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:8:7-39
+	android:roundIcon
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:9:7-52
+	android:icon
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:7:7-41
+	android:allowBackup
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:6:7-33
+	android:theme
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:11:7-38
+activity#com.timper.pins.MainActivity
+ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:12:5-18:16
+	android:name
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:12:15-43
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:13:7-17:23
+action#android.intent.action.MAIN
+ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:14:9-60
+	android:name
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:14:17-58
+category#android.intent.category.LAUNCHER
+ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:16:9-68
+	android:name
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml:16:19-66
+uses-sdk
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/14761eee53fbc9b40e985d211113d465/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:appcompat-v7:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/14761eee53fbc9b40e985d211113d465/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/6853cac92f789d7bcfeecbd2a3b8f553/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support.constraint:constraint-layout:1.1.3] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/6853cac92f789d7bcfeecbd2a3b8f553/AndroidManifest.xml:5:5-7:41
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/a660cda109e3b3f4e10b6e574918cbdf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-fragment:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/a660cda109e3b3f4e10b6e574918cbdf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/1d23fe76d6a4b8719aae9ec8a20d3fc1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:animated-vector-drawable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/1d23fe76d6a4b8719aae9ec8a20d3fc1/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/671b074c2034ceb9ca3fd7a8b69337e4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-ui:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/671b074c2034ceb9ca3fd7a8b69337e4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/bb3fef01ecab9b19a3ab305d2cf99f2b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-core-utils:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/bb3fef01ecab9b19a3ab305d2cf99f2b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/7423a8b2a2a9070a64a39529f65117d0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/7423a8b2a2a9070a64a39529f65117d0/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/3231b7a9624be04674d5e328b3dfcce6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:loader:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/3231b7a9624be04674d5e328b3dfcce6/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/3b45bb82ac12bc920c0fcf6f38b5690c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:viewpager:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/3b45bb82ac12bc920c0fcf6f38b5690c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/685a807087a1536085ef65d5c62922ba/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:coordinatorlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/685a807087a1536085ef65d5c62922ba/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/875197b888653bd935e97be836544b3f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:drawerlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/875197b888653bd935e97be836544b3f/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/aed9a468ace58e0b6bd31e6165126d4c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:slidingpanelayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/aed9a468ace58e0b6bd31e6165126d4c/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/37d86e3a42221f99bad233f5fd676256/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:customview:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/37d86e3a42221f99bad233f5fd676256/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/d399bdc4d610e53134593be58be5dc22/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:swiperefreshlayout:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/d399bdc4d610e53134593be58be5dc22/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/1baf96dd464e333152ceb6a7b975bafc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:asynclayoutinflater:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/1baf96dd464e333152ceb6a7b975bafc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/ab71be97001091d7ba049386db009c6e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-compat:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/ab71be97001091d7ba049386db009c6e/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/9d31488f83c9839bc1aeac437ecc47bf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:versionedparcelable:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/9d31488f83c9839bc1aeac437ecc47bf/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/995873a19015c631e678fab7e9c64edc/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:cursoradapter:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/995873a19015c631e678fab7e9c64edc/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/00eb863498a7a94fbce7f1e9dd74914b/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:runtime:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/00eb863498a7a94fbce7f1e9dd74914b/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/f8d1a1640fde00b3a50f94144b580402/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:documentfile:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/f8d1a1640fde00b3a50f94144b580402/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/88d04aa5166e36c798d04c94f041c1fb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:localbroadcastmanager:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/88d04aa5166e36c798d04c94f041c1fb/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/3b7d8ead116e98b1e261910a90c206df/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:print:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/3b7d8ead116e98b1e261910a90c206df/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/712bee7ae142740bf27372f24ea3925f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:viewmodel:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/712bee7ae142740bf27372f24ea3925f/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/d56b54bba9c2065329a41a6d5025e239/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/d56b54bba9c2065329a41a6d5025e239/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/6cc525eff29564ec24db6947b0f55c60/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.lifecycle:livedata-core:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/6cc525eff29564ec24db6947b0f55c60/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/a64ae0d8a9334eca3fff488a66259db4/AndroidManifest.xml:20:5-44
+MERGED from [android.arch.core:runtime:1.1.1] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/a64ae0d8a9334eca3fff488a66259db4/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/f44e1d863259175c282a429a00e5ff76/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:interpolator:28.0.0] /Users/tangpeng.yang/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/f44e1d863259175c282a429a00e5ff76/AndroidManifest.xml:20:5-44
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		ADDED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
+		INJECTED from /Users/tangpeng.yang/workspace/lonelysword/pins/src/p_main/main/AndroidManifest.xml
