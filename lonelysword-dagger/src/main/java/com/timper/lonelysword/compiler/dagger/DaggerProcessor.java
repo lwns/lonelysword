@@ -58,38 +58,43 @@ import static javax.lang.model.element.Modifier.STATIC;
  * Description:
  * FIXME
  */
-@AutoService(Processor.class) @SupportedSourceVersion(SourceVersion.RELEASE_7) public class DaggerProcessor
-    extends AbstractProcessor {
+@AutoService(Processor.class)
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
+public class DaggerProcessor extends AbstractProcessor {
 
-  private static final String OPTION_SDK_INT = "lonelysword.minSdk";
+  private static final String OPTION_SDK_INT    = "lonelysword.minSdk";
   private static final String OPTION_DEBUGGABLE = "lonelysword.debuggable";
 
   static final String APPACTIVITY_TYPE = "com.timper.lonelysword.base.AppActivity<?,?>";
   static final String APPFRAGMENT_TYPE = "com.timper.lonelysword.base.AppFragment<?,?>";
+  static final String APPDIALOG_TYPE   = "com.timper.lonelysword.base.dialog.AppDialog<?,?>";
 
   private static final String DAGGERPACKAGENAME = "lonelysword.di";
 
   static final ClassName OBJECT = ClassName.get("java.lang", "Object");
 
-  private Types typeUtils;
-  private Filer filer;
+  private Types    typeUtils;
+  private Filer    filer;
   private Elements elements;
 
-  private int sdk = 1;
+  private int     sdk        = 1;
   private boolean debuggable = true;
 
-  @Override public synchronized void init(ProcessingEnvironment env) {
+  @Override
+  public synchronized void init(ProcessingEnvironment env) {
     super.init(env);
     elements = processingEnv.getElementUtils();
     typeUtils = env.getTypeUtils();
     filer = env.getFiler();
   }
 
-  @Override public Set<String> getSupportedOptions() {
+  @Override
+  public Set<String> getSupportedOptions() {
     return ImmutableSet.of(OPTION_SDK_INT, OPTION_DEBUGGABLE);
   }
 
-  @Override public Set<String> getSupportedAnnotationTypes() {
+  @Override
+  public Set<String> getSupportedAnnotationTypes() {
     Set<String> types = new LinkedHashSet<>();
     for (Class<? extends Annotation> annotation : getSupportedAnnotations()) {
       types.add(annotation.getCanonicalName());
@@ -103,7 +108,8 @@ import static javax.lang.model.element.Modifier.STATIC;
     return annotations;
   }
 
-  @Override public boolean process(Set<? extends TypeElement> set, RoundEnvironment env) {
+  @Override
+  public boolean process(Set<? extends TypeElement> set, RoundEnvironment env) {
     Map<TypeElement, DaggerSet> bindingMap = parseTargets(env);
 
     if (bindingMap != null && bindingMap.size() > 0) {
@@ -138,10 +144,33 @@ import static javax.lang.model.element.Modifier.STATIC;
       try {
 
         TypeMirror elementType = element.asType();
+
+        AnnotationValue action = null;// if there is a value
+        for (AnnotationMirror m : element.getAnnotationMirrors()) {
+          if (m.getAnnotationType()
+               .toString()
+               .equals(Dagger.class.getCanonicalName())) {
+            for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : m.getElementValues()
+                                                                                            .entrySet()) {
+              if ("value".equals(entry.getKey()
+                                      .getSimpleName()
+                                      .toString())) {
+                action = entry.getValue();
+              }
+            }
+          }
+        }
+
         if (Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE)) {
-          parseModuleDagger(element, builderMap, erasedTargetNames);
+          parseModuleDagger(element, builderMap, erasedTargetNames, true, false);
+        } else if (Utils.isSubtypeOfType(elementType, APPDIALOG_TYPE) || Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE)) {
+          if (action == null) {
+            parseModuleDagger(element, builderMap, erasedTargetNames, false, true);
+          } else {
+            parseSubModuleDagger(element, action, subModuleMap, otherModuleMap, false, true);
+          }
         } else {
-          parseSubModuleDagger(element, subModuleMap, otherModuleMap);
+          parseSubModuleDagger(element, action, subModuleMap, otherModuleMap, false, false);
         }
       } catch (Exception e) {
         logParsingError(element, Dagger.class, e);
@@ -150,17 +179,23 @@ import static javax.lang.model.element.Modifier.STATIC;
 
     //fragment modules add to activity
     for (Map.Entry<String, SubModuleBinding> entry : subModuleMap.entrySet()) {
-      DaggerSet.Builder builder = getBindingBuilder(builderMap, entry.getValue().getModuleName());
+      DaggerSet.Builder builder = getBindingBuilder(builderMap, entry.getValue()
+                                                                     .getModuleName());
       if (builder != null) {
-        builder.addSubModuleBinding(entry.getValue().getModuleName(), entry.getValue().getSubClassName());
+        builder.addSubModuleBinding(entry.getValue()
+                                         .getModuleName(), entry.getValue()
+                                                                .getSubClassName());
       }
     }
 
     //other modules add to activity
     for (Map.Entry<String, SubModuleBinding> entry : otherModuleMap.entrySet()) {
-      DaggerSet.Builder builder = getBindingBuilder(builderMap, entry.getValue().getModuleName());
+      DaggerSet.Builder builder = getBindingBuilder(builderMap, entry.getValue()
+                                                                     .getModuleName());
       if (builder != null) {
-        builder.addOtherModuleBinding(entry.getValue().getModuleName(), entry.getValue().getSubClassName());
+        builder.addOtherModuleBinding(entry.getValue()
+                                           .getModuleName(), entry.getValue()
+                                                                  .getSubClassName());
       }
     }
 
@@ -179,8 +214,8 @@ import static javax.lang.model.element.Modifier.STATIC;
     return bindingMap;
   }
 
-  private void parseModuleDagger(Element element, Map<TypeElement, DaggerSet.Builder> builderMap,
-      Set<TypeElement> erasedTargetNames) {
+  private void parseModuleDagger(Element element, Map<TypeElement, DaggerSet.Builder> builderMap, Set<TypeElement> erasedTargetNames,
+    boolean isActivity, boolean isFragment) {
 
     TypeElement enclosingElement = (TypeElement) element;
 
@@ -190,31 +225,30 @@ import static javax.lang.model.element.Modifier.STATIC;
     Name simpleName = element.getSimpleName();
     Name qualifiedName = enclosingElement.getQualifiedName();
 
-    if (!Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE) && !Utils.isInterface(elementType)) {
+    if (!Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE) && !Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE) && !Utils.isSubtypeOfType(
+      elementType, APPDIALOG_TYPE) && !Utils.isInterface(elementType)) {
       if (elementType.getKind() == TypeKind.ERROR) {
         note(element, "@%s field with unresolved type (%s) " + "must elsewhere be generated as a View or interface. (%s.%s)",
-            Dagger.class.getSimpleName(), elementType, qualifiedName, simpleName);
+          Dagger.class.getSimpleName(), elementType, qualifiedName, simpleName);
       } else {
-        error(element, "@%s fields must extend from View or be an interface. (%s.%s)", Dagger.class.getSimpleName(),
-            qualifiedName, simpleName);
+        error(element, "@%s fields must extend from View or be an interface. (%s.%s)", Dagger.class.getSimpleName(), qualifiedName, simpleName);
         hasError = true;
       }
-    }
-
-    if (Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE)) {
-      DaggerSet.Builder builder = getOrCreateBindingBuilder(builderMap, enclosingElement);
-      String value = simpleName.toString().replace("Activity", "");
-      builder.addDaggerBinding(simpleName.toString(), value);
     }
 
     if (hasError) {
       return;
     }
+
+    DaggerSet.Builder builder = getOrCreateBindingBuilder(builderMap, enclosingElement,isActivity);
+    String value = simpleName.toString().replace("Activity", "");
+    builder.addDaggerBinding(simpleName.toString(), value);
+
     erasedTargetNames.add(enclosingElement);
   }
 
-  private void parseSubModuleDagger(Element element, Map<String, SubModuleBinding> subModuleMap,
-      Map<String, SubModuleBinding> otherModuleMap) {
+  private void parseSubModuleDagger(Element element, AnnotationValue action, Map<String, SubModuleBinding> subModuleMap,
+    Map<String, SubModuleBinding> otherModuleMap, boolean isActivity, boolean isFragment) {
 
     TypeElement enclosingElement = (TypeElement) element;
 
@@ -226,26 +260,13 @@ import static javax.lang.model.element.Modifier.STATIC;
 
     if (elementType.getKind() == TypeKind.ERROR) {
       note(element, "@%s field with unresolved type (%s) " + "must elsewhere be generated as a View or interface. (%s.%s)",
-          Dagger.class.getSimpleName(), elementType, qualifiedName, simpleName);
-    }
-
-    AnnotationValue action = null;
-    for (AnnotationMirror m : element.getAnnotationMirrors()) {
-      if (m.getAnnotationType().toString().equals(Dagger.class.getCanonicalName())) {
-        for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : m.getElementValues().entrySet()) {
-          if ("value".equals(entry.getKey().getSimpleName().toString())) {
-            action = entry.getValue();
-            break;
-          }
-        }
-      }
+        Dagger.class.getSimpleName(), elementType, qualifiedName, simpleName);
     }
 
     Type.ClassType classType = null;
     String moduleName = null;
     if (action == null) {
-      error(element, "@%s fields must have a value for subModule. (%s.%s)", Dagger.class.getSimpleName(), qualifiedName,
-          simpleName);
+      error(element, "@%s fields must have a value for subModule. (%s.%s)", Dagger.class.getSimpleName(), qualifiedName, simpleName);
       hasError = true;
     } else {
       Object value = action.getValue();
@@ -263,7 +284,7 @@ import static javax.lang.model.element.Modifier.STATIC;
     }
     ClassName className = ClassName.get(enclosingElement);
     SubModuleBinding subModuleBinding = new SubModuleBinding(moduleName, simpleName.toString(), className);
-    if (Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE)) {
+    if (Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE) || Utils.isSubtypeOfType(elementType, APPDIALOG_TYPE)) {
       subModuleMap.put(simpleName.toString(), subModuleBinding);
     } else {
       otherModuleMap.put(simpleName.toString(), subModuleBinding);
@@ -271,11 +292,16 @@ import static javax.lang.model.element.Modifier.STATIC;
   }
 
   private TypeName getTypeName(Type type) {
-    TypeName[] typeNames = new TypeName[type.allparams().size()];
-    if (type.allparams().size() > 0) {
-      for (int i = 0; i < type.allparams().size(); i++) {
-        Type.ClassType classType = (Type.ClassType) type.allparams().get(i);
-        if (classType.allparams().size() > 0) {
+    TypeName[] typeNames = new TypeName[type.allparams()
+                                            .size()];
+    if (type.allparams()
+            .size() > 0) {
+      for (int i = 0; i < type.allparams()
+                              .size(); i++) {
+        Type.ClassType classType = (Type.ClassType) type.allparams()
+                                                        .get(i);
+        if (classType.allparams()
+                     .size() > 0) {
           typeNames[i] = getTypeName(classType);
         } else {
           typeNames[i] = ClassName.get((Symbol.ClassSymbol) classType.tsym);
@@ -289,11 +315,10 @@ import static javax.lang.model.element.Modifier.STATIC;
     }
   }
 
-  private DaggerSet.Builder getOrCreateBindingBuilder(Map<TypeElement, DaggerSet.Builder> builderMap,
-      TypeElement enclosingElement) {
+  private DaggerSet.Builder getOrCreateBindingBuilder(Map<TypeElement, DaggerSet.Builder> builderMap, TypeElement enclosingElement,boolean isActivity) {
     DaggerSet.Builder builder = builderMap.get(enclosingElement);
     if (builder == null) {
-      builder = DaggerSet.newBuilder(enclosingElement);
+      builder = DaggerSet.newBuilder(enclosingElement,isActivity);
       builderMap.put(enclosingElement, builder);
     }
     return builder;
@@ -301,7 +326,10 @@ import static javax.lang.model.element.Modifier.STATIC;
 
   private DaggerSet.Builder getBindingBuilder(Map<TypeElement, DaggerSet.Builder> builderMap, String moduleName) {
     for (Map.Entry<TypeElement, DaggerSet.Builder> entry : builderMap.entrySet()) {
-      if (entry.getKey().getSimpleName().toString().equals(moduleName)) {
+      if (entry.getKey()
+               .getSimpleName()
+               .toString()
+               .equals(moduleName)) {
         return entry.getValue();
       }
     }
@@ -311,8 +339,8 @@ import static javax.lang.model.element.Modifier.STATIC;
   private void brewActivityModuleJava(Map<TypeElement, DaggerSet> bindingMap) {
     try {
       JavaFile javaFile = JavaFile.builder(DAGGERPACKAGENAME, createActivityModuleType(bindingMap, sdk, debuggable))
-          .addFileComment("Generated code from lonely sword. Do not modify!")
-          .build();
+                                  .addFileComment("Generated code from lonely sword. Do not modify!")
+                                  .build();
       javaFile.writeTo(filer);
     } catch (IOException e) {
       e.printStackTrace();
@@ -320,23 +348,22 @@ import static javax.lang.model.element.Modifier.STATIC;
   }
 
   private TypeSpec createActivityModuleType(Map<TypeElement, DaggerSet> bindings, int sdk, boolean debuggable) {
-    String className = "ActivityModule";
-    TypeSpec.Builder result = TypeSpec.classBuilder(className).addModifiers(PUBLIC);
+    String className = "AppModule";
+    TypeSpec.Builder result = TypeSpec.classBuilder(className)
+                                      .addModifiers(PUBLIC);
     result.addModifiers(ABSTRACT);
     result.addAnnotation(MODULE);
 
     for (DaggerSet binding : bindings.values()) {
-      MethodSpec.Builder builder =
-          MethodSpec.methodBuilder("bind" + binding.daggerBinding.getModuleName()).addModifiers(ABSTRACT);
+      MethodSpec.Builder builder = MethodSpec.methodBuilder("bind" + binding.daggerBinding.getModuleName())
+                                             .addModifiers(ABSTRACT);
       builder.addAnnotation(ACTIVITYSCOPE);
 
-      ClassName moduleClass =
-          ClassName.get(binding.bindingClassName.packageName(), binding.daggerBinding.getSimpleName() + "Module");
-      ClassName subModuleClass =
-          ClassName.get(binding.bindingClassName.packageName(), binding.daggerBinding.getSimpleName() + "SubModule");
+      ClassName moduleClass = ClassName.get(binding.bindingClassName.packageName(), binding.daggerBinding.getSimpleName() + "Module");
+      ClassName subModuleClass = ClassName.get(binding.bindingClassName.packageName(), binding.daggerBinding.getSimpleName() + "SubModule");
       AnnotationSpec.Builder annotationBuilder = AnnotationSpec.builder(CONTRIBUTESANDROIDINJECTOR)
-          .addMember("modules", "$T.class", moduleClass)
-          .addMember("modules", "$T.class", subModuleClass);
+                                                               .addMember("modules", "$T.class", moduleClass)
+                                                               .addMember("modules", "$T.class", subModuleClass);
       for (ClassName otherClassName : binding.daggerBinding.getOtherModules()) {
         annotationBuilder.addMember("modules", "$T.class", otherClassName);
       }
@@ -351,8 +378,7 @@ import static javax.lang.model.element.Modifier.STATIC;
   /**
    * wrong method varify
    */
-  private boolean isInaccessibleViaGeneratedCode(Class<? extends Annotation> annotationClass, String targetThing,
-      Element element) {
+  private boolean isInaccessibleViaGeneratedCode(Class<? extends Annotation> annotationClass, String targetThing, Element element) {
     boolean hasError = false;
     TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
@@ -360,21 +386,22 @@ import static javax.lang.model.element.Modifier.STATIC;
     Set<Modifier> modifiers = element.getModifiers();
     if (modifiers.contains(PRIVATE) || modifiers.contains(STATIC)) {
       error(element, "@%s %s must not be private or static. (%s.%s)", annotationClass.getSimpleName(), targetThing,
-          enclosingElement.getQualifiedName(), element.getSimpleName());
+        enclosingElement.getQualifiedName(), element.getSimpleName());
       hasError = true;
     }
 
     // Verify containing type.
     if (enclosingElement.getKind() != INTERFACE) {
       error(enclosingElement, "@%s %s may only be contained in classes. (%s.%s)", annotationClass.getSimpleName(), targetThing,
-          enclosingElement.getQualifiedName(), element.getSimpleName());
+        enclosingElement.getQualifiedName(), element.getSimpleName());
       hasError = true;
     }
 
     // Verify containing class visibility is not private.
-    if (enclosingElement.getModifiers().contains(PRIVATE)) {
-      error(enclosingElement, "@%s %s may not be contained in private classes. (%s.%s)", annotationClass.getSimpleName(),
-          targetThing, enclosingElement.getQualifiedName(), element.getSimpleName());
+    if (enclosingElement.getModifiers()
+                        .contains(PRIVATE)) {
+      error(enclosingElement, "@%s %s may not be contained in private classes. (%s.%s)", annotationClass.getSimpleName(), targetThing,
+        enclosingElement.getQualifiedName(), element.getSimpleName());
       hasError = true;
     }
 
@@ -386,16 +413,15 @@ import static javax.lang.model.element.Modifier.STATIC;
    */
   private boolean isBindingInWrongPackage(Class<? extends Annotation> annotationClass, Element element) {
     TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
-    String qualifiedName = enclosingElement.getQualifiedName().toString();
+    String qualifiedName = enclosingElement.getQualifiedName()
+                                           .toString();
 
     if (qualifiedName.startsWith("android.")) {
-      error(element, "@%s-annotated class incorrectly in Android framework package. (%s)", annotationClass.getSimpleName(),
-          qualifiedName);
+      error(element, "@%s-annotated class incorrectly in Android framework package. (%s)", annotationClass.getSimpleName(), qualifiedName);
       return true;
     }
     if (qualifiedName.startsWith("java.")) {
-      error(element, "@%s-annotated class incorrectly in Java framework package. (%s)", annotationClass.getSimpleName(),
-          qualifiedName);
+      error(element, "@%s-annotated class incorrectly in Java framework package. (%s)", annotationClass.getSimpleName(), qualifiedName);
       return true;
     }
 
@@ -415,7 +441,8 @@ import static javax.lang.model.element.Modifier.STATIC;
       message = String.format(message, args);
     }
 
-    processingEnv.getMessager().printMessage(kind, message, element);
+    processingEnv.getMessager()
+                 .printMessage(kind, message, element);
   }
 
   private void logParsingError(Element element, Class<? extends Annotation> annotation, Exception e) {

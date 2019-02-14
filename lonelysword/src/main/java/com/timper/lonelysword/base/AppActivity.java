@@ -26,7 +26,7 @@ import javax.inject.Inject;
 public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBinding> extends AppCompatActivity
     implements HasFragmentInjector, HasSupportFragmentInjector {
 
-  protected Unbinder unbinder;
+  private Unbinder unbinder;
   public FragmentManager fragmentManager;
   public T binding;
   public V viewModel;

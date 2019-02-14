@@ -1,11 +1,8 @@
 package com.timper.lonelysword.app.feature.splash;
 
 import android.databinding.ObservableField;
-import android.support.v7.app.AppCompatActivity;
 import com.timper.lonelysword.ActivityScope;
 import com.timper.lonelysword.app.data.GetUserUseCase;
-import com.timper.lonelysword.app.databinding.ActSplashBinding;
-import com.timper.lonelysword.base.AppActivity;
 import com.timper.lonelysword.base.AppViewModel;
 import javax.inject.Inject;
 
@@ -15,7 +12,7 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-@ActivityScope public class SplashViewModel extends AppViewModel<ActSplashBinding> {
+@ActivityScope public class SplashViewModel extends AppViewModel {
   GetUserUseCase userUseCase;
 
   public interface Navigation {
@@ -24,8 +21,7 @@ import javax.inject.Inject;
 
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 
-  @Inject public SplashViewModel(AppActivity activity, GetUserUseCase userUseCase) {
-    super(activity);
+  @Inject public SplashViewModel(GetUserUseCase userUseCase) {
     this.userUseCase = userUseCase;
   }
 }

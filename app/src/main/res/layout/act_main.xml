@@ -5,7 +5,10 @@
     >
 
   <data>
-
+    <variable
+        name="view"
+        type="com.timper.lonelysword.app.feature.main.MainActivity"
+        />
     <variable
         name="viewModel"
         type="com.timper.lonelysword.app.feature.main.MainViewModel"
@@ -15,6 +18,7 @@
   <android.support.constraint.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
+      android:fitsSystemWindows="true"
       tools:context="com.timper.lonelysword.lonelysword.com.timper.lonelysword.app.MainActivity"
       >
 
@@ -22,7 +26,15 @@
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        ></FrameLayout>
+        >
+
+      <Button
+          android:id="@+id/button"
+          android:paddingTop="100dp"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          />
+    </FrameLayout>
 
   </android.support.constraint.ConstraintLayout>
 </layout>

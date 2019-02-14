@@ -13,11 +13,13 @@ import com.timper.lonelysword.compiler.TypeBinding;
 public class UseCaseBinding implements TypeBinding {
 
   private final String name;
+  private final TypeName returnRxClass;
   private final TypeName returnClass;
   private final TypeName parameter;
 
-  public UseCaseBinding(TypeName returnClass, String name, TypeName parameter) {
+  public UseCaseBinding(TypeName returnRxClass, TypeName returnClass, String name, TypeName parameter) {
     this.returnClass = returnClass;
+    this.returnRxClass = returnRxClass;
     this.name = name;
     this.parameter = parameter;
   }
@@ -38,8 +40,13 @@ public class UseCaseBinding implements TypeBinding {
     return returnClass;
   }
 
+  public TypeName getReturnRxClass() {
+    return returnRxClass;
+  }
+
   static final class Builder {
     private final String name;
+    private TypeName returnRxClass;
     private TypeName returnClass;
     private TypeName parameter;
 
@@ -55,12 +62,16 @@ public class UseCaseBinding implements TypeBinding {
       this.returnClass = returnClass;
     }
 
+    void addReturnRxClass(TypeName returnRxClass) {
+      this.returnRxClass = returnRxClass;
+    }
+
     void addParameter(TypeName parameter) {
       this.parameter = parameter;
     }
 
     UseCaseBinding build() {
-      return new UseCaseBinding(returnClass, name, parameter);
+      return new UseCaseBinding(returnRxClass, returnClass, name, parameter);
     }
   }
 }

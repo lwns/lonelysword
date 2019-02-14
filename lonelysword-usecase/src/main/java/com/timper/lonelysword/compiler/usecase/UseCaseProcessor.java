@@ -47,13 +47,14 @@ import static javax.lang.model.element.Modifier.STATIC;
  * Description:
  * FIXME
  */
-@AutoService(Processor.class) @SupportedSourceVersion(SourceVersion.RELEASE_7) public class UseCaseProcessor
+@AutoService(Processor.class) @SupportedSourceVersion(SourceVersion.RELEASE_8) public class UseCaseProcessor
     extends AbstractProcessor {
 
   private static final String OPTION_SDK_INT = "lonelysword.minSdk";
   private static final String OPTION_DEBUGGABLE = "lonelysword.debuggable";
 
-  static final ClassName OBJECT = ClassName.get("java.lang", "Object");
+  private static final ClassName FLOWABLE = ClassName.get("io.reactivex", "Flowable");
+  private static final ClassName COMPLETABLE = ClassName.get("io.reactivex", "Completable");
 
   private Types typeUtils;
   private Filer filer;
@@ -157,16 +158,28 @@ import static javax.lang.model.element.Modifier.STATIC;
     // Verify method return type matches the beforViews.
     TypeMirror returnType = executableElement.getReturnType();
     TypeName returnClassName = null;
+    TypeName returnRxClassName = null;
     if (!(returnType instanceof Type.ClassType)) {
       error(element, "@%s methods return type is not a ClassType", returnType.toString());
       hasError = true;
     } else {
       Type.ClassType classType = ((Type.ClassType) returnType);
-      if (!((Symbol.ClassSymbol) classType.tsym).fullname.toString().equals("io.reactivex.Observable")) {
-        error(element, "@%s methods must have a '%s' return type. (%s.%s)", UseCase.class, "Observable",
-            enclosingElement.getQualifiedName(), element.getSimpleName());
-        hasError = true;
+      returnRxClassName = getTypeName(classType);
+
+      if (returnRxClassName instanceof ParameterizedTypeName) {
+        if (!((ParameterizedTypeName) returnRxClassName).rawType.reflectionName().equals(FLOWABLE.reflectionName())) {
+          error(element, "@%s return type must is  '%s','%s' return type. (%s.%s)", UseCase.class, "Flowable", "Completable",
+              enclosingElement.getQualifiedName(), element.getSimpleName());
+          hasError = true;
+        }
+      } else if (returnRxClassName instanceof ClassName) {
+        if (!((ClassName) returnRxClassName).reflectionName().equals(COMPLETABLE.reflectionName())) {
+          error(element, "@%s return type must is  '%s','%s' return type. (%s.%s)", UseCase.class, "Flowable", "Completable",
+              enclosingElement.getQualifiedName(), element.getSimpleName());
+          hasError = true;
+        }
       }
+
       com.sun.tools.javac.util.List<Type> types = classType.allparams();
       if (types != null && types.size() == 1) {
         returnClassName = getTypeName(types.get(0));
@@ -194,6 +207,7 @@ import static javax.lang.model.element.Modifier.STATIC;
     } else {
     }
     builder.addReturnClass(returnClassName);
+    builder.addReturnRxClass(returnRxClassName);
 
     builderMap.put(enclosingElement, useCase);
     erasedTargetNames.add(enclosingElement);

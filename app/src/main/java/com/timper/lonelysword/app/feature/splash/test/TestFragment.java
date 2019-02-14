@@ -12,6 +12,7 @@ import com.timper.lonelysword.app.feature.splash.test2.Test2ViewModel;
  * Description:
  * FIXME
  */
+@Dagger
 public class TestFragment extends Test2Fragment<Test2ViewModel> {
 
   @AfterViews void afterView() {
