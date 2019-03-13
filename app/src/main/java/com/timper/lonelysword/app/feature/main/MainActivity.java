@@ -1,7 +1,7 @@
 package com.timper.lonelysword.app.feature.main;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 import com.timper.lonelysword.annotations.apt.AfterViews;
 import com.timper.lonelysword.annotations.apt.Dagger;

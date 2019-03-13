@@ -72,7 +72,7 @@ import static javax.lang.model.element.Modifier.STATIC;
   private static final String OPTION_SDK_INT = "lonelysword.minSdk";
   private static final String OPTION_DEBUGGABLE = "lonelysword.debuggable";
 
-  static final String VIEWMODEL_TYPE = "android.arch.lifecycle.ViewModel";
+  static final String VIEWMODEL_TYPE = "androidx.lifecycle.ViewModel";
 
   private Types typeUtils;
   private Filer filer;

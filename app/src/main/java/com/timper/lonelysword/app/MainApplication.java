@@ -1,5 +1,6 @@
 package com.timper.lonelysword.app;
 
+import android.app.Activity;
 import android.widget.Toast;
 import com.timper.lonelysword.LoginBinder;
 import com.timper.lonelysword.Lonelysword;
@@ -7,6 +8,8 @@ import com.timper.lonelysword.app.di.DaggerAppComponent;
 import com.timper.lonelysword.base.BaseApplication;
 import com.timper.lonelysword.dagger.DaggerApplication;
 import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import javax.inject.Inject;
 
 /**
  * User: tangpeng.yang
@@ -16,12 +19,12 @@ import dagger.android.AndroidInjector;
  */
 public class MainApplication extends BaseApplication {
 
-  //@Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+  //@Inject
+  //DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
   @Override public void onCreate() {
     super.onCreate();
 
-    //DaggerAppComponent.builder().application(this).build().inject(this);
     Lonelysword.setLoginBinder(new LoginBinder() {
       @Override public void checkLogin() {
         Toast.makeText(MainApplication.this, "go to login", Toast.LENGTH_SHORT).show();

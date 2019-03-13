@@ -1,11 +1,11 @@
 package com.timper.lonelysword;
 
 import android.app.Activity;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
+import androidx.annotation.VisibleForTesting;
 import android.util.Log;
 import android.view.View;
 import java.lang.reflect.Constructor;

@@ -1,11 +1,11 @@
 package com.timper.lonelysword;
 
-import android.arch.lifecycle.LifecycleObserver;
-import android.support.annotation.UiThread;
+import androidx.annotation.UiThread;
 import android.view.View;
+import androidx.lifecycle.LifecycleObserver;
 
 /** An unbinder contract that will unbind views when called. */
-public interface Unbinder extends LifecycleObserver{
+public interface Unbinder extends LifecycleObserver {
 
   void beforeViews();
 

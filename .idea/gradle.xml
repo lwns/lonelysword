@@ -5,12 +5,11 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$USER_HOME$/android/gradle-4.4" />
+        <option name="gradleHome" value="$USER_HOME$/android/gradle-4.9" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/lib" />
             <option value="$PROJECT_DIR$/lonelysword" />
             <option value="$PROJECT_DIR$/lonelysword-annotations" />
             <option value="$PROJECT_DIR$/lonelysword-common" />

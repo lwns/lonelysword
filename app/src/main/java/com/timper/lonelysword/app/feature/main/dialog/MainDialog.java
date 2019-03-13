@@ -5,7 +5,6 @@ import com.timper.lonelysword.annotations.apt.Dagger;
 import com.timper.lonelysword.annotations.apt.RootView;
 import com.timper.lonelysword.app.R;
 import com.timper.lonelysword.app.databinding.DlgMainBinding;
-import com.timper.lonelysword.app.feature.main.MainActivity;
 import com.timper.lonelysword.base.dialog.AppDialog;
 import com.timper.lonelysword.base.dialog.DialogBuilder;
 

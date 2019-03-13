@@ -1,6 +1,6 @@
 package com.timper.lib;
 
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import com.timper.lonelysword.base.AppActivity;
 import com.timper.lonelysword.base.AppViewModel;
 

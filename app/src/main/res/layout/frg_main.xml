@@ -13,7 +13,7 @@
         <!--type="com.timper.lonelysword.app.feature.main.MainFragment"-->
         <!--/>-->
   </data>
-  <android.support.constraint.ConstraintLayout
+  <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       tools:context="com.timper.lonelysword.lonelysword.com.timper.lonelysword.app.MainActivity"
@@ -29,5 +29,5 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-  </android.support.constraint.ConstraintLayout>
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -35,7 +35,7 @@ public class BindingSet {
   static final String FRAGMENT_TYPE = "android.app.Fragment";
   static final String APPACTIVITY_TYPE = "com.timper.lonelysword.base.AppActivity<?,?>";
   static final String APPFRAGMENT_TYPE = "com.timper.lonelysword.base.AppFragment<?,?>";
-  static final String V4FRAGMENT_TYPE = "android.support.v4.app.Fragment";
+  static final String V4FRAGMENT_TYPE = "androidx.fragment.app.Fragment";
   static final String DIALOG_TYPE = "android.app.Dialog";
 
   private static final String AFTERVIEWS = "afterViews";
@@ -49,7 +49,7 @@ public class BindingSet {
   private static final String UNBIND = "unbind";
 
   private static final ClassName UNBINDER = ClassName.get("com.timper.lonelysword", "Unbinder");
-  private static final ClassName UI_THREAD = ClassName.get("android.support.annotation", "UiThread");
+  private static final ClassName UI_THREAD = ClassName.get("androidx.annotation", "UiThread");
   private static final ClassName INJECT = ClassName.get("javax.inject", "Inject");
   private static final ClassName OVERRIIDE = ClassName.get("java.lang", "Override");
   private static final ClassName MODELADAPTERFACTOR = ClassName.get("com.timper.lonelysword.base", "ModelAdapterFactor");

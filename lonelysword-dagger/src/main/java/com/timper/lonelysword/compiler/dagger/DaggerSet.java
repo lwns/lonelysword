@@ -37,8 +37,8 @@ public class DaggerSet {
   static final ClassName ACTIVITYSCOPE = ClassName.get("com.timper.lonelysword", "ActivityScope");
   static final ClassName CONTRIBUTESANDROIDINJECTOR = ClassName.get("dagger.android", "ContributesAndroidInjector");
   //static final ClassName APPACTIVITY = ClassName.get("com.timper.lonelysword.base", "AppActivity");
-  static final ClassName FRAGMENTACTIVITY = ClassName.get("android.support.v4.app", "FragmentActivity");
-  static final ClassName FRAGMENT = ClassName.get("android.support.v4.app", "Fragment");
+  static final ClassName FRAGMENTACTIVITY = ClassName.get("androidx.fragment.app", "FragmentActivity");
+  static final ClassName FRAGMENT = ClassName.get("androidx.fragment.app", "Fragment");
 
   public DaggerSet(TypeName targetTypeName, ClassName bindingClassName, DaggerBinding daggerBinding, boolean isActivity) {
     this.targetTypeName = targetTypeName;

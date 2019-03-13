@@ -1,9 +1,8 @@
 package com.timper.lonelysword.annotations.apt;
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
