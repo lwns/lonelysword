@@ -52,6 +52,7 @@ dependencies {
   api deps.dagger.daggerSupport
   api deps.arch.extensions
   api deps.aspectj.aspectjrt
+
   api deps.rx.rxAndroid
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.1'

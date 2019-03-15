@@ -13,7 +13,6 @@ import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
 import static com.google.auto.common.MoreElements.getPackage;
-import static com.timper.lonelysword.compiler.dagger.DaggerProcessor.APPACTIVITY_TYPE;
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.PUBLIC;
 

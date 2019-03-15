@@ -65,9 +65,8 @@ public class DaggerProcessor extends AbstractProcessor {
   private static final String OPTION_SDK_INT    = "lonelysword.minSdk";
   private static final String OPTION_DEBUGGABLE = "lonelysword.debuggable";
 
-  static final String APPACTIVITY_TYPE = "com.timper.lonelysword.base.AppActivity<?,?>";
-  static final String APPFRAGMENT_TYPE = "com.timper.lonelysword.base.AppFragment<?,?>";
-  static final String APPDIALOG_TYPE   = "com.timper.lonelysword.base.dialog.AppDialog<?,?>";
+  static final String APPACTIVITY_TYPE = "android.support.v4.app.FragmentActivity";
+  static final String APPFRAGMENT_TYPE = "android.support.v4.app.Fragment";
 
   private static final String DAGGERPACKAGENAME = "lonelysword.di";
 
@@ -163,7 +162,7 @@ public class DaggerProcessor extends AbstractProcessor {
 
         if (Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE)) {
           parseModuleDagger(element, builderMap, erasedTargetNames, true, false);
-        } else if (Utils.isSubtypeOfType(elementType, APPDIALOG_TYPE) || Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE)) {
+        } else if (Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE)) {
           if (action == null) {
             parseModuleDagger(element, builderMap, erasedTargetNames, false, true);
           } else {
@@ -225,8 +224,7 @@ public class DaggerProcessor extends AbstractProcessor {
     Name simpleName = element.getSimpleName();
     Name qualifiedName = enclosingElement.getQualifiedName();
 
-    if (!Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE) && !Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE) && !Utils.isSubtypeOfType(
-      elementType, APPDIALOG_TYPE) && !Utils.isInterface(elementType)) {
+    if (!Utils.isSubtypeOfType(elementType, APPACTIVITY_TYPE) && !Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE) && !Utils.isInterface(elementType)) {
       if (elementType.getKind() == TypeKind.ERROR) {
         note(element, "@%s field with unresolved type (%s) " + "must elsewhere be generated as a View or interface. (%s.%s)",
           Dagger.class.getSimpleName(), elementType, qualifiedName, simpleName);
@@ -284,7 +282,7 @@ public class DaggerProcessor extends AbstractProcessor {
     }
     ClassName className = ClassName.get(enclosingElement);
     SubModuleBinding subModuleBinding = new SubModuleBinding(moduleName, simpleName.toString(), className);
-    if (Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE) || Utils.isSubtypeOfType(elementType, APPDIALOG_TYPE)) {
+    if (Utils.isSubtypeOfType(elementType, APPFRAGMENT_TYPE)) {
       subModuleMap.put(simpleName.toString(), subModuleBinding);
     } else {
       otherModuleMap.put(simpleName.toString(), subModuleBinding);

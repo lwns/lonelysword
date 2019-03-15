@@ -44,9 +44,10 @@ dependencies {
 //    kapt 'com.timper:lonelysword-compiler:0.2.9'
 
   implementation project(':lonelysword')
-  kapt project(':lonelysword-compiler')
-  kapt project(':lonelysword-dagger')
-  kapt project(':lonelysword-usecase')
+  implementation project(':lonelysword-usecase')
+  kapt project(':lonelysword-android-compiler')
+//  kapt project(':lonelysword-dagger-compiler')
+  kapt project(':lonelysword-usecase-compiler')
 
   implementation deps.kotlin.lib
 
