@@ -13,6 +13,12 @@ android {
     versionCode 1
     versionName "1.0"
     testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [MODULE_NAME: project.getName()]
+      }
+    }
   }
   buildTypes {
     release {
@@ -38,22 +44,18 @@ gradle.projectsEvaluated {
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-//    implementation project(':lib')
+  implementation project(':lib')
   //  api 'com.timper:lonelysword:0.1.0'
-  //  annotationProcessor 'com.timper:lonelysword-compiler:0.1.0'
-//    kapt 'com.timper:lonelysword-compiler:0.2.9'
 
   implementation project(':lonelysword')
   implementation project(':lonelysword-usecase')
   kapt project(':lonelysword-android-compiler')
-//  kapt project(':lonelysword-dagger-compiler')
   kapt project(':lonelysword-usecase-compiler')
 
   implementation deps.kotlin.lib
 
   kapt deps.dagger.processor
   kapt deps.dagger.compiler
-  kapt 'com.jakewharton:butterknife-compiler:8.8.1'
 
   implementation 'com.android.support:appcompat-v7:26.1.0'
   implementation 'com.android.support.constraint:constraint-layout:1.1.0'

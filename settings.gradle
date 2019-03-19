@@ -1,12 +1,15 @@
-include ':app', ':lonelysword', ':lonelysword-usecase',
-    ':lonelysword-android-compiler',
-    ':lonelysword-annotations',
-    ':lib',
-//    ':lonelysword-dagger',
-//    ':lonelysword-dagger-compiler',
-//    ':lonelysword-usecase',
-    ':lonelysword-usecase-compiler',
-    ':lonelysword-common'
+include 'app'
+include ':lib'
+
+include ':lonelysword'
+include ':lonelysword-android-compiler'
+
+include ':lonelysword-usecase'
+include ':lonelysword-usecase-compiler'
+
+include ':lonelysword-annotations'
+include ':lonelysword-common'
+
 include ':lonelysword-plugin'
 
 rootProject.name = 'lonelysword-parent'

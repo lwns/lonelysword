@@ -1,7 +1,6 @@
 apply plugin: 'java-library'
 
 dependencies {
-    compileOnly deps.android.runtime
     api deps.support.annotations
 }
 

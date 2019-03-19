@@ -16,6 +16,7 @@ public class DaggerBinding {
   private final String moduleName;
   private final String simpleName;
 
+  //记录activity和fragment带有dagger注解的类
   private final ImmutableList<ClassName> subModules;
   private final ImmutableList<ClassName> otherModules;
 

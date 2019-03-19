@@ -1,2 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.timper.lib"/>
+    package="com.timper.lib">
+
+
+  <application>
+    <activity android:name="com.timper.lib.di.feature.LibActivity"
+        >
+    </activity>
+  </application>
+</manifest>

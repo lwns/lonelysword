@@ -24,20 +24,19 @@ import static javax.lang.model.element.Modifier.PUBLIC;
  */
 public class DaggerSet {
 
-  final TypeName targetTypeName;
-  final ClassName bindingClassName;
+  final TypeName      targetTypeName;
+  final ClassName     bindingClassName;
   final DaggerBinding daggerBinding;
 
   private final boolean isActivity;
   private final boolean isFragment;
 
-  static final ClassName MODULE = ClassName.get("dagger", "Module");
-  static final ClassName BINDS = ClassName.get("dagger", "Binds");
-  static final ClassName ACTIVITYSCOPE = ClassName.get("com.timper.lonelysword", "ActivityScope");
+  static final ClassName MODULE                     = ClassName.get("dagger", "Module");
+  static final ClassName BINDS                      = ClassName.get("dagger", "Binds");
+  static final ClassName ACTIVITYSCOPE              = ClassName.get("com.timper.lonelysword", "ActivityScope");
   static final ClassName CONTRIBUTESANDROIDINJECTOR = ClassName.get("dagger.android", "ContributesAndroidInjector");
-  //static final ClassName APPACTIVITY = ClassName.get("com.timper.lonelysword.base", "AppActivity");
-  static final ClassName FRAGMENTACTIVITY = ClassName.get("android.support.v4.app", "FragmentActivity");
-  static final ClassName FRAGMENT = ClassName.get("android.support.v4.app", "Fragment");
+  static final ClassName FRAGMENTACTIVITY           = ClassName.get("android.support.v4.app", "FragmentActivity");
+  static final ClassName FRAGMENT                   = ClassName.get("android.support.v4.app", "Fragment");
 
   public DaggerSet(TypeName targetTypeName, ClassName bindingClassName, DaggerBinding daggerBinding, boolean isActivity) {
     this.targetTypeName = targetTypeName;
@@ -49,28 +48,31 @@ public class DaggerSet {
 
   void brewJava(Filer filer, int sdk, boolean debuggable) throws IOException {
     JavaFile moduleFile = JavaFile.builder(bindingClassName.packageName(), createModuleType(daggerBinding, sdk, debuggable))
-        .addFileComment("Generated code from lonely sword. Do not modify!")
-        .build();
+                                  .addFileComment("Generated code from lonely sword. Do not modify!")
+                                  .build();
     moduleFile.writeTo(filer);
 
     JavaFile subModuleFile = JavaFile.builder(bindingClassName.packageName(), createSubModuleType(daggerBinding, sdk, debuggable))
-        .addFileComment("Generated code from lonely sword. Do not modify!")
-        .build();
+                                     .addFileComment("Generated code from lonely sword. Do not modify!")
+                                     .build();
     subModuleFile.writeTo(filer);
   }
 
   private TypeSpec createModuleType(DaggerBinding binding, int sdk, boolean debuggable) {
     String className = binding.getSimpleName() + "Module";
-    TypeSpec.Builder result = TypeSpec.classBuilder(className).addModifiers(PUBLIC).addModifiers(ABSTRACT);
+    TypeSpec.Builder result = TypeSpec.classBuilder(className)
+                                      .addModifiers(PUBLIC)
+                                      .addModifiers(ABSTRACT);
     result.addAnnotation(MODULE);
 
-    MethodSpec.Builder builder =
-        MethodSpec.methodBuilder("provide" + binding.getModuleName()).addModifiers(PUBLIC).addModifiers(ABSTRACT);
+    MethodSpec.Builder builder = MethodSpec.methodBuilder("provide" + binding.getModuleName())
+                                           .addModifiers(PUBLIC)
+                                           .addModifiers(ABSTRACT);
     builder.addAnnotation(BINDS);
     builder.addParameter(bindingClassName, "param");
-    if(isActivity){
+    if (isActivity) {
       builder.returns(FRAGMENTACTIVITY);
-    }else if(isFragment){
+    } else if (isFragment) {
       builder.returns(FRAGMENT);
     }
 
@@ -81,12 +83,15 @@ public class DaggerSet {
 
   private TypeSpec createSubModuleType(DaggerBinding binding, int sdk, boolean debuggable) {
     String className = binding.getSimpleName() + "SubModule";
-    TypeSpec.Builder result = TypeSpec.classBuilder(className).addModifiers(PUBLIC).addModifiers(ABSTRACT);
+    TypeSpec.Builder result = TypeSpec.classBuilder(className)
+                                      .addModifiers(PUBLIC)
+                                      .addModifiers(ABSTRACT);
     result.addAnnotation(MODULE);
 
     for (ClassName subClassName : binding.getSubModules()) {
-      MethodSpec.Builder builder =
-          MethodSpec.methodBuilder("bind" + subClassName.simpleName()).addModifiers(PUBLIC).addModifiers(ABSTRACT);
+      MethodSpec.Builder builder = MethodSpec.methodBuilder("bind" + subClassName.simpleName())
+                                             .addModifiers(PUBLIC)
+                                             .addModifiers(ABSTRACT);
       builder.addAnnotation(CONTRIBUTESANDROIDINJECTOR);
       builder.returns(subClassName);
       result.addMethod(builder.build());
@@ -96,12 +101,12 @@ public class DaggerSet {
   }
 
   static final class Builder {
-    private final TypeName targetTypeName;
-    private final ClassName bindingClassName;
-    private DaggerBinding.Builder builder;
-    private final boolean isActivity;
+    private final TypeName              targetTypeName;
+    private final ClassName             bindingClassName;
+    private       DaggerBinding.Builder builder;
+    private final boolean               isActivity;
 
-    private Builder(TypeName targetTypeName, ClassName bindingClassName,boolean isActivity) {
+    private Builder(TypeName targetTypeName, ClassName bindingClassName, boolean isActivity) {
       this.targetTypeName = targetTypeName;
       this.bindingClassName = bindingClassName;
       this.isActivity = isActivity;
@@ -130,11 +135,11 @@ public class DaggerSet {
     }
 
     DaggerSet build() {
-      return new DaggerSet(targetTypeName, bindingClassName, builder.build(),isActivity);
+      return new DaggerSet(targetTypeName, bindingClassName, builder.build(), isActivity);
     }
   }
 
-  static Builder newBuilder(TypeElement enclosingElement,boolean isActivity) {
+  static Builder newBuilder(TypeElement enclosingElement, boolean isActivity) {
     TypeMirror typeMirror = enclosingElement.asType();
 
     TypeName targetType = TypeName.get(typeMirror);
@@ -142,8 +147,12 @@ public class DaggerSet {
       targetType = ((ParameterizedTypeName) targetType).rawType;
     }
 
-    String packageName = getPackage(enclosingElement).getQualifiedName().toString();
-    String className = enclosingElement.getQualifiedName().toString().substring(packageName.length() + 1).replace('.', '$');
+    String packageName = getPackage(enclosingElement).getQualifiedName()
+                                                     .toString();
+    String className = enclosingElement.getQualifiedName()
+                                       .toString()
+                                       .substring(packageName.length() + 1)
+                                       .replace('.', '$');
     ClassName bindingClassName = ClassName.get(packageName, className);
 
     return new Builder(targetType, bindingClassName, isActivity);
