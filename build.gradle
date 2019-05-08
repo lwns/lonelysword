@@ -1,103 +1,111 @@
 buildscript {
-  ext.kotlin_version = '1.2.50'
+    ext.kotlin_version = '1.2.50'
 
-  ext.versions = ['minSdk'        : 19,
-                  'compileSdk'    : 27,
-                  'supportLibrary': '27.0.2',
-                  'androidPlugin' : '3.1.2',
-                  'androidTools'  : '27.0.2',
-                  'kotlin'        : '1.2.30',
-                  'dagger'        : '2.11',
-                  'rxLifecycle'   : '2.2.1',
-                  'rxAndroid'     : '2.0.1',
-                  'javaxAnnotation'   : '1.0',
-                  'javaxInject'       : '1',
-                  'release'       : '8.8.1',
-                  'aspectj'       : '1.8.9',
-                  'arch'          : '1.1.1']
+    ext.versions = ['minSdk'         : 19,
+                    'compileSdk'     : 27,
+                    'supportLibrary' : '27.0.2',
+                    'androidPlugin'  : '3.1.2',
+                    'androidTools'   : '27.0.2',
+                    'kotlin'         : '1.2.30',
+                    'dagger'         : '2.11',
+                    'rxLifecycle'    : '2.2.1',
+                    'rxAndroid'      : '2.0.1',
+                    'javaxAnnotation': '1.0',
+                    'javaxInject'    : '1',
+                    'lonelysword'    : '0.4.6',
+                    'release'        : '8.8.1',
+                    'aspectj'        : '1.8.9',
+                    'arch'           : '1.1.1']
 
-  ext.deps = [android       : ['gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",],
-              'support'     : ['compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
-                               'appcompat'  : "com.android.support:appcompat-v7:${versions.supportLibrary}",
-                               'supportV4'  : "om.android.support:support-v4:${versions.supportLibrary}",
-                               'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
-                               'test'       : ['runner': 'com.android.support.test:runner:1.0.1',],],
-              'lint'        : ['core'  : "com.android.tools.lint:lint:${versions.androidTools}",
-                               'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
-                               'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
-                               'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",],
-              javapoet      : 'com.squareup:javapoet:1.10.0',
-              javaparser    : 'com.github.javaparser:javaparser-core:3.5.14',
-              junit         : 'junit:junit:4.12',
-              truth         : 'com.google.truth:truth:0.39',
-              robolectric   : 'org.robolectric:robolectric:3.7.1',
-              compiletesting: 'com.google.testing.compile:compile-testing:0.15',
-              'auto'        : ['service': 'com.google.auto.service:auto-service:1.0-rc4',
-                               'common' : 'com.google.auto:auto-common:0.10',],
-              'guava'       : 'com.google.guava:guava:24.0-jre',
-              'release'     : ['runtime' : "com.jakewharton:butterknife:${versions.release}",
-                               'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"],
+    ext.deps = [android       : ['gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",],
+                'support'     : ['compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
+                                 'appcompat'  : "com.android.support:appcompat-v7:${versions.supportLibrary}",
+                                 'supportV4'  : "om.android.support:support-v4:${versions.supportLibrary}",
+                                 'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
+                                 'test'       : ['runner': 'com.android.support.test:runner:1.0.1',],],
+                'lint'        : ['core'  : "com.android.tools.lint:lint:${versions.androidTools}",
+                                 'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
+                                 'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
+                                 'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",],
+                javapoet      : 'com.squareup:javapoet:1.10.0',
+                javaparser    : 'com.github.javaparser:javaparser-core:3.5.14',
+                junit         : 'junit:junit:4.12',
+                truth         : 'com.google.truth:truth:0.39',
+                robolectric   : 'org.robolectric:robolectric:3.7.1',
+                compiletesting: 'com.google.testing.compile:compile-testing:0.15',
+                'auto'        : ['service': 'com.google.auto.service:auto-service:1.0-rc4',
+                                 'common' : 'com.google.auto:auto-common:0.10',],
+                'guava'       : 'com.google.guava:guava:24.0-jre',
+                'release'     : ['runtime' : "com.jakewharton:butterknife:${versions.release}",
+                                 'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"],
 
-              'kotlin'      : [jdk   : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
-                               jre   : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
-                               lib   : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
-                               plugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"],
+                'kotlin'      : [jdk   : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
+                                 jre   : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
+                                 lib   : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
+                                 plugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"],
 
 
-              'javax'      : [annotation: "javax.annotation:jsr250-api:${versions.javaxAnnotation}",
-                              inject    : "javax.inject:javax.inject:${versions.javaxInject}"],
+                'javax'       : [annotation: "javax.annotation:jsr250-api:${versions.javaxAnnotation}",
+                                 inject    : "javax.inject:javax.inject:${versions.javaxInject}"],
 
-              'dagger'      : [compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
-                               android      : "com.google.dagger:dagger-android:${versions.dagger}",
-                               processor    : "com.google.dagger:dagger-android-processor:${versions.dagger}",
-                               daggerSupport: "com.google.dagger:dagger-android-support:${versions.dagger}"],
+                'dagger'      : [compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
+                                 android      : "com.google.dagger:dagger-android:${versions.dagger}",
+                                 processor    : "com.google.dagger:dagger-android-processor:${versions.dagger}",
+                                 daggerSupport: "com.google.dagger:dagger-android-support:${versions.dagger}"],
 
-              'rx'          : [rxLifecycle: "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxLifecycle}",
-                               rxAndroid  : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"],
+                'rx'          : [rxLifecycle: "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxLifecycle}",
+                                 rxAndroid  : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"],
 
-              'arch'        : [extensions: "android.arch.lifecycle:extensions:${versions.arch}",
-                               compiler  : "android.arch.lifecycle:compiler:${versions.arch}"],
-              'aspectj'     : [aspectjrt   : "org.aspectj:aspectjrt:${versions.aspectj}",
-                               aspectjtools: "org.aspectj:aspectjtools:${versions.aspectj}"]]
 
-  repositories {
-    google()
-    mavenCentral()
-    jcenter()
-    gradlePluginPortal()
-    maven { url "https://dl.bintray.com/timper/maven" }
-    maven {
-      url uri('repo')
+                'lonelysword' : [android        : "com.timper:lonelysword:${versions.lonelysword}",
+                                 androidCompiler: "com.timper:lonelysword-android-compiler:${versions.lonelysword}",
+                                 usecase        : "com.timper:lonelysword-usecase:${versions.lonelysword}",
+                                 usecaseCompiler: "com.timper:lonelysword-usecase-compiler:${versions.lonelysword}"],
+
+
+                'arch'        : [extensions: "android.arch.lifecycle:extensions:${versions.arch}",
+                                 compiler  : "android.arch.lifecycle:compiler:${versions.arch}"],
+                'aspectj'     : [aspectjrt   : "org.aspectj:aspectjrt:${versions.aspectj}",
+                                 aspectjtools: "org.aspectj:aspectjtools:${versions.aspectj}"]]
+
+    repositories {
+        google()
+//        maven { url "https://dl.bintray.com/timper/maven" }
+        mavenCentral()
+        jcenter()
+        gradlePluginPortal()
+        maven {
+            url '/Users/tangpeng.yang/workspace/lonelysword/repo'
+        }
     }
-  }
 
-  dependencies {
-    classpath deps.android.gradlePlugin
+    dependencies {
+        classpath deps.android.gradlePlugin
 
-    classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
-    classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0'
+        classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0'
 
-    classpath deps.aspectj.aspectjtools
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-  }
+        classpath deps.aspectj.aspectjtools
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
+    }
 }
 
 allprojects {
-  repositories {
-    google()
-    jcenter()
-    maven {
-      url uri('repo')
+    repositories {
+        google()
+//        maven { url "https://dl.bintray.com/timper/maven" }
+        jcenter()
+        maven {
+            url '/Users/tangpeng.yang/workspace/lonelysword/repo'
+        }
     }
-    maven { url "https://dl.bintray.com/timper/maven" }
-  }
 }
 
 task clean(type: Delete) {
-  delete rootProject.buildDir
+    delete rootProject.buildDir
 }
 task javadoc(type: Javadoc) {
-  options.encoding = "utf-8"
+    options.encoding = "utf-8"
 }

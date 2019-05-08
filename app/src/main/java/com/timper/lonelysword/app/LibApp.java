@@ -1,7 +1,8 @@
-package com.timper.lib.di;
+package com.timper.lonelysword.app;
 
 import android.app.Application;
 import com.timper.lonelysword.annotations.apt.DaggerApplication;
+import com.timper.lonelysword.app.di.DaggerAppComponent;
 import com.timper.lonelysword.dagger.DaggerMultiModule;
 import dagger.android.AndroidInjector;
 
@@ -13,13 +14,9 @@ import dagger.android.AndroidInjector;
  */
 @DaggerApplication
 public class LibApp extends DaggerMultiModule {
-  @Override
-  protected AndroidInjector<? extends DaggerMultiModule> applicationInjector() {
-    return null;
-  }
+    @Override
+    protected AndroidInjector<? extends DaggerMultiModule> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
+    }
 
-  @Override
-  public void afterApp(Application application) {
-
-  }
 }

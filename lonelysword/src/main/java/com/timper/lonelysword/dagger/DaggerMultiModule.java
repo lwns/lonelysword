@@ -44,11 +44,9 @@ public abstract class DaggerMultiModule implements HasActivityInjector, HasFragm
    */
   protected abstract AndroidInjector<? extends DaggerMultiModule> applicationInjector();
 
-  public void beforeApp(Application application) {
+  public void initDaggerMulti(Application application) {
     injectIfNecessary();
   }
-
-  public abstract void afterApp(Application application);
 
   private void injectIfNecessary() {
     if (needToInject) {

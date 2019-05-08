@@ -10,6 +10,6 @@ import java.util.Map;
  * FIXME
  */
 public class Warehouse {
-  // daggerMultiModules
-  static Map<String, Class<DaggerMultiModule>> daggerMultiModules = new HashMap<>();
+    // daggerMultiModules
+    public final static Map<String, DaggerMultiModule> daggerMultiModules = new HashMap<>();
 }

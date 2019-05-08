@@ -1,5 +1,6 @@
 package com.timper.lonelysword.app;
 
+import android.app.Application;
 import android.widget.Toast;
 import com.timper.lonelysword.LoginBinder;
 import com.timper.lonelysword.Lonelysword;
@@ -14,25 +15,30 @@ import dagger.android.AndroidInjector;
  * Description:
  * FIXME
  */
-public class MainApplication extends BaseApplication {
+public class MainApplication extends Application {
 
-  //@Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+    //@Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
 
-  @Override public void onCreate() {
-    super.onCreate();
+    @Override
+    public void onCreate() {
+        super.onCreate();
 
-    //DaggerAppComponent.builder().application(this).build().inject(this);
-    Lonelysword.setLoginBinder(new LoginBinder() {
-      @Override public void checkLogin() {
-        Toast.makeText(MainApplication.this, "go to login", Toast.LENGTH_SHORT).show();
-      }
-    });
-  }
+        Lonelysword.init(this);
+        //DaggerAppComponent.builder().application(this).build().inject(this);
+        Lonelysword.setLoginBinder(new LoginBinder() {
+            @Override
+            public void checkLogin() {
+                Toast.makeText(MainApplication.this, "go to login", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-  //@Override public AndroidInjector<Activity> activityInjector() {
-  //  return activityDispatchingAndroidInjector;
-  //}
-  @Override protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-    return DaggerAppComponent.builder().create(this);
-  }
+    //@Override public AndroidInjector<Activity> activityInjector() {
+    //  return activityDispatchingAndroidInjector;
+    //}
+//    @Override
+//    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+////        return DaggerAppComponent.builder().create(this);
+//        return null;
+//    }
 }

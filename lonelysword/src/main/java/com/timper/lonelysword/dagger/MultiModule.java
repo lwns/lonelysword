@@ -1,5 +1,7 @@
 package com.timper.lonelysword.dagger;
 
+import android.app.Application;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
@@ -16,5 +18,5 @@ public interface MultiModule {
    *
    * @param map input
    */
-  void saveAndroidModule(Map<String, DaggerMultiModule> map) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException;
+  void saveAndroidModule(Map<String, DaggerMultiModule> map, Application application) throws Exception;
 }

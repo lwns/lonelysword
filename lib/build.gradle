@@ -13,9 +13,9 @@ buildscript {
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'maven'
 
 android {
   compileSdkVersion 27
@@ -52,11 +52,22 @@ dependencies {
 //  api 'com.timper:lonelysword:0.1.0'
   implementation project(':lonelysword')
   implementation project(':lonelysword-usecase')
-  kapt project(':lonelysword-android-compiler')
-  kapt project(':lonelysword-usecase-compiler')
+  annotationProcessor project(':lonelysword-usecase-compiler')
+  annotationProcessor project(':lonelysword-android-compiler')
 
+  annotationProcessor deps.dagger.processor
+  annotationProcessor deps.dagger.compiler
   implementation deps.kotlin.lib
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.2'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+uploadArchives {
+  repositories.mavenDeployer {
+    repository(url: uri('../repo'))
+    pom.groupId = 'com.timper.lib.di'
+    pom.artifactId = 'lib'
+    pom.version = '1.0.5'
+  }
 }

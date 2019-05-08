@@ -1,9 +1,8 @@
 package com.timper.lonelysword.app.data.repository;
 
 import com.timper.lonelysword.app.data.MainRepository;
-import io.reactivex.Completable;
-import io.reactivex.Flowable;
-import io.reactivex.Observable;
+import io.reactivex.*;
+
 import javax.inject.Inject;
 
 /**
@@ -13,14 +12,32 @@ import javax.inject.Inject;
  * FIXME
  */
 public class MainRepositoryImp implements MainRepository {
-  @Inject public MainRepositoryImp() {
-  }
+    @Inject
+    public MainRepositoryImp() {
+    }
 
-  @Override public Flowable<String> getUser(String hellow) {
-    return null;
-  }
+    @Override
+    public Flowable<String> getUser(String hellow) {
+        return null;
+    }
 
-  @Override public Completable getUsers(String hellow) {
-    return null;
-  }
+    @Override
+    public Completable getUsers(String hellow) {
+        return null;
+    }
+
+    @Override
+    public Observable<String> getUsers1(String hellow) {
+        return null;
+    }
+
+    @Override
+    public Maybe<String> getUsers2(String hellow) {
+        return null;
+    }
+
+    @Override
+    public Single<String> getUsers3(String hellow) {
+        return null;
+    }
 }
