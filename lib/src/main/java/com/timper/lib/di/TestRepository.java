@@ -9,7 +9,7 @@ import io.reactivex.Flowable;
  * Description:
  * FIXME
  */
-public interface TestUseCase {
+public interface TestRepository {
 
     @UseCase
     Flowable<String> getUseCase();

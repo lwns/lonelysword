@@ -10,7 +10,7 @@ import lonelysword.di.AppModule$$lib;
 
 @Singleton
 @Component(modules = {
-        AndroidSupportInjectionModule.class, AppModule$$lib.class
+        AndroidSupportInjectionModule.class, DataModule.class, AppModule$$lib.class
 })
 public interface LibComponent extends AndroidInjector<LibDagger> {
 
