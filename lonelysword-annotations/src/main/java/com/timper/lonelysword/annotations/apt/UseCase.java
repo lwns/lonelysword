@@ -1,11 +1,11 @@
 package com.timper.lonelysword.annotations.apt;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.CLASS;
 
 /**
@@ -14,6 +14,25 @@ import static java.lang.annotation.RetentionPolicy.CLASS;
  * Description:
  * FIXME
  */
-@Documented  @Target(METHOD) @Retention(CLASS) public @interface UseCase {
-  String value() default "";
+@Documented
+@Target({METHOD, TYPE})
+@Retention(CLASS)
+public @interface UseCase {
+
+    /**
+     * 需要过滤的类型
+     *
+     * @return 类型
+     */
+    Class<?> name() default Object.class;
+
+    /**
+     * 变换类型
+     *
+     * @return
+     */
+    Class<?> transformer() default Object.class;
+
+    ;
+
 }

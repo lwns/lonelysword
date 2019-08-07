@@ -1,8 +1,7 @@
 package com.timper.lonelysword.app.data.remote;
 
 import com.timper.lib.di.BaseResponse;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableTransformer;
+import io.reactivex.*;
 import org.reactivestreams.Publisher;
 
 /**
@@ -11,9 +10,9 @@ import org.reactivestreams.Publisher;
  * Description:
  * FIXME
  */
-public class SigleErrorTransformer<T> implements FlowableTransformer<BaseResponse<T>,T> {
+public class SigleErrorTransformer<T> implements SingleTransformer<BaseResponse<T>,T> {
     @Override
-    public Publisher<T> apply(Flowable<BaseResponse<T>> upstream) {
+    public SingleSource<T> apply(Single<BaseResponse<T>> upstream) {
         return null;
     }
 }

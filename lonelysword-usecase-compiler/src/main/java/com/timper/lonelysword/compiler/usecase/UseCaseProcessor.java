@@ -7,39 +7,24 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.sun.tools.javac.code.Symbol;
 import com.sun.tools.javac.code.Type;
+import com.timper.lonelysword.annotations.apt.Dagger;
 import com.timper.lonelysword.annotations.apt.UseCase;
 import com.timper.lonelysword.compiler.Utils;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.lang.annotation.Annotation;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.processing.AbstractProcessor;
-import javax.annotation.processing.Filer;
-import javax.annotation.processing.ProcessingEnvironment;
-import javax.annotation.processing.Processor;
-import javax.annotation.processing.RoundEnvironment;
-import javax.annotation.processing.SupportedSourceVersion;
+import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ExecutableElement;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.VariableElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 import javax.tools.Diagnostic;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.lang.annotation.Annotation;
+import java.util.*;
 
-import static javax.lang.model.element.ElementKind.INTERFACE;
-import static javax.lang.model.element.ElementKind.METHOD;
+import static javax.lang.model.element.ElementKind.*;
 import static javax.lang.model.element.Modifier.PRIVATE;
 import static javax.lang.model.element.Modifier.STATIC;
 
@@ -146,50 +131,123 @@ public class UseCaseProcessor
 
     private void parseUseCase(Element element, Map<TypeElement, UseCaseSet.Builder> builderMap,
                               Set<TypeElement> erasedTargetNames) {
-        // This should be guarded by the annotation's @Target but it's worth a check for safe casting.
-        if (!(element instanceof ExecutableElement) || element.getKind() != METHOD) {
-            throw new IllegalStateException(String.format("@%s annotation must be on a method.", UseCase.class.getSimpleName()));
+        if ((element instanceof ExecutableElement) && element.getKind() == METHOD) {
+            ExecutableElement executableElement = (ExecutableElement) element;
+
+            if (checkElement(executableElement)) {
+                return;
+            }
+
+            List<AnnotationValue> ignoreClazz = getIgnoreClass(executableElement);
+
+            TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
+            parseExecutableElement(enclosingElement, executableElement, ignoreClazz, builderMap, erasedTargetNames);
+        } else if ((element instanceof TypeElement) && element.getKind() == INTERFACE) {
+            TypeElement enclosingElement = (TypeElement) element;
+
+            List<AnnotationValue> ignoreClazz = getIgnoreClass(element);
+            if (enclosingElement.getEnclosedElements() != null) {
+                for (Element mothodElement : enclosingElement.getEnclosedElements()) {
+                    if ((mothodElement instanceof ExecutableElement) && mothodElement.getKind() == METHOD) {
+                        if (checkElement((ExecutableElement) mothodElement)) {
+                            return;
+                        }
+                        parseExecutableElement(enclosingElement, (ExecutableElement) mothodElement, ignoreClazz, builderMap, erasedTargetNames);
+                    }
+                }
+            }
+        } else {
+            throw new IllegalStateException(String.format("@%s annotation must be on a method or class.", UseCase.class.getSimpleName()));
         }
+    }
 
-        ExecutableElement executableElement = (ExecutableElement) element;
-        TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
+    private List<AnnotationValue> getIgnoreClass(Element element) {
+        List<AnnotationValue> ignoreClazz = new ArrayList<>();
+        for (AnnotationMirror m : element.getAnnotationMirrors()) {
+            if (m.getAnnotationType()
+                    .toString()
+                    .equals(UseCase.class.getCanonicalName())) {
+                for (Map.Entry<? extends ExecutableElement, ? extends AnnotationValue> entry : m.getElementValues()
+                        .entrySet()) {
+                    if ("name".equals(entry.getKey()
+                            .getSimpleName()
+                            .toString())) {
+                        ignoreClazz.add(entry.getValue());
+                    } else if ("transformer".equals(entry.getKey()
+                            .getSimpleName()
+                            .toString())) {
+                        ignoreClazz.add(entry.getValue());
+                    }
+                }
+            }
+        }
+        return ignoreClazz;
+    }
 
+
+    private boolean checkElement(ExecutableElement executableElement) {
         // Verify that the method and its containing class are accessible via generated code.
-        boolean hasError = isInaccessibleViaGeneratedCode(UseCase.class, "methods", element);
-        hasError |= isBindingInWrongPackage(UseCase.class, element);
+        boolean hasError = isInaccessibleViaGeneratedCode(UseCase.class, "methods", executableElement);
+        hasError |= isBindingInWrongPackage(UseCase.class, executableElement);
 
+        return hasError;
+    }
+
+
+    private void parseExecutableElement(TypeElement enclosingElement, ExecutableElement executableElement, List<AnnotationValue> ignoreClazz, Map<TypeElement, UseCaseSet.Builder> builderMap,
+                                        Set<TypeElement> erasedTargetNames) {
+
+        boolean hasError = false;
         String name = executableElement.getSimpleName().toString();
+
+        Type.ClassType ignoreType = null;
+        Type.ClassType ignoreTransform = null;
 
         // Verify that the method no parameters.
         List<? extends VariableElement> methodParameters = executableElement.getParameters();
         if (methodParameters != null && methodParameters.size() > 1) {
-            error(element, "@%s methods have more than one parameters", UseCase.class);
+            error(executableElement, "@%s methods have more than one parameters", UseCase.class);
             hasError = true;
         }
-
         // Verify method return type matches the beforViews.
         TypeMirror returnType = executableElement.getReturnType();
         TypeName returnClassName = null;
-        TypeName returnRxClassName = null;
         if (!(returnType instanceof Type.ClassType)) {
-            error(element, "@%s methods return type is not a ClassType", returnType.toString());
+            error(executableElement, "@%s methods return type is not a ClassType", returnType.toString());
             hasError = true;
         } else {
             Type.ClassType classType = ((Type.ClassType) returnType);
 
-            returnRxClassName = getTypeName(classType);
+            if (ignoreClazz != null && ignoreClazz.size() == 2) {
+                Object typeObject = ignoreClazz.get(0).getValue();
+                if (typeObject instanceof Type.ClassType) {
+                    ignoreType = (Type.ClassType) typeObject;
+                } else {
+                    error(executableElement, "@%s annotation name must is an Class<?> object.", UseCase.class.getSimpleName());
+                    hasError = true;
+                }
+                Object transformerObject = ignoreClazz.get(1).getValue();
+                if (transformerObject instanceof Type.ClassType) {
+                    ignoreTransform = (Type.ClassType) transformerObject;
+                } else {
+                    error(executableElement, "@%s annotation transform must is an Class<?> object.", UseCase.class.getSimpleName());
+                    hasError = true;
+                }
+            }
+
+            returnClassName = getTypeName(classType, ignoreType);
 
             String reflectionName = null;
 
-            if (returnRxClassName instanceof ParameterizedTypeName) {
-                reflectionName = ((ParameterizedTypeName) returnRxClassName).rawType.reflectionName();
-            } else if (returnRxClassName instanceof ClassName) {
-                reflectionName = ((ClassName) returnRxClassName).reflectionName();
+            if (returnClassName instanceof ParameterizedTypeName) {
+                reflectionName = ((ParameterizedTypeName) returnClassName).rawType.reflectionName();
+            } else if (returnClassName instanceof ClassName) {
+                reflectionName = ((ClassName) returnClassName).reflectionName();
             }
 
             if (Utils.isEmpty(reflectionName)) {
-                error(element, "@%s return type must is  '%s','%s','%s','%s','%s' return type. (%s.%s)", UseCase.class, "Flowable", "Completable", "Maybe", "Observable", "Single",
-                        enclosingElement.getQualifiedName(), element.getSimpleName());
+                error(executableElement, "@%s return type must is  '%s','%s','%s','%s','%s' return type. (%s.%s)", UseCase.class, "Flowable", "Completable", "Maybe", "Observable", "Single",
+                        enclosingElement.getQualifiedName(), executableElement.getSimpleName());
                 hasError = true;
             }
 
@@ -200,52 +258,53 @@ public class UseCaseProcessor
                     && !reflectionName.equals(OBSERVABLE.reflectionName())
                     && !reflectionName.equals(SINGLE.reflectionName())) {
 
-                error(element, "@%s return type must is  '%s','%s','%s','%s','%s' return type. (%s.%s)", UseCase.class, "Flowable", "Completable", "Maybe", "Observable", "Single",
-                        enclosingElement.getQualifiedName(), element.getSimpleName());
+                error(executableElement, "@%s return type must is  '%s','%s','%s','%s','%s' return type. (%s.%s)", UseCase.class, "Flowable", "Completable", "Maybe", "Observable", "Single",
+                        enclosingElement.getQualifiedName(), executableElement.getSimpleName());
                 hasError = true;
             }
 
-            com.sun.tools.javac.util.List<Type> types = classType.allparams();
-            if (types != null && types.size() == 1) {
-                returnClassName = getTypeName(types.get(0));
-            } else if (types != null && types.size() > 1) {
-                error(element, "@%s return type Observable do not have more than one parameter type", UseCase.class, "Observable");
-                hasError = true;
-            }
-        }
-
-        UseCaseBinding.Builder builder = new UseCaseBinding.Builder(name);
-        UseCaseSet.Builder useCase = getOrCreateBindingBuilder(builderMap, enclosingElement);
-        if (!useCase.addUseCaseBinding(builder)) {
-            error(element, "@%s the same useCase name.", UseCase.class);
-            hasError = true;
         }
 
         if (hasError) {
             return;
         }
 
+        UseCaseBinding.Builder builder = new UseCaseBinding.Builder(name);
+        UseCaseSet.Builder useCase = getOrCreateBindingBuilder(builderMap, enclosingElement);
+
+        useCase.addUseCaseBinding(builder);//将UseCaseBinding.Builder，添加到UseCaseSet.Builder
+
         if (methodParameters != null && methodParameters.size() > 0) {
             TypeMirror typeMirror = methodParameters.get(0).asType();
-            TypeName parameter = getTypeName((Type.ClassType) typeMirror);
+            TypeName parameter = getTypeName((Type.ClassType) typeMirror, null);
             builder.addParameter(parameter);
-        } else {
         }
         builder.addReturnClass(returnClassName);
-        builder.addReturnRxClass(returnRxClassName);
+        if (ignoreType != null) {
+            builder.addIgnoreType(getTypeName(ignoreType, null));
+        }
+        if (ignoreTransform != null) {
+            builder.addTransformerType(getTypeName(ignoreTransform, null));
+        }
 
         builderMap.put(enclosingElement, useCase);
         erasedTargetNames.add(enclosingElement);
     }
 
-    private TypeName getTypeName(Type type) {
+    private TypeName getTypeName(Type type, Type.ClassType ignoreType) {
         TypeName[] typeNames = new TypeName[type.allparams().size()];
         if (type.allparams().size() > 0) {
             for (int i = 0; i < type.allparams().size(); i++) {
                 Type.ClassType classType = (Type.ClassType) type.allparams().get(i);
-                if (classType.allparams().size() > 0) {
-                    typeNames[i] = getTypeName(classType);
-                } else {
+                if (ignoreType != null && classType.tsym.flatName().toString().equals(ignoreType.tsym.flatName().toString())) {//过滤不需要记录的ClassType
+                    if (classType.allparams().size() > 0) {
+                        for (int n = 0; n < classType.allparams().size(); n++) {
+                            typeNames[i] = getTypeName(classType.allparams().get(n), ignoreType);
+                        }
+                    }
+                } else if (classType.allparams().size() > 0) {
+                    typeNames[i] = getTypeName(classType, ignoreType);
+                } else {//过滤不需要记录的ClassType
                     typeNames[i] = ClassName.get((Symbol.ClassSymbol) classType.tsym);
                 }
             }
@@ -289,14 +348,6 @@ public class UseCaseProcessor
                     enclosingElement.getQualifiedName(), element.getSimpleName());
             hasError = true;
         }
-
-        // Verify containing class visibility is not private.
-        if (enclosingElement.getModifiers().contains(PRIVATE)) {
-            error(enclosingElement, "@%s %s may not be contained in private classes. (%s.%s)", annotationClass.getSimpleName(),
-                    targetThing, enclosingElement.getQualifiedName(), element.getSimpleName());
-            hasError = true;
-        }
-
         return hasError;
     }
 

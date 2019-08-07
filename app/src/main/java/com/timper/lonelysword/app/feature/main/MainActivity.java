@@ -6,6 +6,7 @@ import android.view.View;
 import com.timper.lib.di.feature.LibActivity;
 import com.timper.lonelysword.annotations.apt.AfterViews;
 import com.timper.lonelysword.annotations.apt.Dagger;
+import com.timper.lonelysword.annotations.apt.DisableNetwork;
 import com.timper.lonelysword.annotations.apt.RootView;
 import com.timper.lonelysword.app.R;
 import com.timper.lonelysword.app.databinding.ActMainBinding;
@@ -25,10 +26,17 @@ public class MainActivity extends AppActivity<MainViewModel, ActMainBinding> {
 
     MainDialog dialog = new MainDialog();
 
+
+
+    @DisableNetwork
+    void disableNetwork(){
+
+    }
+
     public void onClick() {
 //    MainDialog dialog = new MainDialog();
 //    dialog.show(getSupportFragmentManager(), "adfasfsf");
-        LibActivity.instance(this);
+        LibActivity.Companion.instance(this);
     }
 
     @Override
@@ -45,7 +53,7 @@ public class MainActivity extends AppActivity<MainViewModel, ActMainBinding> {
         binding.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LibActivity.instance(MainActivity.this);
+                LibActivity.Companion.instance(MainActivity.this);
 //                MainDialog.instance()
 //                        .show(getSupportFragmentManager());
             }

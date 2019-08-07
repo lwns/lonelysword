@@ -1,5 +1,6 @@
 package com.timper.lonelysword.app.data.repository;
 
+import com.timper.lib.di.BaseResponse;
 import com.timper.lonelysword.app.data.MainRepository;
 import io.reactivex.*;
 
@@ -16,8 +17,9 @@ public class MainRepositoryImp implements MainRepository {
     public MainRepositoryImp() {
     }
 
+
     @Override
-    public Flowable<String> getUser(String hellow) {
+    public Flowable<BaseResponse<String>> getUser(String hellow) {
         return null;
     }
 
@@ -26,18 +28,18 @@ public class MainRepositoryImp implements MainRepository {
         return null;
     }
 
-    @Override
-    public Observable<String> getUsers1(String hellow) {
-        return null;
-    }
+//    @Override
+//    public Observable<String> getUsers1(String hellow) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Maybe<String> getUsers2(String hellow) {
+//        return null;
+//    }
 
     @Override
-    public Maybe<String> getUsers2(String hellow) {
-        return null;
-    }
-
-    @Override
-    public Single<String> getUsers3(String hellow) {
+    public Single<BaseResponse<String>> getUsers3(String hellow) {
         return null;
     }
 }

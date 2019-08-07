@@ -1,6 +1,10 @@
 package com.timper.lonelysword.app.data;
 
+import com.timper.lib.di.BaseResponse;
 import com.timper.lonelysword.annotations.apt.UseCase;
+import com.timper.lonelysword.annotations.apt.internal.Ignore;
+import com.timper.lonelysword.app.data.remote.ErrorTransformer;
+import com.timper.lonelysword.app.data.remote.SigleErrorTransformer;
 import io.reactivex.*;
 
 /**
@@ -9,20 +13,18 @@ import io.reactivex.*;
  * Description:
  * FIXME
  */
+@UseCase(name = BaseResponse.class,transformer = ErrorTransformer.class)
 public interface MainRepository {
-    @UseCase
-    Flowable<String> getUser(String hellow);
 
-    @UseCase
+    Flowable<BaseResponse<String>> getUser(String hellow);
+
     Completable getUsers(String hellow);
 
 
-    @UseCase
-    Observable<String> getUsers1(String hellow);
+//    Observable<String> getUsers1(String hellow);
+//
+//    Maybe<String> getUsers2(String hellow);
 
-    @UseCase
-    Maybe<String> getUsers2(String hellow);
-
-    @UseCase
-    Single<String> getUsers3(String hellow);
+    @UseCase(name = BaseResponse.class,transformer = SigleErrorTransformer.class)
+    Single<BaseResponse<String>> getUsers3(String hellow);
 }

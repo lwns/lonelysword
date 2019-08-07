@@ -15,8 +15,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 public abstract class CompletableUseCase<Params> {
 
-    private final ThreadExecutor threadExecutor;
-    private final PostExecutionThread postExecutionThread;
+    protected final ThreadExecutor threadExecutor;
+    protected final PostExecutionThread postExecutionThread;
 
     public CompletableUseCase(ThreadExecutor threadExecutor, PostExecutionThread postExecutionThread) {
         this.threadExecutor = threadExecutor;

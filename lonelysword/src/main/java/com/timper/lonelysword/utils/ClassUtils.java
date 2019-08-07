@@ -1,7 +1,5 @@
 package com.timper.lonelysword.utils;
 
-// Copy from galaxy sdk ${com.alibaba.android.galaxy.utils.ClassUtils}
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;

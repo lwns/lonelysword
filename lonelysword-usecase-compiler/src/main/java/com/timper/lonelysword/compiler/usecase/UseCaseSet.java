@@ -1,16 +1,13 @@
 package com.timper.lonelysword.compiler.usecase;
 
 import com.google.common.collect.ImmutableList;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterizedTypeName;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
+import com.google.common.collect.ImmutableMap;
+import com.squareup.javapoet.*;
+import com.sun.tools.javac.code.Type;
+import com.timper.lonelysword.compiler.Utils;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
@@ -37,6 +34,7 @@ public class UseCaseSet {
     private static final ClassName MAYBEUSECASE = ClassName.get("com.timper.lonelysword.data", "MaybeUseCase");
     private static final ClassName OBSERVABLEUSECASE = ClassName.get("com.timper.lonelysword.data", "ObservableUseCase");
     private static final ClassName SINGLEUSECASE = ClassName.get("com.timper.lonelysword.data", "SingleUseCase");
+    private static final ClassName USECASE = ClassName.get("com.timper.lonelysword.data", "UseCase");
 
     private static final ClassName INJECT = ClassName.get("javax.inject", "Inject");
     private static final ClassName POSTEXECUTIONTHREAD =
@@ -49,17 +47,18 @@ public class UseCaseSet {
     private static final ClassName MAYBE = ClassName.get("io.reactivex", "Maybe");
     private static final ClassName OBSERVABLE = ClassName.get("io.reactivex", "Observable");
     private static final ClassName SINGLE = ClassName.get("io.reactivex", "Single");
+    private static final ClassName SCHEDULERS = ClassName.get("io.reactivex.schedulers", "Schedulers");
 
-    private final ImmutableList<UseCaseBinding> useCaseBindings;
+    private final Map<String, UseCaseBinding> useCaseBindings;
 
-    public UseCaseSet(TypeName targetTypeName, ClassName bindingClassName, ImmutableList<UseCaseBinding> useCaseBindings) {
+    public UseCaseSet(TypeName targetTypeName, ClassName bindingClassName, Map<String, UseCaseBinding> useCaseBindings) {
         this.targetTypeName = targetTypeName;
         this.bindingClassName = bindingClassName;
         this.useCaseBindings = useCaseBindings;
     }
 
     void brewJava(Filer filer, int sdk, boolean debuggable) throws IOException {
-        for (UseCaseBinding binding : useCaseBindings) {
+        for (UseCaseBinding binding : useCaseBindings.values()) {
             JavaFile javaFile = JavaFile.builder(bindingClassName.packageName(), createType(binding, sdk, debuggable))
                     .addFileComment("Generated code from lonely sword. Do not modify!")
                     .build();
@@ -72,45 +71,54 @@ public class UseCaseSet {
         TypeSpec.Builder result = TypeSpec.classBuilder(className).addModifiers(PUBLIC);
         result.addModifiers(FINAL);
 
-        ClassName returnClass = null;
+//        ClassName returnClass = null;
 
         ParameterizedTypeName parameterizedTypeName = null;
 
         String reflectionName = null;
 
-        TypeName returnRxClassName = binding.getReturnRxClass();
+        TypeName returnClass = binding.getReturnClass();
 
-        if (returnRxClassName instanceof ParameterizedTypeName) {
-            reflectionName = ((ParameterizedTypeName) returnRxClassName).rawType.reflectionName();
-        } else if (returnRxClassName instanceof ClassName) {
-            reflectionName = ((ClassName) returnRxClassName).reflectionName();
+        if (returnClass instanceof ParameterizedTypeName) {
+            reflectionName = ((ParameterizedTypeName) returnClass).rawType.reflectionName();
+        } else if (returnClass instanceof ClassName) {
+            reflectionName = ((ClassName) returnClass).reflectionName();
         }
 
-        if (reflectionName.equals(FLOWABLE.reflectionName())) {
-            returnClass = FLOWABLE;
-            parameterizedTypeName = ParameterizedTypeName.get(FLOWABLEUSECASE,
-                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-        } else if (reflectionName.equals(COMPLETABLE.reflectionName())) {
-            returnClass = COMPLETABLE;
+        if (reflectionName.equals(COMPLETABLE.reflectionName())) {
             parameterizedTypeName = ParameterizedTypeName.get(COMPLETABLEUSECASE,
                     binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-        } else if (reflectionName.equals(MAYBE.reflectionName())) {
-            returnClass = MAYBE;
-            parameterizedTypeName = ParameterizedTypeName.get(MAYBEUSECASE,
-                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-        } else if (reflectionName.equals(OBSERVABLE.reflectionName())) {
-            returnClass = OBSERVABLE;
-            parameterizedTypeName = ParameterizedTypeName.get(OBSERVABLEUSECASE,
-                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-        } else if (reflectionName.equals(SINGLE.reflectionName())) {
-            returnClass = SINGLE;
-            parameterizedTypeName = ParameterizedTypeName.get(SINGLEUSECASE,
-                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
+        }else{
+            parameterizedTypeName = ParameterizedTypeName.get(USECASE,
+                    binding.getReturnClass() != null ? returnClass : ClassName.OBJECT,
                     binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
         }
+
+//        if (reflectionName.equals(FLOWABLE.reflectionName())) {
+//            returnClass = FLOWABLE;
+//            parameterizedTypeName = ParameterizedTypeName.get(FLOWABLEUSECASE,
+//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
+//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+//        } else if (reflectionName.equals(COMPLETABLE.reflectionName())) {
+//            returnClass = COMPLETABLE;
+//            parameterizedTypeName = ParameterizedTypeName.get(COMPLETABLEUSECASE,
+//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+//        } else if (reflectionName.equals(MAYBE.reflectionName())) {
+//            returnClass = MAYBE;
+//            parameterizedTypeName = ParameterizedTypeName.get(MAYBEUSECASE,
+//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
+//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+//        } else if (reflectionName.equals(OBSERVABLE.reflectionName())) {
+//            returnClass = OBSERVABLE;
+//            parameterizedTypeName = ParameterizedTypeName.get(OBSERVABLEUSECASE,
+//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
+//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+//        } else if (reflectionName.equals(SINGLE.reflectionName())) {
+//            returnClass = SINGLE;
+//            parameterizedTypeName = ParameterizedTypeName.get(SINGLEUSECASE,
+//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
+//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
+//        }
 
 
         result.superclass(parameterizedTypeName);
@@ -130,19 +138,33 @@ public class UseCaseSet {
 
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("buildUseCaseObservable").addAnnotation(OVERRIIDE).addModifiers(PROTECTED);
-        if (returnClass.reflectionName().equals(FLOWABLE.reflectionName())) {
-            ParameterizedTypeName typeName =
-                    ParameterizedTypeName.get(returnClass, binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT);
-            builder.returns(typeName);
-        } else {
-            builder.returns(returnClass);
-        }
+//        if (returnClass.reflectionName().equals(FLOWABLE.reflectionName())) {
+//            ParameterizedTypeName typeName =
+//                    ParameterizedTypeName.get(returnClass, binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT);
+//            builder.returns(typeName);
+//        } else {
+//            builder.returns(returnClass);
+//        }
+
+        builder.returns(returnClass);
         builder.addParameter(binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT, "request");
+        StringBuilder stringBuilder = new StringBuilder("return this.repository.$L");
+
         if (binding.getParameter() == null) {
-            builder.addStatement("return this.repository.$L()", binding.getName());
+            stringBuilder.append("()");
+//            builder.addStatement("return this.repository.$L()", binding.getName());
         } else {
-            builder.addStatement("return this.repository.$L(request)", binding.getName());
+            stringBuilder.append("(request)");
+//            builder.addStatement("return this.repository.$L(request)", binding.getName());
         }
+        stringBuilder.append(".subscribeOn($T.from(threadExecutor)).observeOn(postExecutionThread.getScheduler())");
+        if(binding.getTransformerType()!=null && !reflectionName.equals(COMPLETABLE.reflectionName())){
+            stringBuilder.append(".compose(new $T())");
+            builder.addStatement(CodeBlock.of(stringBuilder.toString(),binding.getName(),SCHEDULERS,binding.getTransformerType()));
+        }else{
+            builder.addStatement(CodeBlock.of(stringBuilder.toString(),binding.getName(),SCHEDULERS));
+        }
+
         result.addMethod(builder.build());
 
         return result.build();
@@ -158,21 +180,30 @@ public class UseCaseSet {
             this.bindingClassName = bindingClassName;
         }
 
-        public boolean addUseCaseBinding(UseCaseBinding.Builder builder) {
-            if (useCaseBindings.get(builder.getName()) == null) {
-                useCaseBindings.put(builder.getName(), builder);
-                return true;
-            } else {
-                return false;
-            }
+        /**
+         * 如果name 相同，UseCaseBinding.Builder直接覆盖
+         * @param builder
+         */
+        public void addUseCaseBinding(UseCaseBinding.Builder builder) {
+            useCaseBindings.put(builder.getName(), builder);
+//            if (useCaseBindings.get(builder.getName()) == null) {
+//                useCaseBindings.put(builder.getName(), builder);
+//                return true;
+//            } else {
+//                return false;
+//            }
         }
 
         UseCaseSet build() {
-            ImmutableList.Builder<UseCaseBinding> useCaseBindingBuilder = ImmutableList.builder();
-            for (UseCaseBinding.Builder builder : useCaseBindings.values()) {
-                useCaseBindingBuilder.add(builder.build());
+            Deque<Map.Entry<String, UseCaseBinding.Builder>> entries = new ArrayDeque<>(useCaseBindings.entrySet());
+            Map<String, UseCaseBinding> bindingMap = new HashMap();
+            while (!entries.isEmpty()) {
+                Map.Entry<String, UseCaseBinding.Builder> entry = entries.removeFirst();
+                String type = entry.getKey();
+                UseCaseBinding.Builder builder = entry.getValue();
+                bindingMap.put(type, builder.build());
             }
-            return new UseCaseSet(targetTypeName, bindingClassName, useCaseBindingBuilder.build());
+            return new UseCaseSet(targetTypeName, bindingClassName, bindingMap);
         }
     }
 

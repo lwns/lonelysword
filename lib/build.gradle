@@ -15,6 +15,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
 
 android {
@@ -45,18 +46,21 @@ android {
     enabled true
   }
 }
-
+kapt {
+  generateStubs = true
+  correctErrorTypes true
+}
 dependencies {
   implementation fileTree(dir: 'libs', include: ['*.jar'])
 
 //  api 'com.timper:lonelysword:0.1.0'
   implementation project(':lonelysword')
   implementation project(':lonelysword-usecase')
-  annotationProcessor project(':lonelysword-usecase-compiler')
-  annotationProcessor project(':lonelysword-android-compiler')
+  kapt project(':lonelysword-usecase-compiler')
+  kapt project(':lonelysword-android-compiler')
 
-  annotationProcessor deps.dagger.processor
-  annotationProcessor deps.dagger.compiler
+  kapt deps.dagger.processor
+  kapt deps.dagger.compiler
   implementation deps.kotlin.lib
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.2'

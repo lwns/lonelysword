@@ -43,23 +43,23 @@ gradle.projectsEvaluated {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-//    implementation project(':lib')
-    implementation 'com.timper.lib.di:lib:1.0.5'
+    implementation project(':lib')
+//    implementation 'com.timper.lib.di:lib:1.0.5'
 
-//    implementation project(':lonelysword')
-//    implementation project(':lonelysword-usecase')
-//    annotationProcessor project(':lonelysword-android-compiler')
-//    annotationProcessor project(':lonelysword-usecase-compiler')
+    implementation project(':lonelysword')
+    implementation project(':lonelysword-usecase')
+    annotationProcessor project(':lonelysword-android-compiler')
+    annotationProcessor project(':lonelysword-usecase-compiler')
 
 //    implementation deps.lonelysword.usecase
 //    annotationProcessor deps.lonelysword.usecaseCompiler
 //    implementation deps.lonelysword.android
 //    annotationProcessor deps.lonelysword.androidCompiler
 
-    implementation "com.timper:lonelysword:0.5.0"
-    implementation "com.timper:lonelysword-usecase:0.5.0"
-    annotationProcessor "com.timper:lonelysword-usecase-compiler:0.5.0"
-    annotationProcessor "com.timper:lonelysword-android-compiler:0.5.0"
+//    implementation "com.timper:lonelysword:0.5.0"
+//    implementation "com.timper:lonelysword-usecase:0.5.0"
+//    annotationProcessor "com.timper:lonelysword-usecase-compiler:0.5.0"
+//    annotationProcessor "com.timper:lonelysword-android-compiler:0.5.0"
 
     implementation deps.kotlin.lib
 

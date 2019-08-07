@@ -12,66 +12,81 @@ import com.timper.lonelysword.compiler.TypeBinding;
  */
 public class UseCaseBinding implements TypeBinding {
 
-  private final String name;
-  private final TypeName returnRxClass;
-  private final TypeName returnClass;
-  private final TypeName parameter;
-
-  public UseCaseBinding(TypeName returnRxClass, TypeName returnClass, String name, TypeName parameter) {
-    this.returnClass = returnClass;
-    this.returnRxClass = returnRxClass;
-    this.name = name;
-    this.parameter = parameter;
-  }
-
-  @Override public TypeSpec render() {
-    return null;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public TypeName getParameter() {
-    return parameter;
-  }
-
-  public TypeName getReturnClass() {
-    return returnClass;
-  }
-
-  public TypeName getReturnRxClass() {
-    return returnRxClass;
-  }
-
-  static final class Builder {
     private final String name;
-    private TypeName returnRxClass;
-    private TypeName returnClass;
-    private TypeName parameter;
+    private final TypeName returnClass;
+    private final TypeName parameter;
 
-    Builder(String name) {
-      this.name = name;
+
+    private TypeName ignoreType;
+    private TypeName transformerType;
+
+    public UseCaseBinding(TypeName returnClass, String name, TypeName parameter, TypeName ignoreType, TypeName transformerType) {
+        this.returnClass = returnClass;
+        this.name = name;
+        this.parameter = parameter;
+        this.ignoreType = ignoreType;
+        this.transformerType =transformerType;
+    }
+
+    @Override
+    public TypeSpec render() {
+        return null;
     }
 
     public String getName() {
-      return name;
+        return name;
     }
 
-    void addReturnClass(TypeName returnClass) {
-      this.returnClass = returnClass;
+    public TypeName getParameter() {
+        return parameter;
     }
 
-    void addReturnRxClass(TypeName returnRxClass) {
-      this.returnRxClass = returnRxClass;
+    public TypeName getReturnClass() {
+        return returnClass;
     }
 
-    void addParameter(TypeName parameter) {
-      this.parameter = parameter;
+    public TypeName getIgnoreType() {
+        return ignoreType;
     }
 
-    UseCaseBinding build() {
-      return new UseCaseBinding(returnRxClass, returnClass, name, parameter);
+    public TypeName getTransformerType() {
+        return transformerType;
     }
-  }
+
+    static final class Builder {
+        private final String name;
+        private TypeName returnClass;
+        private TypeName parameter;
+
+        private TypeName ignoreType;
+        private TypeName transformerType;
+
+        Builder(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        void addReturnClass(TypeName returnClass) {
+            this.returnClass = returnClass;
+        }
+
+        void addIgnoreType(TypeName ignoreType) {
+            this.ignoreType = ignoreType;
+        }
+
+        void addTransformerType(TypeName transformerType) {
+            this.transformerType = transformerType;
+        }
+
+        void addParameter(TypeName parameter) {
+            this.parameter = parameter;
+        }
+
+        UseCaseBinding build() {
+            return new UseCaseBinding(returnClass, name, parameter, ignoreType, transformerType);
+        }
+    }
 }
