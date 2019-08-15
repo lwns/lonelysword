@@ -20,7 +20,7 @@ import javax.inject.Inject;
 /**
  * User: tangpeng.yang
  * Date: 17/05/2018
- * Description:
+ * Description: mvvm activity
  * FIXME
  */
 public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBinding> extends AppCompatActivity

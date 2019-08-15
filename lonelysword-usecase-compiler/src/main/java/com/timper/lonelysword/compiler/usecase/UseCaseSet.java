@@ -1,27 +1,20 @@
 package com.timper.lonelysword.compiler.usecase;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.squareup.javapoet.*;
-import com.sun.tools.javac.code.Type;
-import com.timper.lonelysword.compiler.Utils;
 
-import java.io.IOException;
-import java.util.*;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
+import java.io.IOException;
+import java.util.*;
 
 import static com.google.auto.common.MoreElements.getPackage;
-import static javax.lang.model.element.Modifier.FINAL;
-import static javax.lang.model.element.Modifier.PRIVATE;
-import static javax.lang.model.element.Modifier.PROTECTED;
-import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.*;
 
 /**
  * User: tangpeng.yang
  * Date: 29/05/2018
- * Description:
+ * Description: 生成UseCase实体类
  * FIXME
  */
 public class UseCaseSet {
@@ -71,8 +64,6 @@ public class UseCaseSet {
         TypeSpec.Builder result = TypeSpec.classBuilder(className).addModifiers(PUBLIC);
         result.addModifiers(FINAL);
 
-//        ClassName returnClass = null;
-
         ParameterizedTypeName parameterizedTypeName = null;
 
         String reflectionName = null;
@@ -88,38 +79,11 @@ public class UseCaseSet {
         if (reflectionName.equals(COMPLETABLE.reflectionName())) {
             parameterizedTypeName = ParameterizedTypeName.get(COMPLETABLEUSECASE,
                     binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-        }else{
+        } else {
             parameterizedTypeName = ParameterizedTypeName.get(USECASE,
                     binding.getReturnClass() != null ? returnClass : ClassName.OBJECT,
                     binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
         }
-
-//        if (reflectionName.equals(FLOWABLE.reflectionName())) {
-//            returnClass = FLOWABLE;
-//            parameterizedTypeName = ParameterizedTypeName.get(FLOWABLEUSECASE,
-//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-//        } else if (reflectionName.equals(COMPLETABLE.reflectionName())) {
-//            returnClass = COMPLETABLE;
-//            parameterizedTypeName = ParameterizedTypeName.get(COMPLETABLEUSECASE,
-//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-//        } else if (reflectionName.equals(MAYBE.reflectionName())) {
-//            returnClass = MAYBE;
-//            parameterizedTypeName = ParameterizedTypeName.get(MAYBEUSECASE,
-//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-//        } else if (reflectionName.equals(OBSERVABLE.reflectionName())) {
-//            returnClass = OBSERVABLE;
-//            parameterizedTypeName = ParameterizedTypeName.get(OBSERVABLEUSECASE,
-//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-//        } else if (reflectionName.equals(SINGLE.reflectionName())) {
-//            returnClass = SINGLE;
-//            parameterizedTypeName = ParameterizedTypeName.get(SINGLEUSECASE,
-//                    binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT,
-//                    binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT);
-//        }
-
 
         result.superclass(parameterizedTypeName);
 
@@ -138,13 +102,6 @@ public class UseCaseSet {
 
         MethodSpec.Builder builder =
                 MethodSpec.methodBuilder("buildUseCaseObservable").addAnnotation(OVERRIIDE).addModifiers(PROTECTED);
-//        if (returnClass.reflectionName().equals(FLOWABLE.reflectionName())) {
-//            ParameterizedTypeName typeName =
-//                    ParameterizedTypeName.get(returnClass, binding.getReturnClass() != null ? binding.getReturnClass() : ClassName.OBJECT);
-//            builder.returns(typeName);
-//        } else {
-//            builder.returns(returnClass);
-//        }
 
         builder.returns(returnClass);
         builder.addParameter(binding.getParameter() != null ? binding.getParameter() : ClassName.OBJECT, "request");
@@ -152,17 +109,15 @@ public class UseCaseSet {
 
         if (binding.getParameter() == null) {
             stringBuilder.append("()");
-//            builder.addStatement("return this.repository.$L()", binding.getName());
         } else {
             stringBuilder.append("(request)");
-//            builder.addStatement("return this.repository.$L(request)", binding.getName());
         }
         stringBuilder.append(".subscribeOn($T.from(threadExecutor)).observeOn(postExecutionThread.getScheduler())");
-        if(binding.getTransformerType()!=null && !reflectionName.equals(COMPLETABLE.reflectionName())){
+        if (binding.getTransformerType() != null && !reflectionName.equals(COMPLETABLE.reflectionName())) {
             stringBuilder.append(".compose(new $T())");
-            builder.addStatement(CodeBlock.of(stringBuilder.toString(),binding.getName(),SCHEDULERS,binding.getTransformerType()));
-        }else{
-            builder.addStatement(CodeBlock.of(stringBuilder.toString(),binding.getName(),SCHEDULERS));
+            builder.addStatement(CodeBlock.of(stringBuilder.toString(), binding.getName(), SCHEDULERS, binding.getTransformerType()));
+        } else {
+            builder.addStatement(CodeBlock.of(stringBuilder.toString(), binding.getName(), SCHEDULERS));
         }
 
         result.addMethod(builder.build());
@@ -182,16 +137,11 @@ public class UseCaseSet {
 
         /**
          * 如果name 相同，UseCaseBinding.Builder直接覆盖
+         *
          * @param builder
          */
         public void addUseCaseBinding(UseCaseBinding.Builder builder) {
             useCaseBindings.put(builder.getName(), builder);
-//            if (useCaseBindings.get(builder.getName()) == null) {
-//                useCaseBindings.put(builder.getName(), builder);
-//                return true;
-//            } else {
-//                return false;
-//            }
         }
 
         UseCaseSet build() {

@@ -70,7 +70,7 @@ buildscript {
 
     repositories {
         google()
-//        maven { url "https://dl.bintray.com/timper/maven" }
+        maven { url "https://dl.bintray.com/timper/maven" }
         mavenCentral()
         jcenter()
         gradlePluginPortal()
@@ -95,7 +95,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-//        maven { url "https://dl.bintray.com/timper/maven" }
+        maven { url "https://dl.bintray.com/timper/maven" }
         jcenter()
         maven {
             url '/Users/tangpeng.yang/workspace/lonelysword/repo'

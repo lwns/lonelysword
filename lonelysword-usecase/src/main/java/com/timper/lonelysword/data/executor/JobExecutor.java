@@ -24,7 +24,7 @@ import javax.inject.Inject;
 /**
  * User: tangpeng.yang
  * Date: 13/03/2018
- * Description:{@link ThreadPoolExecutor}
+ * Description:{@link ThreadPoolExecutor} 工作线程池
  * FIXME
  */
 public class JobExecutor implements ThreadExecutor {

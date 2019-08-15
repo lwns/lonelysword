@@ -53,12 +53,7 @@ public abstract class DaggerApplication extends Application implements HasActivi
   protected abstract AndroidInjector<? extends DaggerApplication> applicationInjector();
 
   /**
-   * Lazily injects the {@link dagger.android.DaggerApplication}'s members. Injection cannot be performed in {@link
-   * Application#onCreate()} since {@link android.content.ContentProvider}s' {@link
-   * android.content.ContentProvider#onCreate() onCreate()} method will be called first and might
-   * need injected members on the application. Injection is not performed in the the constructor, as
-   * that may result in members-injection methods being called before the constructor has completed,
-   * allowing for a partially-constructed instance to escape.
+   * application oncreate方法执行，参考dagger2  DaggerApplication类
    */
   private void injectIfNecessary() {
     if (needToInject) {
@@ -105,9 +100,6 @@ public abstract class DaggerApplication extends Application implements HasActivi
     return supportFragmentInjector;
   }
 
-  // injectIfNecessary is called here but not on the other *Injector() methods because it is the
-  // only one that should be called (in AndroidInjection.inject(ContentProvider)) before
-  // Application.onCreate()
   @Override
   public AndroidInjector<ContentProvider> contentProviderInjector() {
     injectIfNecessary();

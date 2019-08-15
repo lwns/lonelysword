@@ -9,9 +9,8 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/lib" />
-            <option value="$PROJECT_DIR$/lib2" />
+            <option value="$PROJECT_DIR$/demo/app" />
+            <option value="$PROJECT_DIR$/demo/module" />
             <option value="$PROJECT_DIR$/lonelysword" />
             <option value="$PROJECT_DIR$/lonelysword-android-compiler" />
             <option value="$PROJECT_DIR$/lonelysword-annotations" />

@@ -1,6 +1,9 @@
-include 'app'
-include ':lib', ':lib2'
-//include ':test', ':testlib'
+include ':app'
+include ':module'
+
+
+project(':app').projectDir = file('demo/app')
+project(':module').projectDir = file('demo/module')
 
 include ':lonelysword'
 include ':lonelysword-android-compiler'

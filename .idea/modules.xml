@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib2/lib2.iml" filepath="$PROJECT_DIR$/lib2/lib2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/app/app.iml" filepath="$PROJECT_DIR$/demo/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword/lonelysword.iml" filepath="$PROJECT_DIR$/lonelysword/lonelysword.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-android-compiler/lonelysword-android-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-android-compiler/lonelysword-android-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-annotations/lonelysword-annotations.iml" filepath="$PROJECT_DIR$/lonelysword-annotations/lonelysword-annotations.iml" />
@@ -13,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/lonelysword-plugin/lonelysword-plugin.iml" filepath="$PROJECT_DIR$/lonelysword-plugin/lonelysword-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase/lonelysword-usecase.iml" filepath="$PROJECT_DIR$/lonelysword-usecase/lonelysword-usecase.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-usecase-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-usecase-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/demo/module/module.iml" filepath="$PROJECT_DIR$/demo/module/module.iml" />
     </modules>
   </component>
 </project>

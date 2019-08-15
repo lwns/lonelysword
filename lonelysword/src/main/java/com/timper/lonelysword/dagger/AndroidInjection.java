@@ -29,11 +29,8 @@ public final class AndroidInjection {
     private static final String TAG = "dagger.android";
 
     /**
-     * Injects {@code activity} if an associated {@link AndroidInjector} implementation can be found,
-     * otherwise throws an {@link IllegalArgumentException}.
-     *
-     * @throws RuntimeException if the {@link Application} doesn't implement {@link
-     *                          HasActivityInjector}.
+     * inject到activity类，参考dagger2  AndroidInjection类
+     * @param activity
      */
     public static void inject(Activity activity) {
         checkNotNull(activity, "activity");
@@ -63,25 +60,8 @@ public final class AndroidInjection {
     }
 
     /**
-     * Injects {@code fragment} if an associated {@link AndroidInjector} implementation can be found,
-     * otherwise throws an {@link IllegalArgumentException}.
-     *
-     * <p>Uses the following algorithm to find the appropriate {@code AndroidInjector<Fragment>} to
-     * use to inject {@code fragment}:
-     *
-     * <ol>
-     * <li>Walks the parent-fragment hierarchy to find the a fragment that implements {@link
-     * HasFragmentInjector}, and if none do
-     * <li>Uses the {@code fragment}'s {@link Fragment#getActivity() activity} if it implements
-     * {@link HasFragmentInjector}, and if not
-     * <li>Uses the {@link android.app.Application} if it implements {@link HasFragmentInjector}.
-     * </ol>
-     * <p>
-     * If none of them implement {@link HasFragmentInjector}, a {@link IllegalArgumentException} is
-     * thrown.
-     *
-     * @throws IllegalArgumentException if no parent fragment, activity, or application implements
-     *                                  {@link HasFragmentInjector}.
+     * inject到fragment类，参考dagger2  AndroidInjection类
+     * @param fragment
      */
     public static void inject(Fragment fragment) {
         checkNotNull(fragment, "fragment");
@@ -121,11 +101,8 @@ public final class AndroidInjection {
     }
 
     /**
-     * Injects {@code service} if an associated {@link AndroidInjector} implementation can be found,
-     * otherwise throws an {@link IllegalArgumentException}.
-     *
-     * @throws RuntimeException if the {@link Application} doesn't implement {@link
-     *                          HasServiceInjector}.
+     * inject到service类，参考dagger2  AndroidInjection类
+     * @param service
      */
     public static void inject(Service service) {
         checkNotNull(service, "service");
@@ -148,11 +125,8 @@ public final class AndroidInjection {
     }
 
     /**
-     * Injects {@code broadcastReceiver} if an associated {@link AndroidInjector} implementation can
-     * be found, otherwise throws an {@link IllegalArgumentException}.
-     *
-     * @throws RuntimeException if the {@link Application} from {@link
-     *                          Context#getApplicationContext()} doesn't implement {@link HasBroadcastReceiverInjector}.
+     * inject到broadcastReceiver类，参考dagger2  AndroidInjection类
+     * @param broadcastReceiver
      */
     public static void inject(BroadcastReceiver broadcastReceiver, Context context) {
         checkNotNull(broadcastReceiver, "broadcastReceiver");
@@ -177,11 +151,8 @@ public final class AndroidInjection {
     }
 
     /**
-     * Injects {@code contentProvider} if an associated {@link AndroidInjector} implementation can be
-     * found, otherwise throws an {@link IllegalArgumentException}.
-     *
-     * @throws RuntimeException if the {@link Application} doesn't implement {@link
-     *                          HasContentProviderInjector}.
+     * inject到contentProvider类，参考dagger2  AndroidInjection类
+     * @param contentProvider
      */
     public static void inject(ContentProvider contentProvider) {
         checkNotNull(contentProvider, "contentProvider");

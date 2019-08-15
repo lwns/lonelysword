@@ -2,11 +2,10 @@ package com.timper.lonelysword.logger;
 
 
 /**
- * Logger
- *
- * @author
- * @version 1.0
- * @since 16/5/16 下午5:39
+ * User: tangpeng.yang
+ * Date: 2019/3/16
+ * Description: logger日志类
+ * FIXME
  */
 public interface ILogger {
 

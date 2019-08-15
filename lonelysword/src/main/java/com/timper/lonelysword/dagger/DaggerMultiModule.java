@@ -93,9 +93,6 @@ public abstract class DaggerMultiModule implements HasActivityInjector, HasFragm
     return supportFragmentInjector;
   }
 
-  // injectIfNecessary is called here but not on the other *Injector() methods because it is the
-  // only one that should be called (in AndroidInjection.inject(ContentProvider)) before
-  // Application.onCreate()
   @Override
   public AndroidInjector<ContentProvider> contentProviderInjector() {
     injectIfNecessary();

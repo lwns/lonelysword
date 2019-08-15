@@ -53,7 +53,7 @@ public class Lonelysword {
     public static final String DAGGERMULTI = "MultiModule$$";
 
     /**
-     * Lonelysword init, load all metas in memory. Demand initialization
+     * Lonelysword init, 加载所有的module至内存
      */
     public synchronized static void init(Application context) {
         try {

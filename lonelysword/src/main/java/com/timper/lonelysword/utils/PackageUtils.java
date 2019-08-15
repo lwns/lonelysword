@@ -12,11 +12,10 @@ import static com.timper.lonelysword.Lonelysword.SP_CACHE_KEY;
 
 
 /**
- * Android package utils
- *
- * @author
- * @version 1.0
- * @since 2017/8/8 下午8:19
+ * User: tangpeng.yang
+ * Date: 2019/3/16
+ * Description: 参考Aroute
+ * FIXME
  */
 public class PackageUtils {
     private static String NEW_VERSION_NAME;

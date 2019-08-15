@@ -4,7 +4,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 /**
- *
+ * User: tangpeng.yang
+ * Date: 2019/3/16
+ * Description: logger日志类
+ * FIXME
  */
 public class DefaultLogger implements ILogger {
 

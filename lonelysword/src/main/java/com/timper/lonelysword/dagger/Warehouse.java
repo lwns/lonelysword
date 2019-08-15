@@ -6,10 +6,10 @@ import java.util.Map;
 /**
  * User: tangpeng.yang
  * Date: 2019/3/16
- * Description:
+ * Description: 将记录整个app所有的DaggerMultiModule。有多少module就就记录多少DaggerMultiModule。
  * FIXME
  */
 public class Warehouse {
-    // daggerMultiModules
+    // 将记录整个app所有的DaggerMultiModule。有多少module就就记录多少DaggerMultiModule。
     public final static Map<String, DaggerMultiModule> daggerMultiModules = new HashMap<>();
 }

@@ -7,7 +7,7 @@ import com.timper.lonelysword.compiler.TypeBinding;
 /**
  * User: tangpeng.yang
  * Date: 29/05/2018
- * Description:
+ * Description: UseCaseBinding实体类
  * FIXME
  */
 public class UseCaseBinding implements TypeBinding {

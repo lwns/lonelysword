@@ -19,11 +19,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Scanner, find out class with any conditions, copy from google source code.
- *
- * @author
- * @version 1.0
- * @since 16/6/27 下午10:58
+ * User: tangpeng.yang
+ * Date: 2019/3/16
+ * Description: 参考Aroute
+ * FIXME
  */
 public class ClassUtils {
     private static final String EXTRACTED_NAME_EXT = ".classes";

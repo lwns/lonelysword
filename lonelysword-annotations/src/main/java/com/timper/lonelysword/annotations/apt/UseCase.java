@@ -24,7 +24,7 @@ public @interface UseCase {
      *
      * @return 类型
      */
-    Class<?> name() default Object.class;
+    Class<?> ignore() default Object.class;
 
     /**
      * 变换类型
@@ -32,7 +32,5 @@ public @interface UseCase {
      * @return
      */
     Class<?> transformer() default Object.class;
-
-    ;
 
 }

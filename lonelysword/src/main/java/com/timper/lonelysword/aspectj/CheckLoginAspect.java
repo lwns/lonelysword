@@ -10,7 +10,7 @@ import org.aspectj.lang.annotation.Pointcut;
 /**
  * User: tangpeng.yang
  * Date: 25/05/2018
- * Description:
+ * Description: 检查是否login 切面
  * FIXME
  */
 @Aspect public class CheckLoginAspect {

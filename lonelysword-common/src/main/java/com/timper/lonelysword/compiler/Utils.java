@@ -35,7 +35,7 @@ public class Utils {
   }
 
   /**
-   * is interface
+   * 是否是接口
    *
    * @param typeMirror typemirror
    * @return ture
@@ -45,7 +45,7 @@ public class Utils {
   }
 
   /**
-   * get Annotation mirror
+   * 获取注解镜像
    *
    * @param element element
    * @param annotation annotation
@@ -63,7 +63,7 @@ public class Utils {
   /**
    * @param typeMirror typemirror
    * @param otherType othertype
-   * @return typeMirror's supper type is otherType?
+   * @return typeMirror的超类是否是othertype
    */
   public static boolean isSubtypeOfType(TypeMirror typeMirror, String otherType) {
     if (isTypeEqual(typeMirror, otherType)) {
@@ -107,14 +107,14 @@ public class Utils {
   }
 
   /**
-   * is type equal
+   * 判断类型是否相等
    */
   private static boolean isTypeEqual(TypeMirror typeMirror, String otherType) {
     return otherType.equals(typeMirror.toString());
   }
 
   /**
-   * Finds the parent binder type in the supplied set, if any.
+   * typeElement是否在parents的集合类型里
    * @param typeElement typeelement
    * @param parents parents
    * @return typeelement

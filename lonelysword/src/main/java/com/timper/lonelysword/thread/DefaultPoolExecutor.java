@@ -1,17 +1,15 @@
 package com.timper.lonelysword.thread;
 
 
-import android.text.TextUtils;
 import com.timper.lonelysword.Lonelysword;
 
 import java.util.concurrent.*;
 
 /**
- * Executors
- *
- * @author 正纬 <a href="mailto:zhilong.liu@aliyun.com">Contact me.</a>
- * @version 1.0
- * @since 16/4/28 下午4:07
+ * User: tangpeng.yang
+ * Date: 2019/3/16
+ * Description: 参考Aroute
+ * FIXME
  */
 public class DefaultPoolExecutor extends ThreadPoolExecutor {
     //    Thread args

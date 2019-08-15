@@ -20,9 +20,7 @@ import java.util.concurrent.Executor;
 /**
  * User: tangpeng.yang
  * Date: 13/03/2018
- * Description: Executor implementation can be based on different frameworks or techniques of asynchronous
- * execution, but every implementation will execute the
- * {@link } out of the UI thread.
+ * Description: 工作线程池
  * FIXME
  */
 public interface ThreadExecutor extends Executor {}

@@ -20,9 +20,7 @@ import io.reactivex.Scheduler;
 /**
  * User: tangpeng.yang
  * Date: 13/03/2018
- * Description: Thread abstraction created to change the execution context from any thread to any other thread.
- * Useful to encapsulate a UI Thread for example, since some job will be done in background, an
- * implementation of this interface will change context and update the UI.
+ * Description: 主线程
  * FIXME
  */
 public interface PostExecutionThread {
