@@ -1,0 +1,76 @@
+buildscript {
+  repositories {
+    mavenCentral()
+    jcenter()
+    google()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+  }
+
+  dependencies {
+    classpath "com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT"
+  }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.jakewharton.butterknife'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'maven'
+
+android {
+  compileSdkVersion 27
+
+  defaultConfig {
+    minSdkVersion 15
+    targetSdkVersion 27
+    versionCode 1
+    versionName "1.0"
+
+    javaCompileOptions {
+      annotationProcessorOptions {
+        arguments = [ MODULE_NAME : project.getName() ]
+      }
+    }
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled false
+      proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+    }
+  }
+
+  dataBinding {
+    enabled true
+  }
+}
+kapt {
+  generateStubs = true
+  correctErrorTypes true
+}
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  implementation project(':lonelysword')
+  implementation project(':lonelysword-usecase')
+  kapt project(':lonelysword-usecase-compiler')
+  kapt project(':lonelysword-android-compiler')
+
+  kapt deps.dagger.processor
+  kapt deps.dagger.compiler
+  implementation deps.kotlin.lib
+  testImplementation 'junit:junit:4.12'
+  androidTestImplementation 'com.android.support.test:runner:1.0.2'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+uploadArchives {
+  repositories.mavenDeployer {
+    repository(url: uri('../repo'))
+    pom.groupId = 'com.timper.lib.di'
+    pom.artifactId = 'lib'
+    pom.version = '1.0.5'
+  }
+}
