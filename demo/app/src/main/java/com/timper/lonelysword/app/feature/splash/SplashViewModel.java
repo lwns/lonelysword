@@ -15,10 +15,6 @@ import javax.inject.Inject;
 @ActivityScope public class SplashViewModel extends AppViewModel {
   GetUserUseCase userUseCase;
 
-  public interface Navigation {
-    void gotoMain();
-  }
-
   public ObservableField<String> hellow = new ObservableField<>("sdfadf");
 
   @Inject public SplashViewModel(GetUserUseCase userUseCase) {

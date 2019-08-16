@@ -1,6 +1,6 @@
 package com.timper.lonelysword.app.data.repository;
 
-import com.timper.lib.di.BaseResponse;
+import com.timper.module.data.BaseResponse;
 import com.timper.lonelysword.app.data.MainRepository;
 import io.reactivex.*;
 

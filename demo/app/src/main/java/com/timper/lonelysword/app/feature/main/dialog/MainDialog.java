@@ -5,6 +5,7 @@ import com.timper.lonelysword.annotations.apt.Dagger;
 import com.timper.lonelysword.annotations.apt.RootView;
 import com.timper.lonelysword.app.R;
 import com.timper.lonelysword.app.databinding.DlgMainBinding;
+import com.timper.lonelysword.app.feature.main.MainActivity;
 import com.timper.lonelysword.base.AppDialog;
 
 /**
@@ -13,7 +14,7 @@ import com.timper.lonelysword.base.AppDialog;
  * Description:
  * FIXME
  */
-@Dagger
+@Dagger(MainActivity.class)
 @RootView(R.layout.dlg_main)
 public class MainDialog extends AppDialog<DlgViewModel, DlgMainBinding> {
 

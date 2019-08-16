@@ -26,7 +26,6 @@ import javax.inject.Inject;
 public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBinding> extends AppCompatActivity
         implements HasFragmentInjector, HasSupportFragmentInjector {
 
-    private Unbinder unbinder;
     public FragmentManager fragmentManager;
     public T binding;
     public V viewModel;
@@ -42,12 +41,8 @@ public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBind
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         AndroidInjection.inject(this);
         fragmentManager = getSupportFragmentManager();
-        unbinder = Lonelysword.bind(this);
-        unbinder.beforeViews();
         super.onCreate(savedInstanceState);
-        unbinder.initViews();
-        unbinder.afterViews();
-        getLifecycle().addObserver(unbinder);
+        Lonelysword.bind(this);
     }
 
     @Override
@@ -64,36 +59,5 @@ public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBind
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(containerViewId, fragment);
         fragmentTransaction.commit();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        unbinder.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        unbinder.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        unbinder.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unbinder.onStop();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbinder.onDestroy();
-        unbinder.unbind();
     }
 }

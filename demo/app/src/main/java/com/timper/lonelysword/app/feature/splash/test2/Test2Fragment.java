@@ -16,6 +16,5 @@ import com.timper.lonelysword.base.AppFragment;
 
   @AfterViews
   void afterViews(){
-    binding.setViewModel(viewModel);
   }
 }

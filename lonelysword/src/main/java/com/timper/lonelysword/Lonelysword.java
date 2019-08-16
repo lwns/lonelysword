@@ -106,20 +106,20 @@ public class Lonelysword {
      * @param target Target activity for view binding.
      * @return unbinder object
      */
-    @NonNull
-    @UiThread
-    public static Unbinder bind(@NonNull Activity target) {
-        View sourceView = target.getWindow().getDecorView();
-        return bind(target, sourceView);
-    }
+//    @NonNull
+//    @UiThread
+//    public static Unbinder bind(@NonNull Activity target) {
+////        View sourceView = target.getWindow().getDecorView();
+//        return createBinding(target);
+//    }
 
     @NonNull
     @UiThread
-    public static Unbinder bind(@NonNull Object target, View view) {
-        return createBinding(target, view);
+    public static Unbinder bind(@NonNull Object target) {
+        return createBinding(target);
     }
 
-    private static Unbinder createBinding(@NonNull Object target, View view) {
+    private static Unbinder createBinding(@NonNull Object target) {
         Class<?> targetClass = target.getClass();
         if (debug) Log.d(TAG, "Looking up binding for " + targetClass.getName());
         Constructor<? extends Unbinder> constructor = findBindingConstructorForClass(targetClass);
@@ -129,7 +129,7 @@ public class Lonelysword {
         }
 
         try {
-            return constructor.newInstance(target, view);
+            return constructor.newInstance(target);
         } catch (IllegalAccessException e) {
             throw new RuntimeException("Unable to invoke " + constructor, e);
         } catch (InstantiationException e) {
@@ -164,7 +164,7 @@ public class Lonelysword {
         try {
             Class<?> bindingClass = cls.getClassLoader().loadClass(packageName + ".LonelySword_" + clsName);
             //noinspection unchecked
-            bindingCtor = (Constructor<? extends Unbinder>) bindingClass.getConstructor(cls, View.class);
+            bindingCtor = (Constructor<? extends Unbinder>) bindingClass.getConstructor(cls);
             if (debug) Log.d(TAG, "HIT: Loaded binding class and constructor.");
         } catch (ClassNotFoundException e) {
             if (debug) Log.d(TAG, "Not found. Trying superclass " + cls.getSuperclass().getName());

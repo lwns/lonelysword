@@ -17,7 +17,6 @@ public class RootViewBinding implements ResourceBinding {
 
   private final boolean isActivity;
   private final boolean isFragment;
-  // viewModel className
   private final ClassName className;
 
   RootViewBinding(Id id, ClassName className, boolean isActivity, boolean isFragment) {
@@ -42,13 +41,11 @@ public class RootViewBinding implements ResourceBinding {
         return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n"
                 + "target.binding.setVariable($T.view,target);\n"
                 + "target.binding.setVariable($T.viewModel,target.viewModel);\n"
-            //+ "target.viewModel.setBinding(target.binding);\n"
             , DATABINDINGUTIL, id.code, br, br);
       } else {
         return CodeBlock.of("target.binding = $T.setContentView(target, $L);\n"
                 + "target.binding.setView(target);\n"
                 + "target.binding.setViewModel(target.viewModel);\n"
-            //+ "target.viewModel.setBinding(target.binding);\n"
             , DATABINDINGUTIL, id.code);
       }
     } else if (isFragment) {
@@ -57,7 +54,6 @@ public class RootViewBinding implements ResourceBinding {
             + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
             + "      target.binding.setVariable($T.view,target);\n"
             + "      target.binding.setVariable($T.viewModel,target.viewModel);\n"
-            //+ "      target.viewModel.setBinding(target.binding);\n"
             + "      target.view = target.binding.getRoot();\n"
             + "    }\n");
 
@@ -68,7 +64,6 @@ public class RootViewBinding implements ResourceBinding {
             + "      target.binding = $T.inflate(target.getLayoutInflater(), $L,($T)container,false);\n"
             + "      target.binding.setView(target);\n"
             + "      target.binding.setViewModel(target.viewModel);\n"
-            //+ "      target.viewModel.setBinding(target.binding);\n"
             + "      target.view = target.binding.getRoot();\n"
             + "    }\n");
 

@@ -1,8 +1,7 @@
 package com.timper.lonelysword.app.data;
 
-import com.timper.lib.di.BaseResponse;
+import com.timper.module.data.BaseResponse;
 import com.timper.lonelysword.annotations.apt.UseCase;
-import com.timper.lonelysword.annotations.apt.internal.Ignore;
 import com.timper.lonelysword.app.data.remote.ErrorTransformer;
 import com.timper.lonelysword.app.data.remote.SigleErrorTransformer;
 import io.reactivex.*;

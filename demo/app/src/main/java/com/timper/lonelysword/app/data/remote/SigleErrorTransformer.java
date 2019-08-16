@@ -1,8 +1,7 @@
 package com.timper.lonelysword.app.data.remote;
 
-import com.timper.lib.di.BaseResponse;
+import com.timper.module.data.BaseResponse;
 import io.reactivex.*;
-import org.reactivestreams.Publisher;
 
 /**
  * User: tangpeng.yang

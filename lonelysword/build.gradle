@@ -37,6 +37,10 @@ android {
   libraryVariants.all {
     it.generateBuildConfig.enabled = false
   }
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
   dataBinding {
     enabled true
   }
@@ -51,12 +55,10 @@ dependencies {
   api deps.dagger.android
   api deps.dagger.daggerSupport
   api deps.arch.extensions
+  api deps.arch.java8
   api deps.aspectj.aspectjrt
 
   api deps.rx.rxAndroid
-  testImplementation 'junit:junit:4.12'
-  androidTestImplementation 'com.android.support.test:runner:1.0.1'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
 android.libraryVariants.all { variant ->
   JavaCompile javaCompile = variant.javaCompile
