@@ -11,12 +11,23 @@
         <variable
                 name="view"
                 type="com.timper.module.feature.main.MainFragment"/>
+
+        <import type="com.timper.bindingadapter.recyclerview.LayoutManagers"/>
     </data>
 
     <LinearLayout
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:itemBinding="@{view.itemBinding}"
+                app:items="@{viewModel.datas}"
+                app:layoutManager="@{LayoutManagers.linear()}"
+        >
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 </layout>

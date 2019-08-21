@@ -1,10 +1,12 @@
 package com.timper.lonelysword.app.data;
 
-import com.timper.module.data.BaseResponse;
 import com.timper.lonelysword.annotations.apt.UseCase;
+import com.timper.lonelysword.app.data.remote.BaseResponse;
 import com.timper.lonelysword.app.data.remote.ErrorTransformer;
 import com.timper.lonelysword.app.data.remote.SigleErrorTransformer;
-import io.reactivex.*;
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
+import io.reactivex.Single;
 
 /**
  * User: tangpeng.yang
@@ -12,7 +14,7 @@ import io.reactivex.*;
  * Description:
  * FIXME
  */
-@UseCase(name = BaseResponse.class,transformer = ErrorTransformer.class)
+@UseCase(ignore = BaseResponse.class,transformer = ErrorTransformer.class)
 public interface MainRepository {
 
     Flowable<BaseResponse<String>> getUser(String hellow);
@@ -24,6 +26,6 @@ public interface MainRepository {
 //
 //    Maybe<String> getUsers2(String hellow);
 
-    @UseCase(name = BaseResponse.class,transformer = SigleErrorTransformer.class)
+    @UseCase(ignore = BaseResponse.class,transformer = SigleErrorTransformer.class)
     Single<BaseResponse<String>> getUsers3(String hellow);
 }

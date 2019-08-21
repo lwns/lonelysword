@@ -1,7 +1,10 @@
 package com.timper.module.feature.main
 
+import android.databinding.ObservableArrayList
 import com.timper.lonelysword.ActivityScope
 import com.timper.lonelysword.base.AppViewModel
+import com.timper.module.data.bean.Article
+import com.timper.module.data.remote.GetArticlesUseCase
 import javax.inject.Inject
 
 /**
@@ -12,4 +15,20 @@ import javax.inject.Inject
  */
 @ActivityScope
 class MainViewModel @Inject
-constructor() : AppViewModel()
+constructor(var getArticlesUseCase: GetArticlesUseCase) : AppViewModel() {
+
+    var datas: ObservableArrayList<Article> = ObservableArrayList()
+
+    override fun afterViews() {
+        getArticlesUseCase.execute(null).subscribe({
+            it.datas?.let {
+                datas.clear()
+                datas.addAll(it)
+            }
+        },{
+
+        },{
+
+        })
+    }
+}

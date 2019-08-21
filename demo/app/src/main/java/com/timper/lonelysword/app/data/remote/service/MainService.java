@@ -1,6 +1,5 @@
 package com.timper.lonelysword.app.data.remote.service;
 
-import com.timper.lonelysword.annotations.apt.UseCase;
 import io.reactivex.Observable;
 
 /**

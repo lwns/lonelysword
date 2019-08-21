@@ -26,6 +26,7 @@ import javax.inject.Inject;
 public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBinding> extends AppCompatActivity
         implements HasFragmentInjector, HasSupportFragmentInjector {
 
+    private Fragment currentFragment;
     public FragmentManager fragmentManager;
     public T binding;
     public V viewModel;
@@ -55,9 +56,34 @@ public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBind
         return frameworkFragmentInjector;
     }
 
-    public void addFragment(int containerViewId, Fragment fragment) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(containerViewId, fragment);
-        fragmentTransaction.commit();
+    protected void addFragment(int frameLayoutId, Fragment fragment) {
+        if (fragment != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            if (fragment.isAdded()) {
+                if (currentFragment != null) {
+                    transaction.hide(currentFragment)
+                            .show(fragment);
+                } else {
+                    transaction.show(fragment);
+                }
+            } else {
+                if (currentFragment != null) {
+                    transaction.hide(currentFragment)
+                            .add(frameLayoutId, fragment);
+                } else {
+                    transaction.add(frameLayoutId, fragment);
+                }
+            }
+            currentFragment = fragment;
+            transaction.commit();
+        }
+    }
+
+    protected void replaceFragment(int frameLayoutId, Fragment fragment) {
+        if (fragment != null) {
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(frameLayoutId, fragment);
+            transaction.commit();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package com.timper.lonelysword.app.data.remote;
 
-import com.timper.module.data.BaseResponse;
 import io.reactivex.*;
 
 /**

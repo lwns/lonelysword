@@ -31,5 +31,19 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <declare-styleable name="EmptyLayout">
+        <!-- require Command -->
+        <attr format="reference" name="onRetry"/>
+        <!-- require EmptyView.Status -->
+        <attr format="reference" name="state"/>
+        <!-- require String -->
+        <attr format="reference" name="info"/>
 
+        <attr format="color" name="el_textColor"/>
+        <attr format="dimension" name="el_textSize"/>
+        <attr format="reference" name="el_res"/>
+        <attr format="string" name="el_info"/>
+        <attr format="string" name="emptyInfo"/>
+
+    </declare-styleable>
 </resources>

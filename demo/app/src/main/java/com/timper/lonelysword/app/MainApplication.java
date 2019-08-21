@@ -1,11 +1,10 @@
 package com.timper.lonelysword.app;
 
-import android.app.Application;
 import android.widget.Toast;
+import com.facebook.stetho.Stetho;
 import com.timper.lonelysword.LoginBinder;
 import com.timper.lonelysword.Lonelysword;
 import com.timper.lonelysword.app.di.DaggerAppComponent;
-import com.timper.lonelysword.base.BaseApplication;
 import com.timper.lonelysword.dagger.DaggerApplication;
 import dagger.android.AndroidInjector;
 
@@ -15,16 +14,17 @@ import dagger.android.AndroidInjector;
  * Description:
  * FIXME
  */
-public class MainApplication extends Application {
-
-    //@Inject DispatchingAndroidInjector<Activity> activityDispatchingAndroidInjector;
+public class MainApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
         super.onCreate();
 
+        Lonelysword.setDebug(true);
+
         Lonelysword.init(this);
-        //DaggerAppComponent.builder().application(this).build().inject(this);
+
+        Stetho.initializeWithDefaults(this);
         Lonelysword.setLoginBinder(new LoginBinder() {
             @Override
             public void checkLogin() {
@@ -32,13 +32,8 @@ public class MainApplication extends Application {
             }
         });
     }
-
-    //@Override public AndroidInjector<Activity> activityInjector() {
-    //  return activityDispatchingAndroidInjector;
-    //}
-//    @Override
-//    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
-////        return DaggerAppComponent.builder().create(this);
-//        return null;
-//    }
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().create(this);
+    }
 }

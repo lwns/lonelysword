@@ -14,7 +14,6 @@ import com.timper.lonelysword.annotations.apt.BeforeViews;
 import com.timper.lonelysword.annotations.apt.DisableNetwork;
 import com.timper.lonelysword.annotations.apt.EnableNetwork;
 import com.timper.lonelysword.annotations.apt.RootView;
-import com.timper.lonelysword.annotations.apt.ViewModel;
 import com.timper.lonelysword.compiler.Utils;
 
 import java.io.IOException;
@@ -193,13 +192,13 @@ public class LonelySwordProcessor
         }
 
         // 解析@ViewModel
-        for (Element element : env.getElementsAnnotatedWith(ViewModel.class)) {
-            try {
-                parseViewModel(element, builderMap, erasedTargetNames);
-            } catch (Exception e) {
-                logParsingError(element, EnableNetwork.class, e);
-            }
-        }
+//        for (Element element : env.getElementsAnnotatedWith(ViewModel.class)) {
+//            try {
+//                parseViewModel(element, builderMap, erasedTargetNames);
+//            } catch (Exception e) {
+//                logParsingError(element, EnableNetwork.class, e);
+//            }
+//        }
 
         Deque<Map.Entry<TypeElement, BindingSet.Builder>> entries = new ArrayDeque<>(builderMap.entrySet());
         Map<TypeElement, BindingSet> bindingMap = new LinkedHashMap<>();
@@ -372,70 +371,70 @@ public class LonelySwordProcessor
     }
 
 
-    private void parseViewModel(Element element, Map<TypeElement, BindingSet.Builder> builderMap,
-                                Set<TypeElement> erasedTargetNames) {
-
-        TypeElement enclosingElement = null;
-        // Start by verifying common generated code restrictions.
-        boolean hasError = false;
-
-        String simpleName;
-        if (element.getKind().isClass()) {
-            enclosingElement = (TypeElement) element;
-            simpleName = VIEW;
-        } else if (element.getKind().isField()) {
-            enclosingElement = (TypeElement) element.getEnclosingElement();
-
-            // Start by verifying common generated code restrictions.
-            hasError =
-                    isInaccessibleViaGeneratedCode(ViewModel.class, "fields", element) || isBindingInWrongPackage(ViewModel.class, element);
-
-            simpleName = element.getSimpleName().toString();
-        } else {
-            error(element, "@%s is only bind class and field.", ViewModel.class);
-            return;
-        }
-
-        Name qualifiedName = enclosingElement.getQualifiedName();
-
-        // Verify that the target type extends from View.
-        TypeMirror elementType = enclosingElement.asType();
-        if (elementType.getKind() == TypeKind.TYPEVAR) {
-            TypeVariable typeVariable = (TypeVariable) elementType;
-            elementType = typeVariable.getUpperBound();
-        }
-
-        if (!Utils.isSubtypeOfType(elementType, ACTIVITY_TYPE)
-                && !Utils.isSubtypeOfType(elementType, FRAGMENT_TYPE)
-                && !Utils.isSubtypeOfType(elementType, V4FRAGMENT_TYPE)
-                && !Utils.isInterface(elementType)) {
-            if (elementType.getKind() == TypeKind.ERROR) {
-                note(element, "@%s field with unresolved type (%s) " + "must elsewhere be generated as a View or interface. (%s.%s)",
-                        ViewModel.class.getSimpleName(), elementType, qualifiedName, simpleName);
-            } else {
-                error(element, "@%s fields must extend from View or be an interface. (%s.%s)", ViewModel.class.getSimpleName(),
-                        qualifiedName, simpleName);
-                hasError = true;
-            }
-        }
-
-        String viewModelName = element.getAnnotation(ViewModel.class).value();
-
-        ViewModelBinding.Builder viewModel = new ViewModelBinding.Builder(simpleName.toString());
-        viewModel.addViewModelName(viewModelName);
-        BindingSet.Builder builder = getOrCreateBindingBuilder(builderMap, enclosingElement);
-        if (!builder.addViewModel(viewModel)) {
-            error(element, "@%s the same viewModel name.", ViewModel.class);
-            hasError = true;
-        }
-
-        if (hasError) {
-            return;
-        }
-
-        // Add the type-erased version to the valid binding targets set.
-        erasedTargetNames.add(enclosingElement);
-    }
+//    private void parseViewModel(Element element, Map<TypeElement, BindingSet.Builder> builderMap,
+//                                Set<TypeElement> erasedTargetNames) {
+//
+//        TypeElement enclosingElement = null;
+//        // Start by verifying common generated code restrictions.
+//        boolean hasError = false;
+//
+//        String simpleName;
+//        if (element.getKind().isClass()) {
+//            enclosingElement = (TypeElement) element;
+//            simpleName = VIEW;
+//        } else if (element.getKind().isField()) {
+//            enclosingElement = (TypeElement) element.getEnclosingElement();
+//
+//            // Start by verifying common generated code restrictions.
+//            hasError =
+//                    isInaccessibleViaGeneratedCode(ViewModel.class, "fields", element) || isBindingInWrongPackage(ViewModel.class, element);
+//
+//            simpleName = element.getSimpleName().toString();
+//        } else {
+//            error(element, "@%s is only bind class and field.", ViewModel.class);
+//            return;
+//        }
+//
+//        Name qualifiedName = enclosingElement.getQualifiedName();
+//
+//        // Verify that the target type extends from View.
+//        TypeMirror elementType = enclosingElement.asType();
+//        if (elementType.getKind() == TypeKind.TYPEVAR) {
+//            TypeVariable typeVariable = (TypeVariable) elementType;
+//            elementType = typeVariable.getUpperBound();
+//        }
+//
+//        if (!Utils.isSubtypeOfType(elementType, ACTIVITY_TYPE)
+//                && !Utils.isSubtypeOfType(elementType, FRAGMENT_TYPE)
+//                && !Utils.isSubtypeOfType(elementType, V4FRAGMENT_TYPE)
+//                && !Utils.isInterface(elementType)) {
+//            if (elementType.getKind() == TypeKind.ERROR) {
+//                note(element, "@%s field with unresolved type (%s) " + "must elsewhere be generated as a View or interface. (%s.%s)",
+//                        ViewModel.class.getSimpleName(), elementType, qualifiedName, simpleName);
+//            } else {
+//                error(element, "@%s fields must extend from View or be an interface. (%s.%s)", ViewModel.class.getSimpleName(),
+//                        qualifiedName, simpleName);
+//                hasError = true;
+//            }
+//        }
+//
+//        String viewModelName = element.getAnnotation(ViewModel.class).value();
+//
+//        ViewModelBinding.Builder viewModel = new ViewModelBinding.Builder(simpleName.toString());
+//        viewModel.addViewModelName(viewModelName);
+//        BindingSet.Builder builder = getOrCreateBindingBuilder(builderMap, enclosingElement);
+//        if (!builder.addViewModel(viewModel)) {
+//            error(element, "@%s the same viewModel name.", ViewModel.class);
+//            hasError = true;
+//        }
+//
+//        if (hasError) {
+//            return;
+//        }
+//
+//        // Add the type-erased version to the valid binding targets set.
+//        erasedTargetNames.add(enclosingElement);
+//    }
 
     /**
      * wrong method varify

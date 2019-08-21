@@ -20,15 +20,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import com.timper.lonelysword.Lonelysword;
@@ -39,8 +31,8 @@ import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.AndroidSupportInjection;
 import dagger.android.support.HasSupportFragmentInjector;
 
-import java.util.Arrays;
 import javax.inject.Inject;
+import java.util.Arrays;
 
 /**
  * User: tangpeng.yang
@@ -51,7 +43,7 @@ import javax.inject.Inject;
 public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBinding> extends DialogFragment implements HasSupportFragmentInjector {
 
     DialogBuilder dialogBuilder = initBuilder();
-
+    private Fragment currentFragment;
     public T binding;
     public V viewModel;
     @Inject
@@ -154,6 +146,29 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
         return rootView;
     }
 
+    public void addFragment(int frameLayoutId, Fragment fragment) {
+        if (fragment != null) {
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            if (fragment.isAdded()) {
+                if (currentFragment != null) {
+                    transaction.hide(currentFragment)
+                            .show(fragment);
+                } else {
+                    transaction.show(fragment);
+                }
+            } else {
+                if (currentFragment != null) {
+                    transaction.hide(currentFragment)
+                            .add(frameLayoutId, fragment);
+                } else {
+                    transaction.add(frameLayoutId, fragment);
+                }
+            }
+            currentFragment = fragment;
+            transaction.commit();
+        }
+    }
+
     private ObjectAnimator alphaOut(View view) {
         ObjectAnimator alphaOut = ObjectAnimator.ofFloat(view, "alpha", view.getAlpha(), 0f);
         return alphaOut;
@@ -165,7 +180,6 @@ public abstract class AppDialog<V extends AppViewModel, T extends ViewDataBindin
     }
 
     public void show(FragmentManager fragmentManager) {
-
         show(fragmentManager, this.getClass()
                 .getCanonicalName());
     }

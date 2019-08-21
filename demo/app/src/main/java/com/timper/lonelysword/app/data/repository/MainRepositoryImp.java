@@ -1,7 +1,7 @@
 package com.timper.lonelysword.app.data.repository;
 
-import com.timper.module.data.BaseResponse;
 import com.timper.lonelysword.app.data.MainRepository;
+import com.timper.lonelysword.app.data.remote.BaseResponse;
 import io.reactivex.*;
 
 import javax.inject.Inject;

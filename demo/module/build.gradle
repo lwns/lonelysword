@@ -56,11 +56,25 @@ dependencies {
     implementation deps.kotlin.lib
     implementation deps.support.design
     implementation deps.support.cardview
+    implementation deps.support.appcompat
+    implementation deps.support.recyclerview
+    implementation deps.android.constraint
+    implementation deps.rx.rxAndroid
+
+
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.converter
+    implementation deps.retrofit.adapter
+    implementation deps.retrofit.logger
+    implementation deps.retrofit.stetho
+
+    implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.4.0'
 
     implementation "android.arch.navigation:navigation-fragment:1.0.0"
     implementation "android.arch.navigation:navigation-ui:1.0.0"
-//    implementation "androidx.navigation:navigation-fragment-ktx:2.0.0"
-//    implementation "androidx.navigation:navigation-ui-ktx:2.0.0"
+
+    implementation "com.timper:emptyview:0.0.7"
+    implementation "com.timper:bindingadapter:0.0.9"
 
 
     implementation project(':lonelysword')

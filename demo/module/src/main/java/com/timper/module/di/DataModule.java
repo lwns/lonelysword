@@ -1,11 +1,11 @@
 package com.timper.module.di;
 
-import com.timper.module.UiThread;
-import com.timper.module.data.remote.TestRepository;
-import com.timper.module.data.TestRepositoryImp;
 import com.timper.lonelysword.data.executor.JobExecutor;
 import com.timper.lonelysword.data.executor.PostExecutionThread;
 import com.timper.lonelysword.data.executor.ThreadExecutor;
+import com.timper.module.UiThread;
+import com.timper.module.data.remote.MainService;
+import com.timper.module.data.remote.ServiceFactor;
 import dagger.Module;
 import dagger.Provides;
 
@@ -22,15 +22,20 @@ import javax.inject.Singleton;
 public class DataModule {
 
     @Provides
-    @Singleton public TestRepository bindMainRepository(TestRepositoryImp mainRepository) {
-        return mainRepository;
+    @Singleton
+    public MainService bindMainRepository() {
+        return ServiceFactor.Companion.getInstance().createService(MainService.class);
     }
 
-    @Provides @Singleton public ThreadExecutor bindThreadExecutor(JobExecutor jobExecutor) {
+    @Provides
+    @Singleton
+    public ThreadExecutor bindThreadExecutor(JobExecutor jobExecutor) {
         return jobExecutor;
     }
 
-    @Provides @Singleton public PostExecutionThread provideContext(UiThread uiThread) {
+    @Provides
+    @Singleton
+    public PostExecutionThread provideContext(UiThread uiThread) {
         return uiThread;
     }
 }
