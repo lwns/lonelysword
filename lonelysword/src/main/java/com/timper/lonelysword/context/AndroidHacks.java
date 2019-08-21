@@ -4,11 +4,13 @@ import android.os.Handler;
 import android.os.Looper;
 import java.lang.reflect.Method;
 
-/**
- * Created by op on 2017/4/25.
- */
 
-@SuppressWarnings("WeakerAccess")
+/**
+ * User: tangpeng.yang
+ * Date: 17/05/2018
+ * Description: 通过调用系统方法，拿到应用的context对象
+ * FIXME
+ */
 public class AndroidHacks {
     private static final String TAG = "Applications";
     private static Object sActivityThread;

@@ -1,5 +1,19 @@
-include ':app', ':lonelysword', ':lonelysword-compiler', ':lonelysword-annotations', ':lib', ':lonelysword-dagger',
-    ':lonelysword-usecase', ':lonelysword-common'
+include ':app'
+include ':module'
+
+
+project(':app').projectDir = file('demo/app')
+project(':module').projectDir = file('demo/module')
+
+include ':lonelysword'
+include ':lonelysword-android-compiler'
+
+include ':lonelysword-usecase'
+include ':lonelysword-usecase-compiler'
+
+include ':lonelysword-annotations'
+include ':lonelysword-common'
+
 include ':lonelysword-plugin'
 
 rootProject.name = 'lonelysword-parent'

@@ -11,5 +11,9 @@
       <entry name="!?*.kt" />
       <entry name="!?*.clj" />
     </wildcardResourcePatterns>
+    <bytecodeTargetLevel>
+      <module name="lonelysword-annotations" target="1.7" />
+      <module name="lonelysword-common" target="1.7" />
+    </bytecodeTargetLevel>
   </component>
 </project>

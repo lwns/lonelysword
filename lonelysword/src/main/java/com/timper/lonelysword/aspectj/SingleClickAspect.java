@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Pointcut;
 /**
  * User: tangpeng.yang
  * Date: 25/05/2018
- * Description:
+ * Description: 防止重复单点 切面
  * FIXME
  */
 @Aspect public class SingleClickAspect {

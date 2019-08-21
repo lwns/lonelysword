@@ -11,7 +11,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 /**
  * User: tangpeng.yang
  * Date: 25/05/2018
- * Description:
+ * Description: 方法执行时间切面
  * FIXME
  */
 @Aspect public class TimeAspect {
