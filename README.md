@@ -321,6 +321,9 @@ public final class LonelySword_GardenActivity implements Unbinder, DefaultLifecy
 
 ## 参考
 https://github.com/JakeWharton/butterknife
+
 https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
 https://developer.android.com/topic/libraries/data-binding
+
 https://github.com/alibaba/ARouter
