@@ -316,5 +316,5 @@ public final class LonelySword_GardenActivity implements Unbinder, DefaultLifecy
     
 ## 总结和源码
 
-- 本篇博文需要在熟练掌握MVVM架构思想、Clean架构思想以及Dagger2的工作原理的情况之下，来阅读和使用本框架，Lonelysword译名独孤剑，以快为目的，让我们在做码农的时候，不要把全部精力铺在业务代码上去，也应该抽出时间来改造我们的武器库，有无武器我们才能更好更快的应付业务需求，这样才能达到一个良性循环。如果你喜欢本文，就来支持一下给一个星哦，感谢大家。
+- 本篇博文需要在熟练掌握MVVM架构思想、Clean架构思想以及Dagger2的工作原理的情况之下，来阅读和使用本框架，Lonelysword译名独孤剑，以快为目的，让我们在做码农的时候，不要把全部精力铺在业务代码上去，也应该抽出时间来改造我们的武器库，有武器我们才能更好更快的应付业务需求，这样才能达到一个良性循环，这样裁才能愉快的码代码。如果你喜欢本文，就来支持一下给一个星哦，感谢大家。
 - 源码地址[https://github.com/Timper-yang/lonelysword](https://github.com/Timper-yang/lonelysword)
