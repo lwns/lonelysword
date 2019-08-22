@@ -1,5 +1,18 @@
 # Lonelysword
 
+![](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREpXWzs0i6DWtuClD-JeM8yDXHnRDxlvbnJ2yGiBhVDeZqckmFqg)
+
+### 接入方式
+
+
+```
+implementation 'com.timper:lonelysword:1.0.0'
+katp 'com.timper:lonelysword-android-compiler:1.0.0'
+implementation 'com.timper:lonelysword-usecase::1.0.0'
+katp 'com.timper:lonelysword-usecase-compiler:1.0.0'
+```
+
+
 ### 架构
 到底什么是架构，架构就是用架子构造出来的东西，算了以我现在的水平还不能告诉你,还不够格，哈哈。我能告诉你自己在学习过程中的领悟，我想架构就是一种约定，怎样的约定？为了更好的研发效率、扩展性和稳定性，更精准的风险防控能力。这样说可能有点抽象。比如我用完东西可能一直放在我喜欢的地方，只是在其他人眼中显得有点乱，在我眼里是很有规律的。因为我一直遵循着这个规定，每本书都有我给它定义的位置。但是我老妈不知道啊，虽然整理的很干净，但是书放错了位置，老妈可能是无意识的，就算下次我问她，她也记不清了。为了找到这本书，我也只能遍历一遍了。如果我们双方都遵循我们俩一起定义的一个规定，一个约定，达成一种共识。那么就很简单了，书永远在那，就算是添新书还是移除，双方都有章可循。
 
