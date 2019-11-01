@@ -57,6 +57,7 @@ dependencies {
     implementation deps.rx.rxAndroid
     implementation deps.retrofit.stetho
 
+    implementation project(':lonelysword-support')
     implementation project(':lonelysword')
     implementation project(':lonelysword-usecase')
     annotationProcessor project(':lonelysword-android-compiler')

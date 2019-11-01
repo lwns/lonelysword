@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/lonelysword-annotations" />
             <option value="$PROJECT_DIR$/lonelysword-common" />
             <option value="$PROJECT_DIR$/lonelysword-plugin" />
+            <option value="$PROJECT_DIR$/lonelysword-support" />
             <option value="$PROJECT_DIR$/lonelysword-usecase" />
             <option value="$PROJECT_DIR$/lonelysword-usecase-compiler" />
           </set>

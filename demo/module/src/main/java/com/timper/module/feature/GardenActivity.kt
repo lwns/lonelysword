@@ -4,15 +4,17 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import com.timper.lonelysword.annotations.apt.AfterViews
-import com.timper.lonelysword.annotations.apt.Dagger
-import com.timper.lonelysword.annotations.apt.RootView
+import android.widget.Toast
+import com.timper.lonelysword.annotations.apt.*
 import com.timper.lonelysword.base.AppActivity
 import com.timper.module.R
 import com.timper.module.R2
 import com.timper.module.databinding.ActGardenBinding
 import com.timper.module.feature.list.ListFragment
 import com.timper.module.feature.main.MainFragment
+import io.reactivex.Flowable
+import io.reactivex.FlowableSubscriber
+import org.reactivestreams.Subscription
 
 
 /**
@@ -24,6 +26,14 @@ import com.timper.module.feature.main.MainFragment
 @Dagger
 @RootView(R2.layout.act_garden)
 class GardenActivity : AppActivity<GardenViewModel, ActGardenBinding>() {
+
+    companion object {
+        fun instance(context: Context) {
+            val intent = Intent(context, GardenActivity::class.java)
+            context.startActivity(intent)
+        }
+    }
+
     @AfterViews
     internal fun view() {
         binding.navigationView.setNavigationItemSelectedListener {
@@ -49,13 +59,6 @@ class GardenActivity : AppActivity<GardenViewModel, ActGardenBinding>() {
         toggle.syncState()
 
         addFragment(R.id.fl_content, MainFragment.instance())
-    }
-
-    companion object {
-        fun instance(context: Context) {
-            val intent = Intent(context, GardenActivity::class.java)
-            context.startActivity(intent)
-        }
     }
 
     override fun onBackPressed() {

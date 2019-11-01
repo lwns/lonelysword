@@ -1,4 +1,4 @@
-package com.timper.module.feature.base.tab;
+package com.timper.lonelysword.support.base.tab;
 
 import android.databinding.ViewDataBinding;
 import android.support.v4.app.Fragment;

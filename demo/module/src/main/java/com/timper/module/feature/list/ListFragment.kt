@@ -6,6 +6,8 @@ import com.timper.lonelysword.annotations.apt.AfterViews
 import com.timper.lonelysword.annotations.apt.Dagger
 import com.timper.lonelysword.annotations.apt.RootView
 import com.timper.lonelysword.base.AppFragment
+import com.timper.lonelysword.support.base.loadmore.LoadMoreFragment
+import com.timper.lonelysword.support.databinding.LonelyswordSupportFrgLoadmoreBinding
 import com.timper.module.BR
 import com.timper.module.R
 import com.timper.module.R2
@@ -15,14 +17,16 @@ import com.timper.module.feature.GardenActivity
 
 
 @Dagger(GardenActivity::class)
-@RootView(R2.layout.frg_list)
-class ListFragment : AppFragment<ListViewModel,FrgListBinding>() {
+@RootView(R2.layout.lonelysword_support_frg_loadmore)
+class ListFragment : LoadMoreFragment<ListViewModel, LonelyswordSupportFrgLoadmoreBinding>() {
 
-    /**
-     * drawerBinding
-     */
-    var itemBinding: OnItemBindClass<Article> =
-        OnItemBindClass<Article>().map(Article::class.java, OnItemBindEvent<Article>(BR.viewModel, R.layout.item_main))
+
+    override fun onItemBindClass(): OnItemBindClass<*> {
+        return OnItemBindClass<Article>().map(
+            Article::class.java,
+            OnItemBindEvent<Article>(BR.viewModel, R.layout.item_main)
+        )
+    }
 
     @AfterViews
     internal fun afterViews() {

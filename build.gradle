@@ -5,32 +5,33 @@ buildscript {
                     'compileSdk'     : 28,
                     'supportLibrary' : '28.0.0',
                     'androidPlugin'  : '3.1.2',
-                    'constraint'    : '1.1.2',
+                    'constraint'     : '1.1.2',
                     'androidTools'   : '27.0.2',
                     'kotlin'         : '1.2.51',
                     'dagger'         : '2.11',
                     'rxLifecycle'    : '2.2.1',
                     'rxAndroid'      : '2.1.1',
-                    'retrofit'              : '2.3.0',
-                    'stetho'                : '1.5.0',
-                    'okhttp'                : '3.8.1',
+                    'retrofit'       : '2.3.0',
+                    'stetho'         : '1.5.0',
+                    'okhttp'         : '3.8.1',
                     'javaxAnnotation': '1.0',
                     'javaxInject'    : '1',
                     'lonelysword'    : '0.5.1',
+                    'timperView'     : '0.1.1',
                     'release'        : '8.8.1',
                     'aspectj'        : '1.8.9',
                     'arch'           : '1.1.1']
 
     ext.deps = [android       : ['gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",
                                  'constraint'  : "com.android.support.constraint:constraint-layout:${versions.constraint}"],
-                'support'     : ['compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
-                                 'appcompat'  : "com.android.support:appcompat-v7:${versions.supportLibrary}",
+                'support'     : ['compat'      : "com.android.support:support-compat:${versions.supportLibrary}",
+                                 'appcompat'   : "com.android.support:appcompat-v7:${versions.supportLibrary}",
                                  'recyclerview': "com.android.support:recyclerview-v7:${versions.supportLibrary}",
                                  'design'      : "com.android.support:design:${versions.supportLibrary}",
                                  'cardview'    : "com.android.support:cardview-v7:${versions.supportLibrary}",
-                                 'supportV4'  : "om.android.support:support-v4:${versions.supportLibrary}",
-                                 'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
-                                 'test'       : ['runner': 'com.android.support.test:runner:1.0.1',],],
+                                 'supportV4'   : "om.android.support:support-v4:${versions.supportLibrary}",
+                                 'annotations' : "com.android.support:support-annotations:${versions.supportLibrary}",
+                                 'test'        : ['runner': 'com.android.support.test:runner:1.0.1',],],
                 'lint'        : ['core'  : "com.android.tools.lint:lint:${versions.androidTools}",
                                  'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
                                  'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
@@ -70,15 +71,20 @@ buildscript {
                                  usecase        : "com.timper:lonelysword-usecase:${versions.lonelysword}",
                                  usecaseCompiler: "com.timper:lonelysword-usecase-compiler:${versions.lonelysword}"],
 
-                'retrofit'   : [retrofit : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-                                converter: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-                                adapter  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
-                                logger   : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
-                                stetho   : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",],
+                'timper'      : [base          : "com.timper:view-base:${versions.timperView}",
+                                 emptyView     : "com.timper:view-emptyview:${versions.timperView}",
+                                 bindingadapter: "com.timper:bindingadapter:${versions.timperView}",
+                                 loading       : "com.timper:view-loading:${versions.timperView}"],
+
+                'retrofit'    : [retrofit : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
+                                 converter: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
+                                 adapter  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
+                                 logger   : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
+                                 stetho   : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",],
 
                 'arch'        : [extensions: "android.arch.lifecycle:extensions:${versions.arch}",
                                  compiler  : "android.arch.lifecycle:compiler:${versions.arch}",
-                                 java8  : "android.arch.lifecycle:common-java8:${versions.arch}"],
+                                 java8     : "android.arch.lifecycle:common-java8:${versions.arch}"],
                 'aspectj'     : [aspectjrt   : "org.aspectj:aspectjrt:${versions.aspectj}",
                                  aspectjtools: "org.aspectj:aspectjtools:${versions.aspectj}"]]
 
@@ -111,7 +117,7 @@ subprojects {
     project.configurations.all {
         resolutionStrategy.eachDependency { details ->
             if (details.requested.group == 'com.android.support'
-                    && !details.requested.name.contains('multidex') ) {
+                    && !details.requested.name.contains('multidex')) {
                 details.useVersion "${versions.supportLibrary}"
             }
         }

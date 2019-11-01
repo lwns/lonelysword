@@ -3,8 +3,10 @@ package com.timper.module.feature.list
 import android.databinding.ObservableArrayList
 import com.timper.lonelysword.ActivityScope
 import com.timper.lonelysword.base.AppViewModel
+import com.timper.lonelysword.support.base.loadmore.LoadMoreViewModel
 import com.timper.module.data.bean.Article
 import com.timper.module.data.remote.GetTopsUseCase
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 /**
@@ -15,17 +17,15 @@ import javax.inject.Inject
  */
 @ActivityScope
 class ListViewModel @Inject
-constructor(var getTopsUseCase: GetTopsUseCase) : AppViewModel(){
+constructor(var getTopsUseCase: GetTopsUseCase) : LoadMoreViewModel<Article>(){
     var datas: ObservableArrayList<Article> = ObservableArrayList()
 
-    override fun afterViews() {
-        getTopsUseCase.execute(null).subscribe({
-            it.datas?.let {
-                datas.clear()
-                datas.addAll(it)
-            }
-        },{
-        },{
-        })
+
+    override fun refreshData(): Flowable<MutableList<Article>> {
+        return getTopsUseCase.execute(null).flatMap { Flowable.just(it.datas) }
+    }
+
+    override fun loadMoreData(): Flowable<MutableList<Article>> {
+        return getTopsUseCase.execute(null).flatMap { Flowable.just(it.datas) }
     }
 }

@@ -73,10 +73,13 @@ dependencies {
     implementation "android.arch.navigation:navigation-fragment:1.0.0"
     implementation "android.arch.navigation:navigation-ui:1.0.0"
 
-    implementation "com.timper:emptyview:0.0.7"
-    implementation "com.timper:bindingadapter:0.0.9"
+    implementation deps.timper.base
+    implementation deps.timper.emptyView
+    implementation deps.timper.loading
+    implementation deps.timper.bindingadapter
 
 
+    implementation project(':lonelysword-support')
     implementation project(':lonelysword')
     implementation project(':lonelysword-usecase')
     kapt project(':lonelysword-usecase-compiler')

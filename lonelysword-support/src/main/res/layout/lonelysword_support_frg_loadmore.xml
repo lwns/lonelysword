@@ -8,11 +8,11 @@
 
     <variable
         name="view"
-        type="com.timper.module.feature.base.loadmore.LoadMoreFragment"
+        type="com.timper.lonelysword.support.base.loadmore.LoadMoreFragment"
         />
     <variable
         name="viewModel"
-        type="com.timper.module.feature.base.loadmore.LoadMoreViewModel"
+        type="com.timper.lonelysword.support.base.loadmore.LoadMoreViewModel"
         />
     <import type="com.timper.bindingadapter.recyclerview.LayoutManagers"/>
   </data>
@@ -45,7 +45,7 @@
             app:onLoadMore="@{view.onLoadMore}"
             ></android.support.v7.widget.RecyclerView>
 
-        <com.timper.view.EmptyLayout
+        <com.timper.view.emptyview.EmptyLayout
             android:id="@+id/empty_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,9 +53,8 @@
             app:el_textColor="#91959A"
             app:el_textSize="13sp"
             app:onRetry="@{view.onRetry}"
-            app:el_res="@drawable/ic_empty_nodata"
             app:state="@{viewModel.state}"
-            ></com.timper.view.EmptyLayout>
+            ></com.timper.view.emptyview.EmptyLayout>
 
       </FrameLayout>
 

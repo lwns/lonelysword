@@ -4,7 +4,7 @@
   <data>
     <variable
         name="viewModel"
-        type="com.timper.module.feature.base.loadmore.LoadViewModel"
+        type="com.timper.lonelysword.support.base.loadmore.LoadViewModel"
         />
   </data>
 

@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion versions.compileSdk
+    defaultConfig {
+        minSdkVersion versions.minSdk
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    dataBinding {
+        enabled true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation project(":lonelysword")
+
+    implementation deps.support.appcompat
+    implementation deps.support.recyclerview
+    implementation deps.support.design
+    implementation deps.rx.rxAndroid
+    implementation deps.support.cardview
+
+    implementation deps.timper.base
+    implementation deps.timper.emptyView
+    implementation deps.timper.loading
+    implementation deps.timper.bindingadapter
+}

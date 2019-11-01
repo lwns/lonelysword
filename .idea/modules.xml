@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/lonelysword-common/lonelysword-common.iml" filepath="$PROJECT_DIR$/lonelysword-common/lonelysword-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-parent.iml" filepath="$PROJECT_DIR$/lonelysword-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-plugin/lonelysword-plugin.iml" filepath="$PROJECT_DIR$/lonelysword-plugin/lonelysword-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-support/lonelysword-support.iml" filepath="$PROJECT_DIR$/lonelysword-support/lonelysword-support.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase/lonelysword-usecase.iml" filepath="$PROJECT_DIR$/lonelysword-usecase/lonelysword-usecase.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-usecase-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-usecase-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/demo/module/module.iml" filepath="$PROJECT_DIR$/demo/module/module.iml" />
