@@ -22,7 +22,7 @@
       android:layout_height="match_parent"
       >
 
-    <android.support.v4.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:colorScheme="@{view.colorScheme}"
@@ -34,7 +34,7 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           >
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -43,7 +43,7 @@
             app:items="@{viewModel.datas}"
             app:layoutManager="@{LayoutManagers.linear()}"
             app:onLoadMore="@{view.onLoadMore}"
-            ></android.support.v7.widget.RecyclerView>
+            ></androidx.recyclerview.widget.RecyclerView>
 
         <com.timper.view.emptyview.EmptyLayout
             android:id="@+id/empty_layout"
@@ -58,6 +58,6 @@
 
       </FrameLayout>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
   </FrameLayout>
 </layout>

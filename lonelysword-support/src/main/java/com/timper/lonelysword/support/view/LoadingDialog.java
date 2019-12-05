@@ -1,7 +1,7 @@
 package com.timper.lonelysword.support.view;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

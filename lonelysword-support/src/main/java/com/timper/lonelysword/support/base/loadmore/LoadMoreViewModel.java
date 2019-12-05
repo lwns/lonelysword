@@ -1,8 +1,8 @@
 package com.timper.lonelysword.support.base.loadmore;
 
-import android.databinding.ObservableArrayList;
-import android.databinding.ObservableField;
-import android.databinding.ObservableList;
+import androidx.databinding.ObservableArrayList;
+import androidx.databinding.ObservableField;
+import androidx.databinding.ObservableList;
 import com.timper.bindingadapter.collection.collections.MergeObservableList;
 import com.timper.bindingadapter.recyclerview.LayoutManagers;
 import com.timper.lonelysword.base.AppViewModel;

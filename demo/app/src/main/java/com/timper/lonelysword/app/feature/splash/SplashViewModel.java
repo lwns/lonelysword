@@ -1,9 +1,11 @@
 package com.timper.lonelysword.app.feature.splash;
 
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableField;
+
 import com.timper.lonelysword.ActivityScope;
 import com.timper.lonelysword.app.data.GetUserUseCase;
 import com.timper.lonelysword.base.AppViewModel;
+
 import javax.inject.Inject;
 
 /**

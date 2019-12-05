@@ -1,7 +1,7 @@
 package com.timper.lonelysword.support.base.tab;
 
-import android.databinding.ViewDataBinding;
-import android.support.v4.app.Fragment;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 import com.timper.lonelysword.base.AppFragment;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.timper.lonelysword.thread;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import com.timper.lonelysword.Lonelysword;
 
 import java.util.concurrent.ThreadFactory;

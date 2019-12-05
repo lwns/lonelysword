@@ -1,6 +1,6 @@
 package com.timper.lonelysword.support.base.loadmore;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 import com.timper.bindingadapter.action.Command;
 import com.timper.bindingadapter.action.ParamCommand;
 import com.timper.bindingadapter.collection.itembindings.OnItemBindClass;

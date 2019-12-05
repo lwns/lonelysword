@@ -71,8 +71,8 @@ public class DaggerProcessor extends AbstractProcessor {
     private static final String OPTION_SDK_INT = "lonelysword.minSdk";
     private static final String OPTION_DEBUGGABLE = "lonelysword.debuggable";
 
-    static final String APPACTIVITY_TYPE = "android.support.v4.app.FragmentActivity";
-    static final String APPFRAGMENT_TYPE = "android.support.v4.app.Fragment";
+    static final String APPACTIVITY_TYPE = "androidx.fragment.app.FragmentActivity";
+    static final String APPFRAGMENT_TYPE = "androidx.fragment.app.Fragment";
     static final String MULTIMODULE_TYPE = "com.timper.lonelysword.dagger.DaggerMultiModule";
 
     private static final String LONELYSWORDPACKAGENAME = "lonelysword.di";

@@ -15,7 +15,7 @@ import javax.inject.Singleton;
  * Description:
  * FIXME
  */
-@Module @Singleton public class DataModule {
+@Module public class DataModule {
 
   @Provides @Singleton public MainRepository bindMainRepository(MainRepositoryImp mainRepository) {
     return mainRepository;

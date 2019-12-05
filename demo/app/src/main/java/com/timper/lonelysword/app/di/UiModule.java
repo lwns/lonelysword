@@ -12,7 +12,7 @@ import javax.inject.Singleton;
  * Description:
  * FIXME
  */
-@Module @Singleton public class UiModule {
+@Module public class UiModule {
 
   @Provides @Singleton public PostExecutionThread provideContext(UiThread uiThread) {
     return uiThread;

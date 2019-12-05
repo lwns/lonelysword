@@ -1,4 +1,4 @@
-package com.timper.lonelysword;
+package com.timper.lonelysword.aspectj;
 
 /**
  * User: tangpeng.yang
@@ -8,6 +8,9 @@ package com.timper.lonelysword;
  */
 public interface LoginBinder {
 
-  void checkLogin();
+  /**
+   * @return 是否login
+   */
+  boolean checkLogin();
 
 }

@@ -5,10 +5,11 @@
       <GradleProjectSettings>
         <option name="distributionType" value="LOCAL" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="$USER_HOME$/android/gradle-4.4" />
+        <option name="gradleHome" value="$USER_HOME$/android/gradle-4.6" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/aspectj/lonelysword-aspectj" />
             <option value="$PROJECT_DIR$/demo/app" />
             <option value="$PROJECT_DIR$/demo/module" />
             <option value="$PROJECT_DIR$/lonelysword" />
@@ -22,6 +23,7 @@
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="testRunner" value="PLATFORM" />
       </GradleProjectSettings>
     </option>
   </component>

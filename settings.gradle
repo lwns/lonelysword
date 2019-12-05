@@ -1,9 +1,11 @@
-include ':app', ':lonelysword-support'
+include ':app', ':lonelysword-support', ':lonelysword-aspectj'
 include ':module'
 
 
 project(':app').projectDir = file('demo/app')
 project(':module').projectDir = file('demo/module')
+
+project(':lonelysword-aspectj').projectDir = file('aspectj/lonelysword-aspectj')
 
 include ':lonelysword'
 include ':lonelysword-android-compiler'

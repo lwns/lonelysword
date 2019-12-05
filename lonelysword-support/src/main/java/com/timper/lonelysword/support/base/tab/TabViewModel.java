@@ -1,6 +1,6 @@
 package com.timper.lonelysword.support.base.tab;
 
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableField;
 import com.timper.lonelysword.ActivityScope;
 import com.timper.lonelysword.base.AppViewModel;
 

@@ -1,12 +1,14 @@
 package com.timper.lonelysword.app.di;
 
 import com.timper.lonelysword.app.MainApplication;
+
+import javax.inject.Singleton;
+
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
 import lonelysword.di.AppModule$$app;
 
-import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {

@@ -1,7 +1,8 @@
 package com.timper.lonelysword.base;
 
-import android.arch.lifecycle.AndroidViewModel;
-import android.util.Log;
+
+import androidx.lifecycle.AndroidViewModel;
+
 import com.timper.lonelysword.context.App;
 import io.reactivex.disposables.CompositeDisposable;
 
