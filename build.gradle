@@ -16,7 +16,7 @@ buildscript {
                     'okhttp'         : '3.8.1',
                     'javaxAnnotation': '1.0',
                     'javaxInject'    : '1',
-                    'lonelysword'    : '2.0.1',
+                    'lonelysword'    : '2.0.8',
                     'timperView'     : '2.0.0',
                     'release'        : '8.8.1',
                     'aspectj'        : '1.8.9',
@@ -108,7 +108,11 @@ buildscript {
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
 
+
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0'
+        classpath 'com.timper.lonelysword:lonelysword-plugin:1.2.0'
+
+//            classpath "com.alibaba:arouter-register:1.0.2"
 
         classpath deps.aspectj.aspectjtools
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"

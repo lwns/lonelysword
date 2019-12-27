@@ -1,16 +1,15 @@
 package com.timper.lonelysword;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
+
 import androidx.annotation.CheckResult;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.UiThread;
 import androidx.annotation.VisibleForTesting;
-
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.timper.lonelysword.context.App;
 import com.timper.lonelysword.dagger.MultiModule;
@@ -22,7 +21,11 @@ import com.timper.lonelysword.utils.PackageUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * User: tangpeng.yang
@@ -51,16 +54,12 @@ public class Lonelysword {
 
     private static void loadRouterMap() {
         registerByPlugin = false;
-        //auto generate register code by gradle plugin: arouter-auto-register
-        // looks like below:
-        // register("ARouter..Root..modulejava");
+        //使用gradle插件会在这个方法里插入代码,如下：
+        // register("xxxxmodulejava");
     }
 
     /**
-     * register by class name
-     * Sacrificing a bit of efficiency to solve
-     * the problem that the main dex file size is too large
-     * @author billy.qi <a href="mailto:qiyilike@163.com">Contact me.</a>
+     * 注册类名
      * @param className class name
      */
     private static void register(String className) {
@@ -72,7 +71,7 @@ public class Lonelysword {
                     registerDaggerModuleRoot((MultiModule) obj);
                 } else {
                     logger.info(TAG, "register failed, class name: " + className
-                            + " should implements one of IRouteRoot/IProviderGroup/IInterceptorGroup.");
+                            + " should implements one of MultiModule.");
                 }
             } catch (Exception e) {
                 logger.error(TAG,"register class error:" + className);
@@ -94,8 +93,6 @@ public class Lonelysword {
 
     /**
      * mark already registered by arouter-auto-register plugin
-     * @author billy.qi <a href="mailto:qiyilike@163.com">Contact me.</a>
-     * @since 2017-12-06
      */
     private static void markRegisteredByPlugin() {
         if (!registerByPlugin) {
@@ -155,20 +152,6 @@ public class Lonelysword {
     public static void setDebug(boolean debug) {
         Lonelysword.debug = debug;
     }
-
-    /**
-     * annotated fields and methods in the specified {@link Activity}. The current content
-     * view is used as the view root.
-     *
-     * @param target Target activity for view binding.
-     * @return unbinder object
-     */
-//    @NonNull
-//    @UiThread
-//    public static Unbinder bind(@NonNull Activity target) {
-////        View sourceView = target.getWindow().getDecorView();
-//        return createBinding(target);
-//    }
 
     @NonNull
     @UiThread
@@ -232,6 +215,4 @@ public class Lonelysword {
         BINDINGS.put(cls, bindingCtor);
         return bindingCtor;
     }
-
-
 }

@@ -25,9 +25,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-//    implementation project(":lonelysword")
-
-    implementation deps.lonelysword.android
+    implementation project(":lonelysword")
+//
+//    implementation deps.lonelysword.android
 
     implementation deps.support.appcompat
     implementation deps.support.recyclerview

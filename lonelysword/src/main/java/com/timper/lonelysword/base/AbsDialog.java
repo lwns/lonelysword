@@ -13,14 +13,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+
+import androidx.annotation.ColorInt;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.view.*;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+
 import com.timper.lonelysword.context.App;
 
 import java.util.Arrays;
@@ -28,13 +32,12 @@ import java.util.Arrays;
 /**
  * User: tangpeng.yang
  * Date: 2019-09-18
- * Description:
+ * Description: 基类Dialog
  * FIXME
  */
 public abstract class AbsDialog extends DialogFragment {
 
     AbsDialog.DialogBuilder dialogBuilder = initBuilder();
-    private Fragment currentFragment;
 
     public View view;
 
@@ -75,12 +78,12 @@ public abstract class AbsDialog extends DialogFragment {
             rootView.setPadding(0, 0, 0, getNavigationBarHeight(getActivity()));//当底部有虚拟按键的时候添加
         }
         rootView.setLayoutParams(layoutParams);
-        rootView.setBackgroundColor(Color.parseColor("#00000000"));
+        rootView.setBackgroundColor(Color.TRANSPARENT);//设置透明色
 
         FrameLayout.LayoutParams fadeParams = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         fadeView = new View(getContext());
         fadeView.setLayoutParams(fadeParams);
-        fadeView.setBackgroundColor(Color.parseColor("#66000000"));
+        fadeView.setBackgroundColor(dialogBuilder.getFadeColor() == -1?Color.parseColor("#66000000"):dialogBuilder.getFadeColor());
         fadeView.setAlpha(0);
         fadeView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,29 +115,6 @@ public abstract class AbsDialog extends DialogFragment {
             }
         });
         return rootView;
-    }
-
-    public void addFragment(int frameLayoutId, Fragment fragment) {
-        if (fragment != null) {
-            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-            if (fragment.isAdded()) {
-                if (currentFragment != null) {
-                    transaction.hide(currentFragment)
-                            .show(fragment);
-                } else {
-                    transaction.show(fragment);
-                }
-            } else {
-                if (currentFragment != null) {
-                    transaction.hide(currentFragment)
-                            .add(frameLayoutId, fragment);
-                } else {
-                    transaction.add(frameLayoutId, fragment);
-                }
-            }
-            currentFragment = fragment;
-            transaction.commit();
-        }
     }
 
     private ObjectAnimator alphaOut(View view) {
@@ -345,6 +325,9 @@ public abstract class AbsDialog extends DialogFragment {
         private boolean isFullScreen = false;
         private boolean isBlur = false;
 
+        // 阴影颜色
+        private @ColorInt int fadeColor = -1;
+        //
         private AnimatorSet inAnimation;
         private AnimatorSet outAnimation;
 
@@ -366,6 +349,15 @@ public abstract class AbsDialog extends DialogFragment {
         public AbsDialog.DialogBuilder setGravity(int gravity) {
             this.gravity = gravity;
             layoutParams.gravity = gravity;
+            return this;
+        }
+
+        public int getFadeColor() {
+            return fadeColor;
+        }
+
+        public AbsDialog.DialogBuilder setFadeColor(@ColorInt int fadeColor) {
+            this.fadeColor = fadeColor;
             return this;
         }
 

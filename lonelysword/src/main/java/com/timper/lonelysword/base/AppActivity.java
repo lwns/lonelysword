@@ -32,7 +32,6 @@ public abstract class AppActivity<V extends AppViewModel, T extends ViewDataBind
     public V viewModel;
     @Inject
     public ViewModelFactor<V> factor;
-
     @Inject
     DispatchingAndroidInjector<Fragment> supportFragmentInjector;
     @Inject
