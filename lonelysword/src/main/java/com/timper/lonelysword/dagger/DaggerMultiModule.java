@@ -31,7 +31,7 @@ public abstract class DaggerMultiModule implements HasActivityInjector, HasFragm
   @Inject
   DispatchingAndroidInjector<android.app.Fragment>            fragmentInjector;
   @Inject
-  DispatchingAndroidInjector<android.support.v4.app.Fragment> supportFragmentInjector;
+  DispatchingAndroidInjector<androidx.fragment.app.Fragment> supportFragmentInjector;
   @Inject
   DispatchingAndroidInjector<Service>                         serviceInjector;
   @Inject
@@ -89,7 +89,7 @@ public abstract class DaggerMultiModule implements HasActivityInjector, HasFragm
   }
 
   @Override
-  public AndroidInjector<android.support.v4.app.Fragment> supportFragmentInjector() {
+  public AndroidInjector<androidx.fragment.app.Fragment> supportFragmentInjector() {
     return supportFragmentInjector;
   }
 

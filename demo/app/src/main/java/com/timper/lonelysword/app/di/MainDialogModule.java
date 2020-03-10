@@ -1,10 +1,10 @@
 // Generated code from lonely sword. Do not modify!
 package com.timper.lonelysword.app.di;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import com.timper.lonelysword.app.feature.main.dialog.MainDialog;
-import com.timper.lonelysword.app.feature.splash.SplashActivity;
+
 import dagger.Binds;
 import dagger.Module;
 

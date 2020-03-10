@@ -2,19 +2,18 @@ package com.timper.module.feature
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.widget.Toast
-import com.timper.lonelysword.annotations.apt.*
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.databinding.DataBindingUtil
+import com.timper.lonelysword.annotations.apt.AfterViews
+import com.timper.lonelysword.annotations.apt.Dagger
+import com.timper.lonelysword.annotations.apt.RootView
 import com.timper.lonelysword.base.AppActivity
 import com.timper.module.R
 import com.timper.module.R2
 import com.timper.module.databinding.ActGardenBinding
 import com.timper.module.feature.list.ListFragment
 import com.timper.module.feature.main.MainFragment
-import io.reactivex.Flowable
-import io.reactivex.FlowableSubscriber
-import org.reactivestreams.Subscription
 
 
 /**
@@ -36,6 +35,7 @@ class GardenActivity : AppActivity<GardenViewModel, ActGardenBinding>() {
 
     @AfterViews
     internal fun view() {
+
         binding.navigationView.setNavigationItemSelectedListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             when (it.itemId) {

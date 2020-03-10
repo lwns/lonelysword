@@ -1,11 +1,10 @@
 package com.timper.lonelysword.app.feature.splash.test2;
 
-import android.databinding.ObservableField;
-import android.support.v7.app.AppCompatActivity;
+import androidx.databinding.ObservableField;
+
 import com.timper.lonelysword.ActivityScope;
-import com.timper.lonelysword.app.databinding.FrgTestTooBinding;
-import com.timper.lonelysword.base.AppActivity;
 import com.timper.lonelysword.base.AppViewModel;
+
 import javax.inject.Inject;
 
 /**

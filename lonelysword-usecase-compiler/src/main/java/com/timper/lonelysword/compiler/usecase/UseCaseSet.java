@@ -5,6 +5,7 @@ import com.squareup.javapoet.*;
 import javax.annotation.processing.Filer;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -22,11 +23,7 @@ public class UseCaseSet {
     private final TypeName targetTypeName;
     private final ClassName bindingClassName;
 
-    private static final ClassName FLOWABLEUSECASE = ClassName.get("com.timper.lonelysword.data", "FlowableUseCase");
     private static final ClassName COMPLETABLEUSECASE = ClassName.get("com.timper.lonelysword.data", "CompletableUseCase");
-    private static final ClassName MAYBEUSECASE = ClassName.get("com.timper.lonelysword.data", "MaybeUseCase");
-    private static final ClassName OBSERVABLEUSECASE = ClassName.get("com.timper.lonelysword.data", "ObservableUseCase");
-    private static final ClassName SINGLEUSECASE = ClassName.get("com.timper.lonelysword.data", "SingleUseCase");
     private static final ClassName USECASE = ClassName.get("com.timper.lonelysword.data", "UseCase");
 
     private static final ClassName INJECT = ClassName.get("javax.inject", "Inject");
@@ -35,11 +32,7 @@ public class UseCaseSet {
     private static final ClassName THREADEXECUTOR = ClassName.get("com.timper.lonelysword.data.executor", "ThreadExecutor");
     private static final ClassName OVERRIIDE = ClassName.get("java.lang", "Override");
 
-    private static final ClassName FLOWABLE = ClassName.get("io.reactivex", "Flowable");
     private static final ClassName COMPLETABLE = ClassName.get("io.reactivex", "Completable");
-    private static final ClassName MAYBE = ClassName.get("io.reactivex", "Maybe");
-    private static final ClassName OBSERVABLE = ClassName.get("io.reactivex", "Observable");
-    private static final ClassName SINGLE = ClassName.get("io.reactivex", "Single");
     private static final ClassName SCHEDULERS = ClassName.get("io.reactivex.schedulers", "Schedulers");
 
     private final Map<String, UseCaseBinding> useCaseBindings;

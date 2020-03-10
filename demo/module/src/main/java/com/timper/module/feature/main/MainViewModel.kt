@@ -1,6 +1,6 @@
 package com.timper.module.feature.main
 
-import android.databinding.ObservableArrayList
+import androidx.databinding.ObservableArrayList
 import com.timper.lonelysword.ActivityScope
 import com.timper.lonelysword.base.AppViewModel
 import com.timper.module.data.bean.Article

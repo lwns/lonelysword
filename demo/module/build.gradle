@@ -29,7 +29,7 @@ android {
                 arguments = [MODULE_NAME: project.getName()]
             }
         }
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -55,6 +55,7 @@ dependencies {
 
     implementation deps.kotlin.lib
     implementation deps.support.design
+//    implementation deps.support.supportV4
     implementation deps.support.cardview
     implementation deps.support.appcompat
     implementation deps.support.recyclerview
@@ -70,8 +71,8 @@ dependencies {
 
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.4.0'
 
-    implementation "android.arch.navigation:navigation-fragment:1.0.0"
-    implementation "android.arch.navigation:navigation-ui:1.0.0"
+    implementation 'androidx.navigation:navigation-fragment:2.0.0-rc02'
+    implementation 'androidx.navigation:navigation-ui:2.0.0-rc02'
 
     implementation deps.timper.base
     implementation deps.timper.emptyView
@@ -85,11 +86,16 @@ dependencies {
     kapt project(':lonelysword-usecase-compiler')
     kapt project(':lonelysword-android-compiler')
 
+//    implementation deps.lonelysword.usecase
+//    kapt deps.lonelysword.usecaseCompiler
+//    implementation deps.lonelysword.android
+//    kapt deps.lonelysword.androidCompiler
+
     kapt deps.dagger.processor
     kapt deps.dagger.compiler
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
 }
 
 uploadArchives {

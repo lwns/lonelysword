@@ -1,6 +1,6 @@
 package com.timper.lonelysword.support.base;
 
-import android.databinding.ViewDataBinding;
+import androidx.databinding.ViewDataBinding;
 import com.timper.lonelysword.base.AppDialog;
 
 /**

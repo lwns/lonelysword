@@ -1,0 +1,27 @@
+ext {
+
+    // 是否混淆
+    minifyEnabled = true
+
+    versions = ['minSdk'         : 24,
+                'compileSdk'     : 28,
+                'supportLibrary' : '28.0.0',
+                'androidPlugin'  : '3.2.1',
+                'androidx'       : '1.0.0',
+                'constraint'     : '1.1.2',
+                'androidTools'   : '27.0.2',
+                'kotlin'         : '1.2.51',
+                'dagger'         : '2.15',
+                'rxLifecycle'    : '2.2.1',
+                'rxAndroid'      : '2.1.1',
+                'retrofit'       : '2.3.0',
+                'stetho'         : '1.5.0',
+                'okhttp'         : '3.8.1',
+                'javaxAnnotation': '1.0',
+                'javaxInject'    : '1',
+                'lonelysword'    : '2.0.8',
+                'timperView'     : '2.0.0',
+                'release'        : '8.8.1',
+                'aspectj'        : '1.8.9',
+                'arch'           : '1.1.1']
+}

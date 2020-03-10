@@ -10,7 +10,7 @@ import com.squareup.javapoet.CodeBlock;
  * FIXME
  */
 public class RootViewBinding implements ResourceBinding {
-  private static final ClassName DATABINDINGUTIL = ClassName.get("android.databinding", "DataBindingUtil");
+  private static final ClassName DATABINDINGUTIL = ClassName.get("androidx.databinding", "DataBindingUtil");
   private static final ClassName VIEWGROUP = ClassName.get("android.view", "ViewGroup");
 
   private final Id id;

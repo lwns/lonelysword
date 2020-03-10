@@ -1,6 +1,6 @@
 package com.timper.lonelysword.support.base.loadmore;
 
-import android.databinding.ObservableField;
+import androidx.databinding.ObservableField;
 import com.timper.lonelysword.context.App;
 import com.timper.lonelysword.support.R;
 

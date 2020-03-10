@@ -18,7 +18,6 @@ import javax.inject.Singleton;
  * FIXME
  */
 @Module
-@Singleton
 public class DataModule {
 
     @Provides

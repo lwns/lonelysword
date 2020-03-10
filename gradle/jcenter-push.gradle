@@ -17,17 +17,17 @@ def projectName = properties.getProperty("project.name")
 def projectGroupId = properties.getProperty("project.groupId")
 def projectArtifactId = properties.getProperty("project.artifactId")
 //def projectVersionName = properties.getProperty("project.version")
-def projectVersionName = "1.0.0"
+def projectVersionName = "2.0.8"//支持androidx专有版本号
 def projectPackaging = properties.getProperty("project.packaging")
 def projectSiteUrl = properties.getProperty("project.siteUrl")
 def projectGitUrl = properties.getProperty("project.gitUrl")
 
-def developerId = properties.getProperty("developer.id")
-def developerName = properties.getProperty("developer.name")
-def developerEmail = properties.getProperty("developer.email")
+//def developerId = properties.getProperty("developer.id")
+//def developerName = properties.getProperty("developer.name")
+//def developerEmail = properties.getProperty("developer.email")
 
-def bintrayUser = properties.getProperty("bintray.user")
-def bintrayApikey = properties.getProperty("bintray.apikey")
+def bintrayUser = bintray_user
+def bintrayApikey = bintray_apikey
 
 def javadocName = properties.getProperty("javadoc.name")
 
@@ -52,9 +52,9 @@ install {
         }
         developers {
           developer {
-            id developerId
-            name developerName
-            email developerEmail
+            id 'timper'
+            name 'timper'
+            email '871373988@qq.com'
           }
         }
         scm {

@@ -11,7 +11,7 @@ import com.timper.lonelysword.compiler.Utils;
  * FIXME
  */
 public class ViewModelFactorBinding implements CodeBinding {
-  private static final ClassName VIEWMODELPROVIDERS = ClassName.get("android.arch.lifecycle", "ViewModelProviders");
+  private static final ClassName VIEWMODELPROVIDERS = ClassName.get("androidx.lifecycle", "ViewModelProviders");
 
   private final String factorName;
   private final String fieldName;
