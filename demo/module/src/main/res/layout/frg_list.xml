@@ -6,11 +6,11 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.timper.module.feature.list.ListViewModel"/>
+                type="com.timper.module.feature.garden.list.ListViewModel"/>
 
         <variable
                 name="view"
-                type="com.timper.module.feature.list.ListFragment"/>
+                type="com.timper.module.feature.garden.list.ListFragment"/>
 
         <import type="com.timper.bindingadapter.recyclerview.LayoutManagers"/>
     </data>

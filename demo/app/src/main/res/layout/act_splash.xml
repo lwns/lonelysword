@@ -18,22 +18,22 @@
   <androidx.constraintlayout.widget.ConstraintLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      tools:context="com.timper.lonelysword.lonelysword.com.timper.lonelysword.app.MainActivity"
+      android:background="@color/colorPrimary"
       >
 
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:text="@{viewModel.hellow}"
-          />
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{viewModel.content}"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </FrameLayout>
 
   </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

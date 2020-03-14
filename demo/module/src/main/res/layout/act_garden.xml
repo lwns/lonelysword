@@ -8,12 +8,12 @@
 
         <variable
                 name="view"
-                type="com.timper.module.feature.GardenActivity"
+                type="com.timper.module.feature.garden.GardenActivity"
         />
 
         <variable
                 name="viewModel"
-                type="com.timper.module.feature.GardenViewModel"
+                type="com.timper.module.feature.garden.GardenViewModel"
         />
 
     </data>

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2018 Google LLC
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,10 +17,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/garden_fragment"
-        android:title="@string/my_garden_title"/>
+            android:id="@+id/garden_activity_integration"
+            android:title="@string/garden_activity_integration" />
     <item
-        android:id="@+id/plant_list_fragment"
-        android:title="@string/plant_list_title"/>
+            android:id="@+id/garden_fragment_integration"
+            android:title= "@string/garden_fragment_integration" />
+    <item
+            android:id="@+id/garden_support_loadmore"
+            android:title="@string/garden_support_loadmore" />
+
+    <item
+            android:id="@+id/garden_dagger_add_library_class"
+            android:title="@string/garden_dagger_add_library_class" />
+
+
+    <item
+            android:id="@+id/garden_usecase_auto"
+            android:title="@string/garden_usecase_auto" />
 
 </menu>

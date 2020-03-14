@@ -42,7 +42,7 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 bintray {
     user = bintrayUser // local.properties里设置
     key = bintrayApikey // local.properties里设置
-    publications = ['lonelysword'] // 'MyPublication'与下面的publishing闭包里的名称对应
+    publications = ['lonelysword'] // 'lonelysword'与下面的publishing闭包里的名称对应
     publish = true // 上传后立即发布到Bintray平台
     pkg {
         userOrg = "timper"

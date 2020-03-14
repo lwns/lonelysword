@@ -2,30 +2,29 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/android.lonelysword-parent.iml" filepath="$PROJECT_DIR$/android.lonelysword-parent.iml" group="lonelysword-parent" />
       <module fileurl="file://$PROJECT_DIR$/demo/app/app.iml" filepath="$PROJECT_DIR$/demo/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aspectj/lonelysword-aspectj/aspectj-lonelysword-aspectj.iml" filepath="$PROJECT_DIR$/aspectj/lonelysword-aspectj/aspectj-lonelysword-aspectj.iml" group="lonelysword-parent/lonelysword-aspectj" />
-      <module fileurl="file://$PROJECT_DIR$/demo/app/demo-app.iml" filepath="$PROJECT_DIR$/demo/app/demo-app.iml" group="lonelysword-parent/app" />
-      <module fileurl="file://$PROJECT_DIR$/demo/module/demo-module.iml" filepath="$PROJECT_DIR$/demo/module/demo-module.iml" group="lonelysword-parent/module" />
+      <module fileurl="file://$PROJECT_DIR$/demo/app/demo.app.iml" filepath="$PROJECT_DIR$/demo/app/demo.app.iml" group="lonelysword-parent/app" />
+      <module fileurl="file://$PROJECT_DIR$/demo/module/demo.module.iml" filepath="$PROJECT_DIR$/demo/module/demo.module.iml" group="lonelysword-parent/module" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword/lonelysword.iml" filepath="$PROJECT_DIR$/lonelysword/lonelysword.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-android-compiler/lonelysword-android-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-android-compiler/lonelysword-android-compiler.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-annotations/lonelysword-annotations.iml" filepath="$PROJECT_DIR$/lonelysword-annotations/lonelysword-annotations.iml" />
-      <module fileurl="file://$PROJECT_DIR$/aspectj/lonelysword-aspectj/lonelysword-aspectj.iml" filepath="$PROJECT_DIR$/aspectj/lonelysword-aspectj/lonelysword-aspectj.iml" />
+      <module fileurl="file://$PROJECT_DIR$/aspectj/lonelysword-aspectj/lonelysword-aspectj.iml" filepath="$PROJECT_DIR$/aspectj/lonelysword-aspectj/lonelysword-aspectj.iml" group="lonelysword-parent/lonelysword-aspectj" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-common/lonelysword-common.iml" filepath="$PROJECT_DIR$/lonelysword-common/lonelysword-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword/lonelysword-lonelysword.iml" filepath="$PROJECT_DIR$/lonelysword/lonelysword-lonelysword.iml" group="lonelysword-parent/lonelysword" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-android-compiler/lonelysword-lonelysword-android-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-android-compiler/lonelysword-lonelysword-android-compiler.iml" group="lonelysword-parent/lonelysword-android-compiler" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-annotations/lonelysword-lonelysword-annotations.iml" filepath="$PROJECT_DIR$/lonelysword-annotations/lonelysword-lonelysword-annotations.iml" group="lonelysword-parent/lonelysword-annotations" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-common/lonelysword-lonelysword-common.iml" filepath="$PROJECT_DIR$/lonelysword-common/lonelysword-lonelysword-common.iml" group="lonelysword-parent/lonelysword-common" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-plugin/lonelysword-lonelysword-plugin.iml" filepath="$PROJECT_DIR$/lonelysword-plugin/lonelysword-lonelysword-plugin.iml" group="lonelysword-parent/lonelysword-plugin" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-support/lonelysword-lonelysword-support.iml" filepath="$PROJECT_DIR$/lonelysword-support/lonelysword-lonelysword-support.iml" group="lonelysword-parent/lonelysword-support" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase/lonelysword-lonelysword-usecase.iml" filepath="$PROJECT_DIR$/lonelysword-usecase/lonelysword-lonelysword-usecase.iml" group="lonelysword-parent/lonelysword-usecase" />
-      <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-lonelysword-usecase-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-lonelysword-usecase-compiler.iml" group="lonelysword-parent/lonelysword-usecase-compiler" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-parent.iml" filepath="$PROJECT_DIR$/lonelysword-parent.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-plugin/lonelysword-plugin.iml" filepath="$PROJECT_DIR$/lonelysword-plugin/lonelysword-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-support/lonelysword-support.iml" filepath="$PROJECT_DIR$/lonelysword-support/lonelysword-support.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase/lonelysword-usecase.iml" filepath="$PROJECT_DIR$/lonelysword-usecase/lonelysword-usecase.iml" />
       <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-usecase-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword-usecase-compiler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword/lonelysword.lonelysword.iml" filepath="$PROJECT_DIR$/lonelysword/lonelysword.lonelysword.iml" group="lonelysword-parent/lonelysword" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-android-compiler/lonelysword.lonelysword-android-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-android-compiler/lonelysword.lonelysword-android-compiler.iml" group="lonelysword-parent/lonelysword-android-compiler" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-annotations/lonelysword.lonelysword-annotations.iml" filepath="$PROJECT_DIR$/lonelysword-annotations/lonelysword.lonelysword-annotations.iml" group="lonelysword-parent/lonelysword-annotations" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-common/lonelysword.lonelysword-common.iml" filepath="$PROJECT_DIR$/lonelysword-common/lonelysword.lonelysword-common.iml" group="lonelysword-parent/lonelysword-common" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-plugin/lonelysword.lonelysword-plugin.iml" filepath="$PROJECT_DIR$/lonelysword-plugin/lonelysword.lonelysword-plugin.iml" group="lonelysword-parent/lonelysword-plugin" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-support/lonelysword.lonelysword-support.iml" filepath="$PROJECT_DIR$/lonelysword-support/lonelysword.lonelysword-support.iml" group="lonelysword-parent/lonelysword-support" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase/lonelysword.lonelysword-usecase.iml" filepath="$PROJECT_DIR$/lonelysword-usecase/lonelysword.lonelysword-usecase.iml" group="lonelysword-parent/lonelysword-usecase" />
+      <module fileurl="file://$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword.lonelysword-usecase-compiler.iml" filepath="$PROJECT_DIR$/lonelysword-usecase-compiler/lonelysword.lonelysword-usecase-compiler.iml" group="lonelysword-parent/lonelysword-usecase-compiler" />
       <module fileurl="file://$PROJECT_DIR$/demo/module/module.iml" filepath="$PROJECT_DIR$/demo/module/module.iml" />
-      <module fileurl="file://$PROJECT_DIR$/workspace-lonelysword-parent.iml" filepath="$PROJECT_DIR$/workspace-lonelysword-parent.iml" group="lonelysword-parent" />
     </modules>
   </component>
 </project>

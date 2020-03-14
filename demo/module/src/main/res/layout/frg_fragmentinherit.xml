@@ -4,18 +4,19 @@
         xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable
-                name="viewModel"
-                type="com.timper.module.feature.garden.detail.DetailViewModel"/>
 
         <variable
                 name="view"
-                type="com.timper.module.feature.garden.detail.DetailFragment"/>
+                type="com.timper.module.feature.garden.fragmentinherit.FragmentinheritFragment" />
+
+        <variable
+                name="viewModel"
+                type="com.timper.module.feature.garden.fragmentinherit.FragmentinheritViewModel" />
     </data>
 
     <LinearLayout
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
     </LinearLayout>

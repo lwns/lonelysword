@@ -387,11 +387,12 @@ public class BindingSet {
             // generate beforViews
             for (ViewModelFactorBinding binding : modelAdapterBindings) {
                 codeBlock.add(binding.render());
-            }
-            if (beforViewsBinding != null) {
-                codeBlock.add(beforViewsBinding.render());
                 codeBlock.add("\n");
             }
+//            if (beforViewsBinding != null) {
+//                codeBlock.add(beforViewsBinding.render());
+//                codeBlock.add("\n");
+//            }
 
             codeBlock.addStatement(
                     "        break;\n" +

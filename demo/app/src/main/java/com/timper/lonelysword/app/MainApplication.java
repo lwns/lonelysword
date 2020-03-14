@@ -22,12 +22,6 @@ public class MainApplication extends DaggerApplication {
 
     @Override
     public void onCreate() {
-        try {
-            Thread.sleep(3000L);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         super.onCreate();
         Lonelysword.setDebug(true);
 

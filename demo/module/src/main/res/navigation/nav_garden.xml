@@ -22,8 +22,7 @@
 
     <fragment
         android:id="@+id/garden_fragment"
-        android:name="com.timper.module.feature.main.MainFragment"
-        android:label="@string/my_garden_title"
+        android:name="com.timper.module.feature.garden.main.MainFragment"
         tools:layout="@layout/frg_main">
 
         <action
@@ -37,8 +36,7 @@
 
     <fragment
         android:id="@+id/plant_list_fragment"
-        android:name="com.timper.module.feature.list.ListFragment"
-        android:label="@string/plant_list_title"
+        android:name="com.timper.module.feature.garden.list.ListFragment"
         tools:layout="@layout/frg_list">
 
         <action
@@ -52,8 +50,7 @@
 
     <fragment
         android:id="@+id/plant_detail_fragment"
-        android:name="com.timper.module.feature.detail.DetailFragment"
-        android:label="@string/plant_details_title"
+        android:name="com.timper.module.feature.garden.detail.DetailFragment"
         tools:layout="@layout/frg_detail">
         <argument
             android:name="plantId"
