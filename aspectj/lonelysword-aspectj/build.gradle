@@ -95,4 +95,4 @@ android.libraryVariants.all { variant ->
         }
     }
 }
-apply from: rootProject.file('gradle/jcenter-push.gradle')
+apply from: rootProject.file('gradle/maven/maven.gradle')

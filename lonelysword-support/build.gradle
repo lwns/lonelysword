@@ -25,18 +25,32 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation project(":lonelysword")
-//
-//    implementation deps.lonelysword.android
+    if (isDependencyRemote.toBoolean()){
+        implementation deps.lonelysword.android
+        implementation deps.lonelysword.annotations
+    }else {
+        implementation project(":lonelysword-annotations")
+        implementation project(":lonelysword")
+    }
 
+
+    implementation deps.support.core
+    implementation deps.support.supportV4
     implementation deps.support.appcompat
     implementation deps.support.recyclerview
     implementation deps.support.design
     implementation deps.rx.rxAndroid
     implementation deps.support.cardview
 
+    implementation deps.dagger.android
+    implementation deps.dagger.daggerSupport
+    implementation deps.arch.extensions
+    implementation deps.arch.java8
+
     implementation deps.timper.base
     implementation deps.timper.emptyView
     implementation deps.timper.loading
     implementation deps.timper.bindingadapter
 }
+
+apply from: rootProject.file('gradle/maven/maven.gradle')

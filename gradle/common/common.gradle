@@ -28,9 +28,9 @@ def gitShortRev() {
 
 allprojects {
     ext.DEPENDENCY_REMOTE = "true"
-    ext.PUBLISH_MODE = "debug"
+    ext.PUBLISH_MODE = "release"
     ext.VERSION_CODE = 1
-    ext.VERSION_NAME = "1.0.0"
+    ext.VERSION_NAME = "3.0.0"
     if (ext.PUBLISH_MODE.equalsIgnoreCase("release")) {
         ext.VERSION_SUFFIX = ""
     } else {
@@ -42,4 +42,7 @@ allprojects {
         google()
         jcenter()
     }
+
+    //如果是kotlin项目,请添加此项,纯Java项目请忽略
+    tasks.withType(Javadoc).all { enabled = false }
 }

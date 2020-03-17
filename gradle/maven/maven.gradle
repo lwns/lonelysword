@@ -1,160 +1,126 @@
-apply plugin: 'maven-publish'
+apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+// load properties
+Properties properties = new Properties()
+File projectPropertiesFile = project.file("project.properties");
+if (projectPropertiesFile.exists()) {
+    properties.load(projectPropertiesFile.newDataInputStream())
+}
 
-def bintrayUser = bintray_user
-def bintrayApikey = bintray_apikey
+// read properties
+def projectName = properties.getProperty("project.name")
+def projectArtifactId = properties.getProperty("project.artifactId")
+def projectPackaging = properties.getProperty("project.packaging")
+def javadocName = properties.getProperty("javadoc.name")
+
+
+def publishedVersionName = project.ARTIFACT_VERSION
+def publishedGroupId = "com.timper"
+
 
 // 定义参数
 def gitUrl = 'https://github.com/Timper-yang/lonelysword.git'   // Git仓库的url
 def sitUrl = 'https://github.com/Timper-yang/lonelysword' //网站url
-def groupIdDefined = "com.timper"
+def developId = 'timper'
+def developName = 'timper'
+def developEmail = '871373988@qq.com'
+def licenseName = 'The Apache Software License, Version 2.0'
+def licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
 
-def publicationVersion = project.ARTIFACT_VERSION
+def bintrayUser = bintray_user
+def bintrayApikey = bintray_apikey
 
-
-static def getDependencyNode(scope, groupId, artifactId, version) {
-    Node node = new Node(null, 'dependency')
-    node.appendNode('groupId', groupId)
-    node.appendNode('artifactId', artifactId)
-    node.appendNode('version', version)
-    node.appendNode('scope', scope)
-    return node
-}
-
-def gitShortRev() {
-    def gitCommit = ""
-    def proc = "git rev-parse --short HEAD".execute()
-    proc.in.eachLine { line -> gitCommit = line }
-    proc.err.eachLine { line -> println line }
-    proc.waitFor()
-    return gitCommit
-}
-
-def getPublishReleaseUrl(String publishMode) {
-    return "release".equals(publishMode) ? "http://nexus.nevint.com/repository/maven-releases" : "http://nexus.nevint.com/repository/maven-snapshots"
-}
-
-
-// bintray平台信息配置
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-bintray {
-    user = bintrayUser // local.properties里设置
-    key = bintrayApikey // local.properties里设置
-    publications = ['lonelysword'] // 'lonelysword'与下面的publishing闭包里的名称对应
-    publish = true // 上传后立即发布到Bintray平台
-    pkg {
-        userOrg = "timper"
-        repo = "maven"  // 必填。bintray平台仓库名，必须已经创建过。
-        licenses = ["Apache-2.0"] // 首次创建package则必须，否则选填。
-        vcsUrl = gitUrl // 首次创建package则必须，否则选填。
-        websiteUrl = sitUrl
-    }
-}
-
-def setScm(scm) {
-    scm.appendNode('connection', "https://github.com/Timper-yang/lonelysword.git")
-
-    def commit
-    if ("${System.env.ORANGE}".equalsIgnoreCase("true")) {
-        commit = "${System.env.ORANGE_COMMIT}"
-    } else {
-        commit = gitShortRev()
-    }
-    scm.appendNode('url', "https://github.com/Timper-yang/lonelysword.git/commit/$commit")
-}
-
-// 构件文件和POM信息配置
-publishing {
-    publications {
-        lonelysword(MavenPublication) {
-            artifact("projects/lonelysword/build/outputs/aar/lonelysword-release.aar")
-//            artifact sourcesJar
-//            artifact javadocJar
-            groupId groupIdDefined
-            artifactId "lonelysword"
-            version publicationVersion
-
-            pom.withXml {
-                def dependencies = asNode().appendNode('dependencies')
-
-                dependencies.append(getDependencyNode('compile', 'com.timper', 'lonelysword-annotations', '0.5.5'))
-                dependencies.append(getDependencyNode('compile', 'androidx.core', 'core', project.versions.androidx))
-                dependencies.append(getDependencyNode('compile', 'androidx.legacy', 'legacy-support-v4', project.versions.androidx))
-                dependencies.append(getDependencyNode('compile', 'androidx.appcompat', 'appcompat', project.versions.androidx))
-                dependencies.append(getDependencyNode('compile', 'com.google.dagger', 'dagger-android', project.versions.dagger))
-                dependencies.append(getDependencyNode('compile', 'com.google.dagger', 'dagger-android-support', project.versions.dagger))
-                dependencies.append(getDependencyNode('compile', 'androidx.lifecycle', 'lifecycle-extensions', '2.0.0'))
-                dependencies.append(getDependencyNode('compile', 'androidx.lifecycle', 'lifecycle-common-java8', '2.0.0'))
-
-                def scm = root.appendNode('scm')
-                setScm(scm)
+group = publishedGroupId
+// This generates POM.xml with proper parameters
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                name projectName
+                groupId publishedGroupId
+                artifactId projectArtifactId
+                version publishedVersionName
+                packaging projectPackaging
+                url sitUrl
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developId
+                        name developName
+                        email developEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url sitUrl
+                }
             }
         }
     }
 }
 
-// 生成sourceJar和javaDocJar构件
-//task sourcesJar(type: Jar) {
-//    from android.sourceSets.main.java.srcDirs
-//    classifier = 'sources'
-//}
-//
-//task javadoc(type: Javadoc) {
-//    failOnError false
-//    source = android.sourceSets.main.java.sourceFiles
-//    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-//    classpath += configurations.compile
-//}
-//task javadocJar(type: Jar, dependsOn: javadoc) {
-//    classifier = 'javadoc'
-//    from javadoc.destinationDir
-//}
+if (project.hasProperty("android")) {
+    // Android libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
 
-//artifacts {
-//    archives sourcesJar
-//    archives javadocJar
-//}
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
 
+} else {
+    // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+}
 
-//task buildSdk() {
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword:assembleRelease')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-android-compiler:assemble')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-annotations:assemble')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-common:assemble')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-plugin:assemble')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-support:assembleRelease')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-usecase:assemble')
-//    dependsOn gradle.includedBuild('lonelysword-parent').task(':lonelysword-usecase-compiler:assemble')
-//}
-//
-//
-//def setGeneratePomFileAndDepends(publicationName) {
-//    model {
-//        tasks."generatePomFileFor${publicationName.capitalize()}Publication" {
-//            destination = file("$buildDir/pom/$publicationName-pom.xml")
-//            dependsOn(buildSdk)
-//        }
-//    }
-//}
-//
-//setGeneratePomFileAndDepends('utils')
-//setGeneratePomFileAndDepends('updownload')
-//setGeneratePomFileAndDepends('common')
-//setGeneratePomFileAndDepends('calendar')
-//setGeneratePomFileAndDepends('activity')
-//setGeneratePomFileAndDepends('coupon')
-//setGeneratePomFileAndDepends('file')
-//setGeneratePomFileAndDepends('im')
-//setGeneratePomFileAndDepends('login')
-//setGeneratePomFileAndDepends('nfc')
-//setGeneratePomFileAndDepends('plugin')
-//setGeneratePomFileAndDepends('push')
-//setGeneratePomFileAndDepends('upgrade')
-//setGeneratePomFileAndDepends('userview')
-//setGeneratePomFileAndDepends('daily')
-//setGeneratePomFileAndDepends('workflow')
-//setGeneratePomFileAndDepends('maplib')
-//setGeneratePomFileAndDepends('websocket')
-//setGeneratePomFileAndDepends('watermark')
+// This generates javadoc.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+// javadoc configuration
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version publishedVersionName
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title javadocName
+    }
+}
+
+// bintray configuration
+bintray {
+    user = bintrayUser
+    key = bintrayApikey
+    configurations = ['archives']
+    pkg {
+        userOrg = "timper"
+        repo = "maven"
+        name = projectName
+        websiteUrl = sitUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}

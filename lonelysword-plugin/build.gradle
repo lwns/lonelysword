@@ -1,7 +1,4 @@
-//apply plugin: 'maven'
 apply plugin: 'groovy'
-//apply from: "../gradle/lonelysword.gradle"
-
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -16,8 +13,6 @@ dependencies {
 
   compile 'com.android.tools.build:gradle:3.1.4'
   compile 'org.codehaus.groovy:groovy-xml:2.0.1'
-//  compile 'org.aspectj:aspectjtools:1.8.9'
-//  compile 'org.aspectj:aspectjrt:1.8.9'
 }
 
 
@@ -31,5 +26,5 @@ dependencies {
 //  }
 //}
 
-apply from: rootProject.file('gradle/jcenter-push.gradle')
+apply from: rootProject.file('gradle/maven/maven.gradle')
 //注意⚠️:   插件修改后运行前需要重新发布: ./gradlew -p lonelysword-plugin clean build uploadArchives --info

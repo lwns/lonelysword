@@ -3,81 +3,9 @@ buildscript {
 
     apply from: "./gradle/version/version.gradle"
 
-    ext.deps = [android       : ['gradlePlugin': "com.android.tools.build:gradle:${versions.androidPlugin}",
-                                 'constraint'  : "com.android.support.constraint:constraint-layout:${versions.constraint}"],
-                'support'     : ['core'      : 'androidx.core:core:1.0.0',
-                                 'appcompat'   : 'androidx.appcompat:appcompat:1.0.0',
-                                 'recyclerview': 'androidx.recyclerview:recyclerview:1.0.0',
-                                 'design'      : 'com.google.android.material:material:1.0.0',
-                                 'cardview'    : 'androidx.cardview:cardview:1.0.0',
-                                 'supportV4'   : "androidx.legacy:legacy-support-v4:1.0.0",
-                                 'annotations' : 'androidx.annotation:annotation:1.0.0',
-                                 'test'        : ['runner': 'com.android.support.test:runner:1.0.1',],],
-                'lint'        : ['core'  : "com.android.tools.lint:lint:${versions.androidTools}",
-                                 'api'   : "com.android.tools.lint:lint-api:${versions.androidTools}",
-                                 'checks': "com.android.tools.lint:lint-checks:${versions.androidTools}",
-                                 'tests' : "com.android.tools.lint:lint-tests:${versions.androidTools}",],
-                javapoet      : 'com.squareup:javapoet:1.10.0',
-                javaparser    : 'com.github.javaparser:javaparser-core:3.5.14',
-                junit         : 'junit:junit:4.12',
-                truth         : 'com.google.truth:truth:0.39',
-                robolectric   : 'org.robolectric:robolectric:3.7.1',
-                compiletesting: 'com.google.testing.compile:compile-testing:0.15',
-                'auto'        : ['service': 'com.google.auto.service:auto-service:1.0-rc4',
-                                 'common' : 'com.google.auto:auto-common:0.10',],
-                'guava'       : 'com.google.guava:guava:24.0-jre',
-                'release'     : ['runtime' : "com.jakewharton:butterknife:${versions.release}",
-                                 'compiler': "com.jakewharton:butterknife-compiler:${versions.release}"],
-
-                'kotlin'      : [jdk   : "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${versions.kotlin}",
-                                 jre   : "org.jetbrains.kotlin:kotlin-stdlib-jre8:${versions.kotlin}",
-                                 lib   : "org.jetbrains.kotlin:kotlin-stdlib:${versions.kotlin}",
-                                 plugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"],
-
-
-                'javax'       : [annotation: "javax.annotation:jsr250-api:${versions.javaxAnnotation}",
-                                 inject    : "javax.inject:javax.inject:${versions.javaxInject}"],
-
-                'dagger'      : [compiler     : "com.google.dagger:dagger-compiler:${versions.dagger}",
-                                 android      : "com.google.dagger:dagger-android:${versions.dagger}",
-                                 processor    : "com.google.dagger:dagger-android-processor:${versions.dagger}",
-                                 daggerSupport: "com.google.dagger:dagger-android-support:${versions.dagger}"],
-
-                'rx'          : [rxLifecycle: "com.trello.rxlifecycle2:rxlifecycle-components:${versions.rxLifecycle}",
-                                 rxAndroid  : "io.reactivex.rxjava2:rxandroid:${versions.rxAndroid}"],
-
-
-                'lonelysword' : [android        : "com.timper:lonelysword:${versions.lonelysword}",
-                                 androidCompiler: "com.timper:lonelysword-android-compiler:${versions.lonelysword}",
-                                 usecase        : "com.timper:lonelysword-usecase:${versions.lonelysword}",
-                                 usecaseCompiler: "com.timper:lonelysword-usecase-compiler:${versions.lonelysword}"],
-
-                'timper'      : [base          : "com.timper:view-base:${versions.timperView}",
-                                 emptyView     : "com.timper:view-emptyview:${versions.timperView}",
-                                 bindingadapter: "com.timper:bindingadapter:${versions.timperView}",
-                                 loading       : "com.timper:view-loading:${versions.timperView}"],
-
-                'retrofit'    : [retrofit : "com.squareup.retrofit2:retrofit:${versions.retrofit}",
-                                 converter: "com.squareup.retrofit2:converter-gson:${versions.retrofit}",
-                                 adapter  : "com.squareup.retrofit2:adapter-rxjava2:${versions.retrofit}",
-                                 logger   : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
-                                 stetho   : "com.facebook.stetho:stetho-okhttp3:${versions.stetho}",],
-
-                'arch'        : [extensions: 'androidx.lifecycle:lifecycle-extensions:2.0.0',
-                                 compiler  : "android.arch.lifecycle:compiler:${versions.arch}",
-                                 java8     : 'androidx.lifecycle:lifecycle-common-java8:2.0.0'],
-                'aspectj'     : [aspectjrt   : "org.aspectj:aspectjrt:${versions.aspectj}",
-                                 aspectjtools: "org.aspectj:aspectjtools:${versions.aspectj}"]]
-
     repositories {
-
-        maven { url 'http://nexus.nevint.com/repository/maven-snapshots/' }
-        maven { url 'http://nexus.nevint.com/repository/maven-releases/' }
         google()
-        maven { url "https://dl.bintray.com/timper/maven" }
-        mavenCentral()
         jcenter()
-        gradlePluginPortal()
         maven {
             url '/Users/tangpeng.yang/workspace/lonelysword/repo'
         }
@@ -87,19 +15,16 @@ buildscript {
         classpath deps.android.gradlePlugin
 
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4'
 
         classpath 'com.jakewharton:butterknife-gradle-plugin:9.0.0'
         classpath 'com.timper:lonelysword-plugin:2.0.8'
 
-//            classpath "com.alibaba:arouter-register:1.0.2"
-
         classpath deps.aspectj.aspectjtools
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:${versions.kotlin}"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
+
 
 //防止兼容包版本不一致
 subprojects {
@@ -113,26 +38,6 @@ subprojects {
     }
 }
 
-allprojects {
-    repositories {
-
-        maven { url 'http://nexus.nevint.com/repository/maven-snapshots/' }
-        maven { url 'http://nexus.nevint.com/repository/maven-releases/' }
-        google()
-        maven { url "https://dl.bintray.com/timper/maven" }
-        jcenter()
-        maven {
-            url '/Users/tangpeng.yang/workspace/lonelysword/repo'
-        }
-    }
-}
 
 apply from: './gradle/common/common.gradle'
-apply from: './gradle/maven/maven.gradle'
 
-//task clean(type: Delete) {
-//    delete rootProject.buildDir
-//}
-//task javadoc(type: Javadoc) {
-//    options.encoding = "utf-8"
-//}

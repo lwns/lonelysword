@@ -1,16 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        google()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
-    }
-
-    dependencies {
-        classpath "com.jakewharton:butterknife-gradle-plugin:9.0.0-SNAPSHOT"
-    }
-}
-
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -53,14 +40,39 @@ kapt {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation deps.kotlin.lib
+    if (isDependencyRemote.toBoolean()){
+        implementation deps.lonelysword.annotations
+        implementation deps.lonelysword.usecase
+        implementation deps.lonelysword.android
+        implementation deps.lonelysword.support
+        kapt deps.lonelysword.androidCompiler
+        kapt deps.lonelysword.usecaseCompiler
+    }else {
+        implementation project(':lonelysword-support')
+        implementation project(':lonelysword')
+        implementation project(':lonelysword-usecase')
+        implementation project(':lonelysword-annotations')
+        kapt project(':lonelysword-usecase-compiler')
+        kapt project(':lonelysword-android-compiler')
+    }
+
+
+    implementation deps.support.core
+    implementation deps.support.supportV4
     implementation deps.support.design
-//    implementation deps.support.supportV4
     implementation deps.support.cardview
     implementation deps.support.appcompat
     implementation deps.support.recyclerview
     implementation deps.android.constraint
     implementation deps.rx.rxAndroid
+
+    implementation deps.arch.extensions
+    implementation deps.arch.java8
+
+    implementation deps.kotlin.lib
+
+    implementation deps.dagger.android
+    implementation deps.dagger.daggerSupport
 
 
     implementation deps.retrofit.retrofit
@@ -78,18 +90,6 @@ dependencies {
     implementation deps.timper.emptyView
     implementation deps.timper.loading
     implementation deps.timper.bindingadapter
-
-
-    implementation project(':lonelysword-support')
-    implementation project(':lonelysword')
-    implementation project(':lonelysword-usecase')
-    kapt project(':lonelysword-usecase-compiler')
-    kapt project(':lonelysword-android-compiler')
-
-//    implementation deps.lonelysword.usecase
-//    kapt deps.lonelysword.usecaseCompiler
-//    implementation deps.lonelysword.android
-//    kapt deps.lonelysword.androidCompiler
 
     kapt deps.dagger.processor
     kapt deps.dagger.compiler
