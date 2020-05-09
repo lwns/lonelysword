@@ -14,10 +14,8 @@ def projectArtifactId = properties.getProperty("project.artifactId")
 def projectPackaging = properties.getProperty("project.packaging")
 def javadocName = properties.getProperty("javadoc.name")
 
-
 def publishedVersionName = project.ARTIFACT_VERSION
 def publishedGroupId = "com.timper"
-
 
 // 定义参数
 def gitUrl = 'https://github.com/Timper-yang/lonelysword.git'   // Git仓库的url
