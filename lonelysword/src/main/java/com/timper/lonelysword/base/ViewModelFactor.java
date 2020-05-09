@@ -1,6 +1,8 @@
 package com.timper.lonelysword.base;
 
-import android.arch.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+
 import javax.inject.Inject;
 
 /**
@@ -17,7 +19,7 @@ public class ViewModelFactor<V extends AppViewModel> implements ViewModelProvide
     this.modelAdapter = modelAdapter;
   }
 
-  @Override public <T extends android.arch.lifecycle.ViewModel> T create(Class<T> modelClass) {
+  @Override public <T extends ViewModel> T create(Class<T> modelClass) {
     if (modelClass.isAssignableFrom(modelAdapter.getClass())) {
       return (T) modelAdapter;
     }

@@ -14,18 +14,13 @@ import io.reactivex.Single;
  * Description:
  * FIXME
  */
-@UseCase(ignore = BaseResponse.class,transformer = ErrorTransformer.class)
+@UseCase(ignore = BaseResponse.class, transformer = ErrorTransformer.class)
 public interface MainRepository {
 
-    Flowable<BaseResponse<String>> getUser(String hellow);
+    Flowable<BaseResponse<String>> getUser(String params);
 
-    Completable getUsers(String hellow);
+    Completable getUsers(String params);
 
-
-//    Observable<String> getUsers1(String hellow);
-//
-//    Maybe<String> getUsers2(String hellow);
-
-    @UseCase(ignore = BaseResponse.class,transformer = SigleErrorTransformer.class)
-    Single<BaseResponse<String>> getUsers3(String hellow);
+    @UseCase(ignore = BaseResponse.class, transformer = SigleErrorTransformer.class)
+    Single<BaseResponse<String>> getUsers3(String params);
 }

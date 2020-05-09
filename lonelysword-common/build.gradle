@@ -4,7 +4,7 @@ dependencies {
     implementation deps.javapoet
 }
 
-apply from: rootProject.file('gradle/jcenter-push.gradle')
+apply from: rootProject.file('gradle/maven/maven.gradle')
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8

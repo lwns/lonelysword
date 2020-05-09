@@ -30,14 +30,13 @@
         android:layout_width="@dimen/navigation_drawer_image_width"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_navigation_drawer_header_logo"
-        android:contentDescription="@string/navigation_drawer_header_content_description" />
+        android:src="@drawable/ic_navigation_drawer_header_logo" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:text="@string/navigation_drawer_header_title"
+        android:text="@string/garden_lonelysword_demo"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 
 </FrameLayout>

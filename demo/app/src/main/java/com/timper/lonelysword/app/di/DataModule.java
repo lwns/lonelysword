@@ -15,12 +15,7 @@ import javax.inject.Singleton;
  * Description:
  * FIXME
  */
-@Module @Singleton public class DataModule {
-
-  //@Provides @Singleton public MainService provideMainService() {
-  //  return ServiceFactor.createService(HostUtil.getHost(SpUtil.readString(ENVIROMENT, "")), BuildConfig.DEBUG ? true : false,
-  //      MainService.class);
-  //}
+@Module public class DataModule {
 
   @Provides @Singleton public MainRepository bindMainRepository(MainRepositoryImp mainRepository) {
     return mainRepository;

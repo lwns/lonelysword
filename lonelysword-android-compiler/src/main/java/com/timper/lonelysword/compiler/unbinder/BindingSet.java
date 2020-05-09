@@ -13,6 +13,7 @@ import com.timper.lonelysword.compiler.Utils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
 import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
@@ -36,7 +37,7 @@ public class BindingSet {
     static final String FRAGMENT_TYPE = "android.app.Fragment";
     static final String APPACTIVITY_TYPE = "com.timper.lonelysword.base.AppActivity<?,?>";
     static final String APPFRAGMENT_TYPE = "com.timper.lonelysword.base.AppFragment<?,?>";
-    static final String V4FRAGMENT_TYPE = "android.support.v4.app.Fragment";
+    static final String V4FRAGMENT_TYPE = "androidx.fragment.app.Fragment";
     static final String DIALOG_TYPE = "android.app.Dialog";
 
     private static final String AFTERVIEWS = "afterViews";
@@ -53,13 +54,13 @@ public class BindingSet {
     private static final ClassName UNBINDER = ClassName.get("com.timper.lonelysword", "Unbinder");
 
     //lifecycle for fragment
-    private static final ClassName GENERICLIFECYCLEOBSERVER = ClassName.get("android.arch.lifecycle", "GenericLifecycleObserver");
+    private static final ClassName GENERICLIFECYCLEOBSERVER = ClassName.get("androidx.lifecycle", "GenericLifecycleObserver");
     //lifecycle for activity
-    private static final ClassName DEFAULTLIFECYCLEOBSERVER = ClassName.get("android.arch.lifecycle", "DefaultLifecycleObserver");
-    private static final ClassName LIFECYCLEOWNER = ClassName.get("android.arch.lifecycle", "LifecycleOwner");
-    private static final ClassName LIFECYCLEEVENT = ClassName.get("android.arch.lifecycle.Lifecycle", "Event");
+    private static final ClassName DEFAULTLIFECYCLEOBSERVER = ClassName.get("androidx.lifecycle", "DefaultLifecycleObserver");
+    private static final ClassName LIFECYCLEOWNER = ClassName.get("androidx.lifecycle", "LifecycleOwner");
+    private static final ClassName LIFECYCLEEVENT = ClassName.get("androidx.lifecycle.Lifecycle", "Event");
 
-    private static final ClassName UI_THREAD = ClassName.get("android.support.annotation", "UiThread");
+    private static final ClassName UI_THREAD = ClassName.get("androidx.annotation", "UiThread");
     private static final ClassName INJECT = ClassName.get("javax.inject", "Inject");
     private static final ClassName OVERRIIDE = ClassName.get("java.lang", "Override");
     private static final ClassName MODELADAPTERFACTOR = ClassName.get("com.timper.lonelysword.base", "ModelAdapterFactor");
@@ -136,6 +137,7 @@ public class BindingSet {
 
         result.addMethod(createConstructor(sdk, debuggable));
         result.addMethod(generateInitViewsMethod(sdk, debuggable));
+        result.addMethod(createAfterViewsMethod(sdk, debuggable));
         if (isActivity) {
             result.addMethod(generateOnCreateMethod(sdk, debuggable));
             result.addMethod(generateOnResumeMethod(sdk, debuggable));
@@ -167,6 +169,7 @@ public class BindingSet {
 
         if (parentBinding != null) {
             constructor.addStatement("super(target)");
+            constructor.addStatement("this.target = target");
         } else {
             constructor.addStatement("this.target = target");
             constructor.addStatement("target.getLifecycle().addObserver(this);");
@@ -203,52 +206,35 @@ public class BindingSet {
         return builder.build();
     }
 
-
     /**
-     * create onCreateMethod
+     * create afterViews method
      */
-    private MethodSpec generateOnCreateMethod(int sdk, boolean debuggable) {
-        MethodSpec.Builder builder = MethodSpec.methodBuilder(ONCREATE).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
-        builder.addParameter(LIFECYCLEOWNER, "owner");
-        if (parentBinding != null) {
-            builder.addStatement("super.onCreate(owner);");
-            builder.addCode("\n");
-        }
+    private MethodSpec createAfterViewsMethod(int sdk, boolean debuggable) {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(AFTERVIEWS).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
+
         // generate beforViews
         for (ViewModelFactorBinding binding : modelAdapterBindings) {
             builder.addCode(binding.render());
+            builder.addCode("\n");
         }
 
         if (beforViewsBinding != null) {
             builder.addCode(beforViewsBinding.render());
+            builder.addCode("\n");
         }
 
         // generate initViews
         builder.addStatement("initViews(null);");
         builder.addCode("\n");
 
-        // generate afterViews
-        if (afterViewsBinding != null) {
-            builder.addCode(afterViewsBinding.render());
-            builder.addCode("\n");
-        }
-
-        builder.addStatement("target.viewModel.afterViews()");
-        builder.addCode("\n");
-
-        for (ViewModelBinding binding : viewModelBindings) {
-            builder.addCode(binding.render());
-        }
-        return builder.build();
-    }
-
-    /**
-     * create afterViews method
-     */
-    private MethodSpec createAfterViewsMethod(int sdk, boolean debuggable) {
-        MethodSpec.Builder builder = MethodSpec.methodBuilder(AFTERVIEWS).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
         if (parentBinding != null) {
             builder.addStatement("super.afterViews()");
+
+            if (afterViewsBinding != null) {
+                builder.addCode(afterViewsBinding.render());
+                builder.addCode("\n");
+            }
+
             builder.addCode("\n");
         } else {
             if (afterViewsBinding != null) {
@@ -267,6 +253,20 @@ public class BindingSet {
     }
 
     /**
+     * create onCreateMethod
+     */
+    private MethodSpec generateOnCreateMethod(int sdk, boolean debuggable) {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder(ONCREATE).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
+        builder.addParameter(LIFECYCLEOWNER, "owner");
+        if (parentBinding != null) {
+            builder.addStatement("super.onCreate(owner);");
+            builder.addCode("\n");
+        }
+        return builder.build();
+    }
+
+
+    /**
      * create onResume method
      */
     private MethodSpec generateOnResumeMethod(int sdk, boolean debuggable) {
@@ -278,6 +278,7 @@ public class BindingSet {
         }
 
         builder.addStatement("target.viewModel.onResume()");
+        builder.addCode("\n");
         return builder.build();
     }
 
@@ -292,9 +293,11 @@ public class BindingSet {
             builder.addCode("\n");
             if (parentBinding.networkBinding == null && networkBinding != null) {
                 builder.addCode(networkBinding.bindNetworkConnection());
+                builder.addCode("\n");
             }
         } else if (networkBinding != null) {
             builder.addCode(networkBinding.bindNetworkConnection());
+            builder.addCode("\n");
         }
 
         builder.addStatement("target.viewModel.onStart()");
@@ -308,10 +311,12 @@ public class BindingSet {
         MethodSpec.Builder builder = MethodSpec.methodBuilder(ONPAUSE).addAnnotation(OVERRIIDE).addModifiers(PUBLIC);
         builder.addParameter(LIFECYCLEOWNER, "owner");
         if (parentBinding != null) {
-            builder.addStatement("super.onPause()");
+            builder.addStatement("super.onPause(owner)");
+            builder.addCode("\n");
         }
 
         builder.addStatement("target.viewModel.onPause()");
+        builder.addCode("\n");
         return builder.build();
     }
 
@@ -326,10 +331,12 @@ public class BindingSet {
             builder.addCode("\n");
             if (parentBinding.networkBinding == null && networkBinding != null) {
                 builder.addCode(networkBinding.unBindNetworkConnection());
+                builder.addCode("\n");
             }
         } else {
             if (networkBinding != null) {
                 builder.addCode(networkBinding.unBindNetworkConnection());
+                builder.addCode("\n");
             }
         }
 
@@ -380,22 +387,12 @@ public class BindingSet {
             // generate beforViews
             for (ViewModelFactorBinding binding : modelAdapterBindings) {
                 codeBlock.add(binding.render());
-            }
-            if (beforViewsBinding != null) {
-                codeBlock.add(beforViewsBinding.render());
-            }
-            // generate afterViews
-            if (afterViewsBinding != null) {
-                codeBlock.add(afterViewsBinding.render());
                 codeBlock.add("\n");
             }
-
-            codeBlock.addStatement("target.viewModel.afterViews()");
-            codeBlock.add("\n");
-
-            for (ViewModelBinding binding : viewModelBindings) {
-                codeBlock.add(binding.render());
-            }
+//            if (beforViewsBinding != null) {
+//                codeBlock.add(beforViewsBinding.render());
+//                codeBlock.add("\n");
+//            }
 
             codeBlock.addStatement(
                     "        break;\n" +

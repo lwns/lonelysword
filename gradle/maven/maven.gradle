@@ -1,0 +1,124 @@
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+// load properties
+Properties properties = new Properties()
+File projectPropertiesFile = project.file("project.properties");
+if (projectPropertiesFile.exists()) {
+    properties.load(projectPropertiesFile.newDataInputStream())
+}
+
+// read properties
+def projectName = properties.getProperty("project.name")
+def projectArtifactId = properties.getProperty("project.artifactId")
+def projectPackaging = properties.getProperty("project.packaging")
+def javadocName = properties.getProperty("javadoc.name")
+
+def publishedVersionName = project.ARTIFACT_VERSION
+def publishedGroupId = "com.timper"
+
+// 定义参数
+def gitUrl = 'https://github.com/Timper-yang/lonelysword.git'   // Git仓库的url
+def sitUrl = 'https://github.com/Timper-yang/lonelysword' //网站url
+def developId = 'timper'
+def developName = 'timper'
+def developEmail = '871373988@qq.com'
+def licenseName = 'The Apache Software License, Version 2.0'
+def licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+
+def bintrayUser = bintray_user
+def bintrayApikey = bintray_apikey
+
+group = publishedGroupId
+// This generates POM.xml with proper parameters
+install {
+    repositories.mavenInstaller {
+        pom {
+            project {
+                name projectName
+                groupId publishedGroupId
+                artifactId projectArtifactId
+                version publishedVersionName
+                packaging projectPackaging
+                url sitUrl
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developId
+                        name developName
+                        email developEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url sitUrl
+                }
+            }
+        }
+    }
+}
+
+if (project.hasProperty("android")) {
+    // Android libraries
+    task sourcesJar(type: Jar) {
+        classifier = 'sources'
+        from android.sourceSets.main.java.srcDirs
+    }
+
+    task javadoc(type: Javadoc) {
+        source = android.sourceSets.main.java.srcDirs
+        classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    }
+
+} else {
+    // Java libraries
+    task sourcesJar(type: Jar, dependsOn: classes) {
+        classifier = 'sources'
+        from sourceSets.main.allSource
+    }
+}
+
+// This generates javadoc.jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+// javadoc configuration
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version publishedVersionName
+        links "http://docs.oracle.com/javase/7/docs/api"
+        title javadocName
+    }
+}
+
+// bintray configuration
+bintray {
+    user = bintrayUser
+    key = bintrayApikey
+    configurations = ['archives']
+    pkg {
+        userOrg = "timper"
+        repo = "maven"
+        name = projectName
+        websiteUrl = sitUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}

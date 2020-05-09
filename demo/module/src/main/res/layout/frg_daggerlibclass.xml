@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+                name="view"
+                type="com.timper.module.feature.garden.daggerlibclass.DaggerlibclassFragment" />
+
+        <variable
+                name="viewModel"
+                type="com.timper.module.feature.garden.daggerlibclass.DaggerlibclassViewModel" />
+    </data>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@{viewModel.content}" />
+    </LinearLayout>
+</layout>

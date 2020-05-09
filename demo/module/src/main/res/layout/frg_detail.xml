@@ -6,11 +6,11 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.timper.module.feature.detail.DetailViewModel"/>
+                type="com.timper.module.feature.garden.detail.DetailViewModel"/>
 
         <variable
                 name="view"
-                type="com.timper.module.feature.detail.DetailFragment"/>
+                type="com.timper.module.feature.garden.detail.DetailFragment"/>
     </data>
 
     <LinearLayout

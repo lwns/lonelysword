@@ -6,11 +6,11 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.timper.module.feature.main.MainViewModel"/>
+                type="com.timper.module.feature.garden.main.MainViewModel"/>
 
         <variable
                 name="view"
-                type="com.timper.module.feature.main.MainFragment"/>
+                type="com.timper.module.feature.garden.main.MainFragment"/>
 
         <import type="com.timper.bindingadapter.recyclerview.LayoutManagers"/>
     </data>
@@ -20,14 +20,14 @@
             android:layout_width="match_parent"
             android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:itemBinding="@{view.itemBinding}"
                 app:items="@{viewModel.datas}"
                 app:layoutManager="@{LayoutManagers.linear()}"
         >
-        </android.support.v7.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 </layout>

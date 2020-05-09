@@ -9,7 +9,7 @@ package com.timper.module.data.bean
 
 data class BaseList<T>(
     val curPage: Int?,
-    val datas: List<T>?,
+    val datas: MutableList<T>?,
     val offset: Int?,
     val over: Boolean?,
     val pageCount: Int?,

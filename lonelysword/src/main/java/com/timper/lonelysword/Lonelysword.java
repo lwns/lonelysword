@@ -1,15 +1,17 @@
 package com.timper.lonelysword;
 
-import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
-import android.support.annotation.CheckResult;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.UiThread;
-import android.support.annotation.VisibleForTesting;
+import android.text.TextUtils;
 import android.util.Log;
-import android.view.View;
+
+import androidx.annotation.CheckResult;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.UiThread;
+import androidx.annotation.VisibleForTesting;
+
+import com.timper.lonelysword.context.App;
 import com.timper.lonelysword.dagger.MultiModule;
 import com.timper.lonelysword.dagger.Warehouse;
 import com.timper.lonelysword.logger.DefaultLogger;
@@ -19,8 +21,11 @@ import com.timper.lonelysword.utils.PackageUtils;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
-import java.util.concurrent.ThreadPoolExecutor;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * User: tangpeng.yang
@@ -37,13 +42,6 @@ public class Lonelysword {
     @VisibleForTesting
     static final Map<Class<?>, Constructor<? extends Unbinder>> BINDINGS = new LinkedHashMap<>();
 
-    public static LoginBinder loginBinder;
-
-    public static void setLoginBinder(LoginBinder loginBinder) {
-        Log.i("Lonelysword", "setLoginBinder");
-        Lonelysword.loginBinder = loginBinder;
-    }
-
 
     public static final String SP_CACHE_KEY = "SP_CACHE_KEY";
     public static final String DAGGER_MULTI_MAP = "DAGGER_MULTI_MAP";
@@ -51,12 +49,68 @@ public class Lonelysword {
     public static final String LAST_VERSION_CODE = "LAST_VERSION_CODE";
     public static final String LONELYSWORD_ROOT_PAKCAGE = "lonelysword.dagger";
     public static final String DAGGERMULTI = "MultiModule$$";
+    private static boolean registerByPlugin;
+
+
+    private static void loadRouterMap() {
+        registerByPlugin = false;
+        //使用gradle插件会在这个方法里插入代码,如下：
+        // register("xxxxmodulejava");
+    }
+
+    /**
+     * 注册类名
+     * @param className class name
+     */
+    private static void register(String className) {
+        if (!TextUtils.isEmpty(className)) {
+            try {
+                Class<?> clazz = Class.forName(className);
+                Object obj = clazz.getConstructor().newInstance();
+                if (obj instanceof MultiModule) {
+                    registerDaggerModuleRoot((MultiModule) obj);
+                } else {
+                    logger.info(TAG, "register failed, class name: " + className
+                            + " should implements one of MultiModule.");
+                }
+            } catch (Exception e) {
+                logger.error(TAG,"register class error:" + className);
+            }
+        }
+    }
+
+    private static void registerDaggerModuleRoot(MultiModule multiModule) {
+        markRegisteredByPlugin();
+        if (multiModule != null) {
+            try {
+                multiModule.saveAndroidModule(Warehouse.daggerMultiModules, App.context());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    /**
+     * mark already registered by arouter-auto-register plugin
+     */
+    private static void markRegisteredByPlugin() {
+        if (!registerByPlugin) {
+            registerByPlugin = true;
+        }
+    }
 
     /**
      * Lonelysword init, 加载所有的module至内存
      */
     public synchronized static void init(Application context) {
         try {
+            loadRouterMap();
+            if (registerByPlugin) {
+                logger.info(TAG, "Load router map by arouter-auto-register plugin.");
+                return;
+            }
+
             Set<String> routerMap;
             // It will rebuild router map every times when debuggable.
             if (Lonelysword.debug || PackageUtils.isNewVersion(context)) {
@@ -98,20 +152,6 @@ public class Lonelysword {
     public static void setDebug(boolean debug) {
         Lonelysword.debug = debug;
     }
-
-    /**
-     * annotated fields and methods in the specified {@link Activity}. The current content
-     * view is used as the view root.
-     *
-     * @param target Target activity for view binding.
-     * @return unbinder object
-     */
-//    @NonNull
-//    @UiThread
-//    public static Unbinder bind(@NonNull Activity target) {
-////        View sourceView = target.getWindow().getDecorView();
-//        return createBinding(target);
-//    }
 
     @NonNull
     @UiThread
@@ -175,6 +215,4 @@ public class Lonelysword {
         BINDINGS.put(cls, bindingCtor);
         return bindingCtor;
     }
-
-
 }

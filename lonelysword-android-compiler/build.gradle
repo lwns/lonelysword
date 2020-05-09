@@ -1,10 +1,14 @@
 apply plugin: 'java-library'
 
 dependencies {
-//    implementation project(':lonelysword-common')
-//    implementation project(':lonelysword-annotations')
-  implementation 'com.timper:lonelysword-common:0.5.5'
-  implementation 'com.timper:lonelysword-annotations:0.5.5'
+
+  if (isDependencyRemote.toBoolean()){
+    implementation deps.lonelysword.common
+    implementation deps.lonelysword.annotations
+  }else {
+    implementation project(':lonelysword-common')
+    implementation project(':lonelysword-annotations')
+  }
   implementation deps.auto.common
   implementation deps.guava
   implementation deps.javapoet
@@ -15,7 +19,7 @@ dependencies {
   testImplementation deps.truth
 }
 
-apply from: rootProject.file('gradle/jcenter-push.gradle')
+apply from: rootProject.file('gradle/maven/maven.gradle')
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
