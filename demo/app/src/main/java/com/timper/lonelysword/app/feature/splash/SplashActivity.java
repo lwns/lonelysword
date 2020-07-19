@@ -6,6 +6,7 @@ import com.timper.lonelysword.annotations.apt.RootView;
 import com.timper.lonelysword.app.R;
 import com.timper.lonelysword.app.databinding.ActSplashBinding;
 import com.timper.lonelysword.base.AppActivity;
+import com.timper.lonelysword.support.base.BaseActivity;
 import com.timper.module.feature.garden.GardenActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -14,7 +15,7 @@ import io.reactivex.Flowable;
 
 @Dagger
 @RootView(R.layout.act_splash)
-public class SplashActivity extends AppActivity<SplashViewModel, ActSplashBinding> {
+public class SplashActivity extends BaseActivity<SplashViewModel, ActSplashBinding> {
 
 
     @AfterViews

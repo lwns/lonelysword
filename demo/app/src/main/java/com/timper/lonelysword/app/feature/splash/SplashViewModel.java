@@ -5,6 +5,7 @@ import androidx.databinding.ObservableField;
 import com.timper.lonelysword.ActivityScope;
 import com.timper.lonelysword.app.data.GetUserUseCase;
 import com.timper.lonelysword.base.AppViewModel;
+import com.timper.lonelysword.support.base.BaseViewModel;
 
 import javax.inject.Inject;
 
@@ -14,7 +15,7 @@ import javax.inject.Inject;
  * Description:
  * FIXME
  */
-@ActivityScope public class SplashViewModel extends AppViewModel {
+@ActivityScope public class SplashViewModel extends BaseViewModel {
 
   public ObservableField<String> content = new ObservableField<>("欢迎来到android快速开发框架Lonelysword");
 

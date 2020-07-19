@@ -42,19 +42,21 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     if (isDependencyRemote.toBoolean()){
-        implementation deps.lonelysword.annotations
+        api deps.lonelysword.annotations
+        api deps.lonelysword.common
     }else {
-        implementation project(':lonelysword-annotations')
+        api project(':lonelysword-annotations')
+        api project(':lonelysword-common')
     }
+    api deps.dagger.android
+    api deps.dagger.daggerSupport
+    api deps.support.core
+    api deps.support.supportV4
+    api deps.support.appcompat
+    api deps.rx.rxAndroid
 
-    implementation deps.support.core
-    implementation deps.support.supportV4
-    implementation deps.support.appcompat
-    implementation deps.dagger.android
-    implementation deps.dagger.daggerSupport
-    implementation deps.arch.extensions
-    implementation deps.arch.java8
+    api deps.arch.extensions
+    api deps.arch.java8
 
-    implementation deps.rx.rxAndroid
 }
 apply from: rootProject.file('gradle/maven/maven.gradle')

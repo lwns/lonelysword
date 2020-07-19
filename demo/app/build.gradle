@@ -76,7 +76,6 @@ dependencies {
 
     implementation project(':lonelysword-support')
     implementation project(':lonelysword')
-    implementation project(':lonelysword-aspectj')
     implementation project(':lonelysword-usecase')
     annotationProcessor project(':lonelysword-android-compiler')
     annotationProcessor project(':lonelysword-usecase-compiler')

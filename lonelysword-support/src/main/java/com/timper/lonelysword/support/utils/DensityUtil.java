@@ -31,8 +31,8 @@ public class DensityUtil {
 
     private static final int WIDTH = 1;
     private static final int HEIGHT = 2;
-    private static final float DEFAULT_WIDTH = 1080f; //默认宽度768f
-    private static final float DEFAULT_HEIGHT = 1920f; //默认高度1024f
+    private static final float DEFAULT_WIDTH = 768f; //默认宽度768f
+    private static final float DEFAULT_HEIGHT = 1024f; //默认高度1024f
     private static float appDensity;
     /**
      * 字体的缩放因子，正常情况下和density相等，但是调节系统字体大小后会改变这个值

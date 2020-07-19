@@ -17,7 +17,6 @@ import javax.inject.Inject
 @ActivityScope
 class ListViewModel @Inject
 constructor(var getTopsUseCase: GetTopsUseCase) : LoadMoreViewModel<Article>(){
-    var datas: ObservableArrayList<Article> = ObservableArrayList()
 
 
     override fun refreshData(): Flowable<MutableList<Article>> {

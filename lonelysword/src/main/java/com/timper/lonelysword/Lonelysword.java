@@ -56,6 +56,7 @@ public class Lonelysword {
         registerByPlugin = false;
         //使用gradle插件会在这个方法里插入代码,如下：
         // register("xxxxmodulejava");
+
     }
 
     /**

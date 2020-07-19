@@ -32,7 +32,7 @@ public class BaseActivity<V extends AppViewModel, T extends ViewDataBinding> ext
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DensityUtil.setDefault(this);
+//        DensityUtil.setDefault(this);
         setStatusBar();
     }
 

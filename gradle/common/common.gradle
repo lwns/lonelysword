@@ -30,7 +30,7 @@ allprojects {
     ext.DEPENDENCY_REMOTE = "true"
     ext.PUBLISH_MODE = "release"
     ext.VERSION_CODE = 1
-    ext.VERSION_NAME = "3.0.0"
+    ext.VERSION_NAME = "3.0.1"
     if (ext.PUBLISH_MODE.equalsIgnoreCase("release")) {
         ext.VERSION_SUFFIX = ""
     } else {
